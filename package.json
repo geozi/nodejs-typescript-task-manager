@@ -1,0 +1,17 @@
+{
+  "name": "nodejs-typescript-task-manager",
+  "version": "1.0.0",
+  "description": "Contains the backend implementation of a Task Manager API in Typescript",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "middleware pattern",
+    "RESTful API",
+    "Typescript",
+    "Mocha"
+  ],
+  "author": "geozi",
+  "license": "ISC"
+}
