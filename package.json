@@ -2,9 +2,12 @@
   "name": "nodejs-typescript-task-manager",
   "version": "1.0.0",
   "description": "Contains the backend implementation of a Task Manager API in Typescript",
-  "main": "app.js",
+  "main": "dist/app.js",
   "scripts": {
-    "test": "mocha"
+    "start": "node dist/app.js",
+    "build": "tsc",
+    "test": "mocha",
+    "lint": "eslint ."
   },
   "keywords": [
     "middleware pattern",
@@ -13,5 +16,18 @@
     "Mocha"
   ],
   "author": "geozi",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "mongoose": "^7.8.4",
+    "mongoose-unique-validator": "^4.0.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.18.0",
+    "@types/mocha": "^10.0.10",
+    "eslint": "^9.18.0",
+    "eslint-plugin-mocha": "^10.5.0",
+    "globals": "^15.14.0",
+    "mocha": "^11.0.1",
+    "typescript-eslint": "^8.20.0"
+  }
 }
