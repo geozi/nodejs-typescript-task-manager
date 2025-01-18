@@ -1,0 +1,14 @@
+{
+  "extension": ["ts"],
+  "spec": "tests/**/*.ts",
+  "reporter": "spec",
+  "diff": true,
+  "inline-diffs ": true,
+  "full-trace": true,
+  "recursive": true,
+  "slow": 1,
+  "package": "./package.json",
+  "watch-files": ["tests/**/*.ts"],
+  "watch-ignore": ["node_modules"],
+  "require": "ts-node/register"
+}

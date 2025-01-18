@@ -33,7 +33,10 @@ const userSchema = new Schema<IUser>(
       type: String,
       unique: true,
       required: [true, userFailedValidation.EMAIL_REQUIRED],
-      match: [regularExpressions.ID_REGEX, userFailedValidation.EMAIL_INVALID],
+      match: [
+        regularExpressions.EMAIL_REGEX,
+        userFailedValidation.EMAIL_INVALID,
+      ],
       trim: true,
       lowercase: true,
     },

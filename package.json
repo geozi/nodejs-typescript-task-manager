@@ -7,6 +7,7 @@
     "start": "node dist/app.js",
     "build": "tsc",
     "test": "mocha",
+    "testWithCoverage": "nyc mocha",
     "lint": "eslint ."
   },
   "keywords": [
@@ -31,6 +32,7 @@
     "globals": "^15.14.0",
     "jsdoc": "^4.0.4",
     "mocha": "^11.0.1",
+    "nyc": "^17.1.0",
     "sinon": "^19.0.2",
     "ts-node": "^10.9.2",
     "typescript-eslint": "^8.20.0"
