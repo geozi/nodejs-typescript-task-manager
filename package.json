@@ -24,10 +24,12 @@
   "devDependencies": {
     "@eslint/js": "^9.18.0",
     "@types/mocha": "^10.0.10",
+    "@types/mongoose-unique-validator": "^1.0.9",
     "@types/sinon": "^17.0.3",
     "eslint": "^9.18.0",
     "eslint-plugin-mocha": "^10.5.0",
     "globals": "^15.14.0",
+    "jsdoc": "^4.0.4",
     "mocha": "^11.0.1",
     "sinon": "^19.0.2",
     "ts-node": "^10.9.2",
