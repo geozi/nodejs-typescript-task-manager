@@ -19,9 +19,9 @@ import IUser from "../domain/interfaces/iUser.interface";
  *
  * @memberof module:src/persistence/user
  * @async @function getUsers
- * @returns {Promise<Array<Object>>} - A promise that resolves to an array of user objects.
+ * @returns {Promise<Array<IUser>>} - A promise that resolves to an array of user objects.
  */
-const getUsers = async () => {
+const getUsers = async (): Promise<Array<IUser>> => {
   return await User.find({});
 };
 
@@ -31,7 +31,7 @@ const getUsers = async () => {
  * @memberof module:src/persistence/user
  * @async @function getUsersByRole
  * @param {string} role - The role designated to a user profile.
- * @returns {Promise<Array<Object>>} - A promise that resolves to an array of user objects.
+ * @returns {Promise<Array<IUser>>} - A promise that resolves to an array of user objects.
  */
 const getUsersByRole = async (role: string) => {
   return await User.find({ role: role });
@@ -43,7 +43,7 @@ const getUsersByRole = async (role: string) => {
  * @memberof module:src/persistence/user
  * @async @function getUserByUsername
  * @param {string} username - The username of the user.
- * @returns {Promise<Object>} - A promise that resolves to a user object.
+ * @returns {Promise<IUser>} - A promise that resolves to a user object.
  */
 const getUserByUsername = async (username: string) => {
   return await User.findOne({ username: username });
@@ -55,7 +55,7 @@ const getUserByUsername = async (username: string) => {
  * @memberof module:src/persistence/user
  * @async @function getUserByEmail
  * @param {string} email  - The email of the user.
- * @returns {Promise<Object>} - A promise that resolves to a user object.
+ * @returns {Promise<IUser>} - A promise that resolves to a user object.
  */
 const getUserByEmail = async (email: string) => {
   return await User.findOne({ email: email });
@@ -67,9 +67,9 @@ const getUserByEmail = async (email: string) => {
  * @memberof module:src/persistence/user
  * @async @function addUser
  * @param {IUser} newUser - The new user to be added.
- * @returns {Promise<Object>} - A promise that resolves to the saved document in the form of a user object.
+ * @returns {Promise<IUser>} - A promise that resolves to the saved document in the form of a user object.
  */
-const addUser = async (newUser: IUser) => {
+const addUser = async (newUser: IUser): Promise<IUser> => {
   return await newUser.save();
 };
 
@@ -80,7 +80,7 @@ const addUser = async (newUser: IUser) => {
  * @async @function updateUserInfo
  * @param {mongoose.Types.ObjectId} id - The id of the user document.
  * @param {object} updateDataObj - The new data to be persisted.
- * @returns {Promise<Object>} - A promise that resolves to the user object after update.
+ * @returns {Promise<IUser>} - A promise that resolves to the user object after update.
  */
 const updateUserInfo = async (
   id: mongoose.Types.ObjectId,
@@ -99,7 +99,7 @@ const updateUserInfo = async (
  * @memberof module:src/persistence/user
  * @async @function deleteUserInfo
  * @param {mongoose.Types.ObjectId} id - The id of the user document.
- * @returns {Promise<Object>} - A promise that resolves to the deleted document in the form of a user object.
+ * @returns {Promise<IUser>} - A promise that resolves to the deleted document in the form of a user object.
  */
 const deleteUserInfo = async (id: mongoose.Types.ObjectId) => {
   return await User.findByIdAndDelete(id);
