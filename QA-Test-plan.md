@@ -1,6 +1,6 @@
 # Task Manager API test plan
 
-Document version 1.0.0
+Document version 1.0.1
 
 ## Introduction
 
@@ -12,10 +12,59 @@ The project's tests are unit and integration tests. Completed tests are noted wi
 
 ## Unit tests
 
-Focus is placed on the validation rules of the Mongoose schemas. Tests are conducted per model/schema:
+Unit tests are conducted per layer:
 
-- User model,
-- Task model.
+- **domain**:
+  - User model [✔],
+  - Task model [✔]
+
+The directories and files included in the unit tests of domain models are:
+
+```text
+└── src
+    ├── domain
+    │   ├── enums
+    │   │   ├── role.enum.ts
+    │   │   └── status.enum.ts
+    │   ├── interfaces
+    │   │   ├── iTask.interface.ts
+    │   │   └── iUser.interface.ts
+    │   └── models
+    │       ├── task.model.ts
+    │       └── user.model.ts
+    └── resources
+        ├── taskValidationMessages.ts
+        ├── userValidationMessages.ts
+        └── validationRegExp.ts
+```
+
+- **persistence**:
+  - User repository [✔],
+  - Task repository [✔]
+
+The directories and files included in the unit tests of the persistence layer are:
+
+```text
+└── src
+    ├── domain
+    │   ├── enums
+    │   │   ├── role.enum.ts
+    │   │   └── status.enum.ts
+    │   ├── interfaces
+    │   │   ├── iTask.interface.ts
+    │   │   └── iUser.interface.ts
+    │   └── models
+    │       ├── task.model.ts
+    │       └── user.model.ts
+    └── persistence
+        ├── task.repository.ts
+        └── user.repository.ts
+```
+
+- **service**:
+  - [Under development]
+- **presentation**:
+  - [Under development]
 
 ### Integration tests
 
