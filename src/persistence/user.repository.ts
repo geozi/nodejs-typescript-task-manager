@@ -1,6 +1,14 @@
 /**
  * User repository.
+ *
  * @module src/persistence/user
+ * @async @function getUsers
+ * @async @function getUsersByRole
+ * @async @function getUserByEmail
+ * @async @function getUserByUsername
+ * @async @function addUser
+ * @async @function updateUserInfo
+ * @async @function deleteUserInfo
  */
 import mongoose from "mongoose";
 import User from "../domain/models/user.model";
@@ -10,8 +18,7 @@ import IUser from "../domain/interfaces/iUser.interface";
  * Returns all users persisted in the 'users' collection.
  *
  * @memberof module:src/persistence/user
- * @async
- * @function getUsers
+ * @async @function getUsers
  * @returns {Promise<Array<Object>>} - A promise that resolves to an array of user objects.
  */
 const getUsers = async () => {
@@ -22,8 +29,7 @@ const getUsers = async () => {
  * Returns all users having the specified role.
  *
  * @memberof module:src/persistence/user
- * @async
- * @function getUsersByRole
+ * @async @function getUsersByRole
  * @param {string} role - The role designated to a user profile.
  * @returns {Promise<Array<Object>>} - A promise that resolves to an array of user objects.
  */
@@ -35,8 +41,7 @@ const getUsersByRole = async (role: string) => {
  * Returns the user with the specified username.
  *
  * @memberof module:src/persistence/user
- * @async
- * @function getUserByUsername
+ * @async @function getUserByUsername
  * @param {string} username - The username of the user.
  * @returns {Promise<Object>} - A promise that resolves to a user object.
  */
@@ -48,8 +53,7 @@ const getUserByUsername = async (username: string) => {
  * Returns the user with the specified email.
  *
  * @memberof module:src/persistence/user
- * @async
- * @function getUserByEmail
+ * @async @function getUserByEmail
  * @param {string} email  - The email of the user.
  * @returns {Promise<Object>} - A promise that resolves to a user object.
  */
@@ -61,8 +65,7 @@ const getUserByEmail = async (email: string) => {
  * Adds a new user to the 'users' collection.
  *
  * @memberof module:src/persistence/user
- * @async
- * @function addUser
+ * @async @function addUser
  * @param {IUser} newUser - The new user to be added.
  * @returns {Promise<Object>} - A promise that resolves to the saved document in the form of a user object.
  */
@@ -74,8 +77,7 @@ const addUser = async (newUser: IUser) => {
  * Updates the information of a specified user.
  *
  * @memberof module:src/persistence/user
- * @async
- * @function updateUserInfo
+ * @async @function updateUserInfo
  * @param {mongoose.Types.ObjectId} id - The id of the user document.
  * @param {object} updateDataObj - The new data to be persisted.
  * @returns {Promise<Object>} - A promise that resolves to the user object after update.
@@ -95,8 +97,7 @@ const updateUserInfo = async (
  * Deletes the information of a specified user.
  *
  * @memberof module:src/persistence/user
- * @async
- * @function deleteUserInfo
+ * @async @function deleteUserInfo
  * @param {mongoose.Types.ObjectId} id - The id of the user document.
  * @returns {Promise<Object>} - A promise that resolves to the deleted document in the form of a user object.
  */

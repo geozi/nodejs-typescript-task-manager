@@ -1,6 +1,14 @@
 /**
  * Task repository.
+ *
  * @module src/persistence/task
+ * @async @function getTasks
+ * @async @function getTasksByStatus
+ * @async @function getTasksByUsername
+ * @async @function getTaskBySubject
+ * @async @function addTask
+ * @async @function updateTask
+ * @async @function deleteTask
  */
 import mongoose from "mongoose";
 import Task from "../domain/models/task.model";
@@ -10,8 +18,7 @@ import ITask from "../domain/interfaces/iTask.interface";
  * Returns all tasks persisted in the 'tasks' collection.
  *
  * @memberof module:src/persistence/task
- * @async
- * @function getTasks
+ * @async @function getTasks
  * @returns {Promise<Array<Object>>} - A promise that resolves to an array of task objects.
  */
 const getTasks = async () => {
@@ -22,8 +29,7 @@ const getTasks = async () => {
  * Returns all tasks with the specified status.
  *
  * @memberof module:src/persistence/task
- * @async
- * @function getTasksByStatus
+ * @async @function getTasksByStatus
  * @param {string} status - The current status of the task.
  * @returns {Promise<Array<Object>>} - A promise that resolves to an array of task objects.
  */
@@ -35,8 +41,7 @@ const getTasksByStatus = async (status: string) => {
  * Returns all tasks with the specified username.
  *
  * @memberof module:src/persistence/task
- * @async
- * @function getTasksByUsername
+ * @async @function getTasksByUsername
  * @param {string} username - The username of the task author.
  * @returns {Promise<Array<Object>>} - A promise that resolves to an array of task objects.
  */
@@ -48,8 +53,7 @@ const getTasksByUsername = async (username: string) => {
  * Returns the task with the specified subject.
  *
  * @memberof module:src/persistence/task
- * @async
- * @function getTaskBySubject
+ * @async @function getTaskBySubject
  * @param {string} subject - The subject of the task.
  * @returns {Promise<Object>} - A promise that resolves to a task object.
  */
@@ -61,8 +65,7 @@ const getTaskBySubject = async (subject: string) => {
  * Adds a new task to the 'tasks' collection.
  *
  * @memberof module:src/persistence/task
- * @async
- * @function addTask
+ * @async @function addTask
  * @param {ITask} newTask - The new task to be added.
  * @returns {Promise<Object>} - A promise that resolves to the saved document in the form of a task object.
  */
@@ -74,8 +77,7 @@ const addTask = async (newTask: ITask) => {
  * Updates the fields of a specified task.
  *
  * @memberof module:src/persistence/task
- * @async
- * @function updateTask
+ * @async @function updateTask
  * @param {mongoose.Types.ObjectId} id - The id of the task document.
  * @param updateDataObj - The new data to be persisted.
  * @returns {Promise<Object>} - A promise that resolves to the task object after update.
@@ -95,8 +97,7 @@ const updateTask = async (
  * Deletes a task.
  *
  * @memberof module:src/persistence/task
- * @async
- * @function
+ * @async @function
  * @param {mongoose.Types.ObjectId} id - The id of the task document.
  * @returns {Promise<Object>} - A promise that resolves to the deleted document in the form of a user object.
  */
