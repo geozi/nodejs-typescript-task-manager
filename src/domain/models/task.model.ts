@@ -14,10 +14,10 @@ import userFailedValidation from "../domainResources/userValidationMessages";
  *
  * @memberof module:src/models/task
  * @type {Schema<ITask>}
- * @property {string} subject - The subject of the task.
- * @property {string} description - The description of the task.
- * @property {string} status - The status of the task.
- * @property {string} username - The username of the task.
+ * @property {string} subject The subject of the task.
+ * @property {string} description The description of the task.
+ * @property {string} status The status of the task.
+ * @property {string} username The username of the task.
  */
 const taskSchema = new Schema<ITask>(
   {

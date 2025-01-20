@@ -19,7 +19,7 @@ import ITask from "../domain/interfaces/iTask.interface";
  *
  * @memberof module:src/persistence/task
  * @async @function getTasks
- * @returns {Promise<Array<ITask>>} - A promise that resolves to an array of task objects or an empty array.
+ * @returns {Promise<Array<ITask>>} A promise that resolves to an array of task objects or an empty array.
  */
 const getTasks = async (): Promise<Array<ITask>> => {
   return await Task.find({});
@@ -30,8 +30,8 @@ const getTasks = async (): Promise<Array<ITask>> => {
  *
  * @memberof module:src/persistence/task
  * @async @function getTasksByStatus
- * @param {string} status - The current status of the task.
- * @returns {Promise<Array<ITask>>} - A promise that resolves to an array of task objects or an empty array.
+ * @param {string} status The current status of the task.
+ * @returns {Promise<Array<ITask>>} A promise that resolves to an array of task objects or an empty array.
  */
 const getTasksByStatus = async (status: string): Promise<Array<ITask>> => {
   return await Task.find({ status: status });
@@ -42,8 +42,8 @@ const getTasksByStatus = async (status: string): Promise<Array<ITask>> => {
  *
  * @memberof module:src/persistence/task
  * @async @function getTasksByUsername
- * @param {string} username - The username of the task author.
- * @returns {Promise<Array<ITask>>} - A promise that resolves to an array of task objects or an empty array.
+ * @param {string} username The username of the task author.
+ * @returns {Promise<Array<ITask>>} A promise that resolves to an array of task objects or an empty array.
  */
 const getTasksByUsername = async (username: string): Promise<Array<ITask>> => {
   return await Task.find({ username: username });
@@ -54,8 +54,8 @@ const getTasksByUsername = async (username: string): Promise<Array<ITask>> => {
  *
  * @memberof module:src/persistence/task
  * @async @function getTaskBySubject
- * @param {string} subject - The subject of the task.
- * @returns {Promise<ITask | null>} - A promise that resolves to a task object or null.
+ * @param {string} subject The subject of the task.
+ * @returns {Promise<ITask | null>} A promise that resolves to a task object or null.
  */
 const getTaskBySubject = async (subject: string): Promise<ITask | null> => {
   return await Task.findOne({ subject: subject });
@@ -66,8 +66,8 @@ const getTaskBySubject = async (subject: string): Promise<ITask | null> => {
  *
  * @memberof module:src/persistence/task
  * @async @function addTask
- * @param {ITask} newTask - The new task to be added.
- * @returns {Promise<ITask>} - A promise that resolves to the saved document in the form of a task object.
+ * @param {ITask} newTask The new task to be added.
+ * @returns {Promise<ITask>} A promise that resolves to the saved document in the form of a task object.
  */
 const addTask = async (newTask: ITask) => {
   return await newTask.save();
@@ -78,9 +78,9 @@ const addTask = async (newTask: ITask) => {
  *
  * @memberof module:src/persistence/task
  * @async @function updateTask
- * @param {mongoose.Types.ObjectId} id - The id of the task document.
- * @param updateDataObj - The new data to be persisted.
- * @returns {Promise<ITask | null>} - A promise that resolves to the task object after update or null.
+ * @param {mongoose.Types.ObjectId} id The id of the task document.
+ * @param updateDataObj The new data to be persisted.
+ * @returns {Promise<ITask | null>} A promise that resolves to the task object after update or null.
  */
 const updateTask = async (
   id: mongoose.Types.ObjectId,
@@ -98,8 +98,8 @@ const updateTask = async (
  *
  * @memberof module:src/persistence/task
  * @async @function
- * @param {mongoose.Types.ObjectId} id - The id of the task document.
- * @returns {Promise<ITask | null>} - A promise that resolves to the deleted document in the form of a user object or null.
+ * @param {mongoose.Types.ObjectId} id The id of the task document.
+ * @returns {Promise<ITask | null>} A promise that resolves to the deleted document in the form of a user object or null.
  */
 const deleteTask = async (
   id: mongoose.Types.ObjectId

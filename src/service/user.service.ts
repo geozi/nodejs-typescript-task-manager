@@ -1,3 +1,16 @@
+/**
+ * User service.
+ *
+ * @module src/service/user
+ * @async @function retrieveAllUsers
+ * @async @function retrieveUsersByRole
+ * @async @function retrieveUserByEmail
+ * @async @function retrieveUserByUsername
+ * @async @function createUserProfile
+ * @async @function updateProfileAsGeneralUser
+ * @async @function updateProfileAsAdminUser
+ * @async @function deleteUserProfile
+ */
 import mongoose from "mongoose";
 import IUser from "../domain/interfaces/iUser.interface";
 import userRepository from "../persistence/user.repository";
@@ -8,6 +21,13 @@ import serviceResponses from "./serviceResources/serviceResponses";
 import bcrypt from "bcryptjs";
 import IUserUpdateAdmin from "../presentation/interfaces/iUserUpdateAdmin.interface";
 
+/**
+ * Calls on the persistence layer to retrieve all users from the 'users' collection.
+ *
+ * @memberof module:src/service/user
+ * @async @function retrieveAllUsers
+ * @returns {Promise<Array<IUser>>} A promise that resolves to an array of user objects or an empty array.
+ */
 const retrieveAllUsers = async (): Promise<Array<IUser>> => {
   try {
     const users = userRepository.getUsers();
@@ -18,6 +38,14 @@ const retrieveAllUsers = async (): Promise<Array<IUser>> => {
   }
 };
 
+/**
+ * Calls on the persistence layer to retrieve all users having the specified role.
+ *
+ * @memberof module:src/service/user
+ * @async @function retrieveUsersByRole
+ * @param {string} role The role assigned to each user profile.
+ * @returns {Promise<Array<IUser>>} A promise that resolves to an array of user objects or an empty array.
+ */
 const retrieveUsersByRole = async (role: string): Promise<Array<IUser>> => {
   try {
     const users = await userRepository.getUsersByRole(role);
@@ -34,6 +62,14 @@ const retrieveUsersByRole = async (role: string): Promise<Array<IUser>> => {
   }
 };
 
+/**
+ * Calls on the persistence layer to retrieve the user with the specified username.
+ *
+ * @memberof module:src/service/user
+ * @async @function retrieveUserByUsername
+ * @param {string} username The username of the user.
+ * @returns {Promise<IUser | null>} A promise that resolves to a user object or null.
+ */
 const retrieveUserByUsername = async (
   username: string
 ): Promise<IUser | null> => {
@@ -53,6 +89,14 @@ const retrieveUserByUsername = async (
   }
 };
 
+/**
+ * Calls on the persistence layer to retrieve the user with the specified email.
+ *
+ * @memberof module:src/service/user
+ * @async @function retrieveUserByEmail
+ * @param {string} email The email of the user.
+ * @returns {Promise<IUser | null>} A promise that resolves to a user object or null.
+ */
 const retrieveUserByEmail = async (email: string): Promise<IUser | null> => {
   try {
     const user = await userRepository.getUserByEmail(email);
@@ -70,6 +114,14 @@ const retrieveUserByEmail = async (email: string): Promise<IUser | null> => {
   }
 };
 
+/**
+ * Calls on the persistence layer to add a new user to the database.
+ *
+ * @memberof module:src/service/user
+ * @async @function createUserProfile
+ * @param {IUser} newUser A new user object.
+ * @returns {Promise<IUser>} A promise that resolves to the saved user object.
+ */
 const createUserProfile = async (newUser: IUser): Promise<IUser> => {
   try {
     const savedUser = await userRepository.addUser(newUser);
@@ -81,6 +133,15 @@ const createUserProfile = async (newUser: IUser): Promise<IUser> => {
   }
 };
 
+/**
+ * Calls on the persistence layer to update a user profile (as general).
+ *
+ * @memberof module:src/service/user
+ * @async @function updateProfileAsGeneralUser
+ * @description The user using this function must be logged in as a general user.
+ * @param {IUserUpdateGeneral} userUpdateInfo A custom type object containing the information to be updated in a user profile.
+ * @returns {Promise<IUser | null>} A promise that resolves to the updated user object or null.
+ */
 const updateProfileAsGeneralUser = async (
   userUpdateInfo: IUserUpdateGeneral
 ): Promise<IUser | null> => {
@@ -122,6 +183,15 @@ const updateProfileAsGeneralUser = async (
   }
 };
 
+/**
+ * Calls on the persistence layer to update a user profile (as admin).
+ *
+ * @memberof module:src/service/user
+ * @async @function updateProfileAsAdminUser
+ * @description The user using this function must be logged in as an admin user.
+ * @param {IUserUpdateAdmin} userUpdateInfo A custom type object containing the information to be updated in a user profile.
+ * @returns {Promise<IUser | null>} A promise that resolves to the updated user object or null.
+ */
 const updateProfileAsAdminUser = async (
   userUpdateInfo: IUserUpdateAdmin
 ): Promise<IUser | null> => {
@@ -151,6 +221,14 @@ const updateProfileAsAdminUser = async (
   }
 };
 
+/**
+ * Calls on the persistence layer to delete a user profile.
+ *
+ * @memberof  module:src/service/user
+ * @async @function deleteUserProfile
+ * @param {string} id The id of the user profile.
+ * @returns {Promise<IUser | null>} A promise that resolves to the deleted user object or null.
+ */
 const deleteUserProfile = async (id: string): Promise<IUser | null> => {
   try {
     const idAsObjectId = new mongoose.Types.ObjectId(id);

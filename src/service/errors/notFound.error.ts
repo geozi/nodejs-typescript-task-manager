@@ -15,7 +15,7 @@ class NotFoundError extends Error {
   /**
    * Creates an instance of NotFoundError.
    * @memberof module:src/service/errors/notFound
-   * @param {string} message - The error message.
+   * @param {string} message The error message.
    */
   constructor(message: string) {
     super(message);

@@ -15,7 +15,7 @@ class BadRequestError extends Error {
   /**
    * Creates an instance of BadRequestError.
    * @memberof module:src/presentation/errors/badRequest
-   * @param {string} message - The error message
+   * @param {string} message The error message
    */
   constructor(message: string) {
     super(message);

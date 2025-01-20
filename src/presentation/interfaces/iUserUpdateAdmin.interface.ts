@@ -9,8 +9,8 @@
  * @interface
  * @memberof module:src/presentation/interfaces/iUserUpdateAdmin
  * @description The caller must be logged in as an admin user.
- * @property {string} id - The id of the user document.
- * @property {string} role - The role assigned to the user profile.
+ * @property {string} id The id of the user document.
+ * @property {string} role The role assigned to the user profile.
  */
 interface IUserUpdateAdmin {
   /**

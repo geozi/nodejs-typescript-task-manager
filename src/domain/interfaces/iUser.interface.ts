@@ -10,32 +10,36 @@ import { Document } from "mongoose";
  * @interface
  * @memberof module:src/domain/interfaces/iUser
  * @extends {Document}
- * @property {string} username - The username of the user.
- * @property {string} email - The email of the user.
- * @property {string} password - The password of the user.
- * @property {string} role - The role of the user.
+ * @property {string} username The username of the user.
+ * @property {string} email The email of the user.
+ * @property {string} password The password of the user.
+ * @property {string} role The role of the user.
  */
 interface IUser extends Document {
   /**
    * The username of the user.
+   * @memberof module:src/domain/interfaces/iUser
    * @type {string}
    */
   username: string;
 
   /**
    * The email of the user.
+   * @memberof module:src/domain/interfaces/iUser
    * @type {string}
    */
   email: string;
 
   /**
    * The password of the user.
+   * @memberof module:src/domain/interfaces/iUser
    * @type {string}
    */
   password: string;
 
   /**
    * The role of the user.
+   * @memberof module:src/domain/interfaces/iUser
    * @type {string}
    */
   role: string;

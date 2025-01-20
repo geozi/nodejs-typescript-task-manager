@@ -8,12 +8,12 @@
  *
  * @memberof module:src/domainResources/taskValidationMessages
  * @type {Object}
- * @property {string} SUBJECT_REQUIRED - Message sent when no subject is provided.
- * @property {string} SUBJECT_MAX_LENGTH - Message sent when the provided subject is too long.
- * @property {string} SUBJECT_MIN_LENGTH - Message sent when the provided subject is too short.
- * @property {string} DESCRIPTION_MAX_LENGTH - Message sent when the provided description is too long.
- * @property {string} STATUS_REQUIRED - Message sent when no status is provided.
- * @property {string} STATUS_INVALID - Message sent when the provided status does not match the standard categories.
+ * @property {string} SUBJECT_REQUIRED Message sent when no subject is provided.
+ * @property {string} SUBJECT_MAX_LENGTH Message sent when the provided subject is too long.
+ * @property {string} SUBJECT_MIN_LENGTH Message sent when the provided subject is too short.
+ * @property {string} DESCRIPTION_MAX_LENGTH Message sent when the provided description is too long.
+ * @property {string} STATUS_REQUIRED Message sent when no status is provided.
+ * @property {string} STATUS_INVALID Message sent when the provided status does not match the standard categories.
  */
 const taskFailedValidation = {
   /**
