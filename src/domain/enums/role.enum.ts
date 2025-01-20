@@ -13,14 +13,14 @@
 enum Role {
   /**
    * Represents the 'admin' role.
-   * @memberof module:src/domain/enums/role
+   * @memberof Role
    * @type {string}
    */
   Admin = "Admin",
 
   /**
    * Represents the 'general' role.
-   * @memberof module:src/domain/enums/role
+   * @memberof Role
    * @type {string}
    */
   General = "General",

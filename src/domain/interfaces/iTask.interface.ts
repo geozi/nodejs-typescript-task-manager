@@ -18,28 +18,28 @@ import { Document } from "mongoose";
 interface ITask extends Document {
   /**
    * The subject of the task.
-   * @memberof module:src/domain/interfaces/iTask
+   * @memberof ITask
    * @type {string}
    */
   subject: string;
 
   /**
    * The description of the task.
-   * @memberof module:src/domain/interfaces/iTask
+   * @memberof ITask
    * @type {string}
    */
   description: string;
 
   /**
    * The status of the task.
-   * @memberof module:src/domain/interfaces/iTask
+   * @memberof ITask
    * @type {string}
    */
   status: string;
 
   /**
    * The username of the task.
-   * @memberof module:src/domain/interfaces/iTask
+   * @memberof ITask
    * @type {string}
    */
   username: string;

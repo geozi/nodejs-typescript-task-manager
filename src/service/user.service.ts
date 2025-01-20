@@ -17,7 +17,8 @@ import userRepository from "../persistence/user.repository";
 import IUserUpdateGeneral from "../presentation/interfaces/iUserUpdateGeneral.interface";
 import NotFoundError from "./errors/notFound.error";
 import ServerError from "./errors/server.error";
-import serviceResponses from "./serviceResources/serviceResponses";
+import userServiceResponses from "./serviceResources/userService.response";
+import commonServiceResponses from "./serviceResources/commonService.response";
 import bcrypt from "bcryptjs";
 import IUserUpdateAdmin from "../presentation/interfaces/iUserUpdateAdmin.interface";
 
@@ -27,14 +28,15 @@ import IUserUpdateAdmin from "../presentation/interfaces/iUserUpdateAdmin.interf
  * @memberof module:src/service/user
  * @async @function retrieveAllUsers
  * @returns {Promise<Array<IUser>>} A promise that resolves to an array of user objects or an empty array.
+ * @throws {ServerError}
  */
 const retrieveAllUsers = async (): Promise<Array<IUser>> => {
   try {
-    const users = userRepository.getUsers();
-    return users;
+    return await userRepository.getUsers();
+
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
-    throw new ServerError(serviceResponses.SERVER_ERROR);
+    throw new ServerError(commonServiceResponses.SERVER_ERROR);
   }
 };
 
@@ -44,13 +46,14 @@ const retrieveAllUsers = async (): Promise<Array<IUser>> => {
  * @memberof module:src/service/user
  * @async @function retrieveUsersByRole
  * @param {string} role The role assigned to each user profile.
- * @returns {Promise<Array<IUser>>} A promise that resolves to an array of user objects or an empty array.
+ * @returns {Promise<Array<IUser>>} A promise that resolves to an array of user objects.
+ * @throws {NotFoundError | ServerError}
  */
 const retrieveUsersByRole = async (role: string): Promise<Array<IUser>> => {
   try {
     const users = await userRepository.getUsersByRole(role);
     if (users.length === 0) {
-      throw new NotFoundError(serviceResponses.USERS_NOT_FOUND);
+      throw new NotFoundError(userServiceResponses.USERS_NOT_FOUND);
     }
     return users;
   } catch (error) {
@@ -58,7 +61,7 @@ const retrieveUsersByRole = async (role: string): Promise<Array<IUser>> => {
       throw error;
     }
 
-    throw new ServerError(serviceResponses.SERVER_ERROR);
+    throw new ServerError(commonServiceResponses.SERVER_ERROR);
   }
 };
 
@@ -68,15 +71,14 @@ const retrieveUsersByRole = async (role: string): Promise<Array<IUser>> => {
  * @memberof module:src/service/user
  * @async @function retrieveUserByUsername
  * @param {string} username The username of the user.
- * @returns {Promise<IUser | null>} A promise that resolves to a user object or null.
+ * @returns {Promise<IUser>} A promise that resolves to a user object.
+ * @throws {NotFoundError | ServerError}
  */
-const retrieveUserByUsername = async (
-  username: string
-): Promise<IUser | null> => {
+const retrieveUserByUsername = async (username: string): Promise<IUser> => {
   try {
     const user = await userRepository.getUserByUsername(username);
     if (user === null) {
-      throw new NotFoundError(serviceResponses.USER_NOT_FOUND);
+      throw new NotFoundError(userServiceResponses.USER_NOT_FOUND);
     }
 
     return user;
@@ -85,7 +87,7 @@ const retrieveUserByUsername = async (
       throw error;
     }
 
-    throw new ServerError(serviceResponses.SERVER_ERROR);
+    throw new ServerError(commonServiceResponses.SERVER_ERROR);
   }
 };
 
@@ -95,13 +97,14 @@ const retrieveUserByUsername = async (
  * @memberof module:src/service/user
  * @async @function retrieveUserByEmail
  * @param {string} email The email of the user.
- * @returns {Promise<IUser | null>} A promise that resolves to a user object or null.
+ * @returns {Promise<IUser>} A promise that resolves to a user object.
+ * @throws {NotFoundError | ServerError}
  */
-const retrieveUserByEmail = async (email: string): Promise<IUser | null> => {
+const retrieveUserByEmail = async (email: string): Promise<IUser> => {
   try {
     const user = await userRepository.getUserByEmail(email);
     if (user === null) {
-      throw new NotFoundError(serviceResponses.USER_NOT_FOUND);
+      throw new NotFoundError(userServiceResponses.USER_NOT_FOUND);
     }
 
     return user;
@@ -110,7 +113,7 @@ const retrieveUserByEmail = async (email: string): Promise<IUser | null> => {
       throw error;
     }
 
-    throw new ServerError(serviceResponses.SERVER_ERROR);
+    throw new ServerError(commonServiceResponses.SERVER_ERROR);
   }
 };
 
@@ -119,17 +122,17 @@ const retrieveUserByEmail = async (email: string): Promise<IUser | null> => {
  *
  * @memberof module:src/service/user
  * @async @function createUserProfile
- * @param {IUser} newUser A new user object.
- * @returns {Promise<IUser>} A promise that resolves to the saved user object.
+ * @param {IUser} newUser The new user profile to be created.
+ * @returns {Promise<IUser>} A promise that resolves to the newly saved user object.
+ * @throws {ServerError}
  */
 const createUserProfile = async (newUser: IUser): Promise<IUser> => {
   try {
-    const savedUser = await userRepository.addUser(newUser);
-    return savedUser;
+    return await userRepository.addUser(newUser);
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
-    throw new ServerError(serviceResponses.SERVER_ERROR);
+    throw new ServerError(commonServiceResponses.SERVER_ERROR);
   }
 };
 
@@ -140,11 +143,12 @@ const createUserProfile = async (newUser: IUser): Promise<IUser> => {
  * @async @function updateProfileAsGeneralUser
  * @description The user using this function must be logged in as a general user.
  * @param {IUserUpdateGeneral} userUpdateInfo A custom type object containing the information to be updated in a user profile.
- * @returns {Promise<IUser | null>} A promise that resolves to the updated user object or null.
+ * @returns {Promise<IUser>} A promise that resolves to the updated user object.
+ * @throws {NotFoundError | ServerError}
  */
 const updateProfileAsGeneralUser = async (
   userUpdateInfo: IUserUpdateGeneral
-): Promise<IUser | null> => {
+): Promise<IUser> => {
   try {
     const { id, username, email, password } = userUpdateInfo;
     const idAsObjectId = new mongoose.Types.ObjectId(id);
@@ -170,7 +174,7 @@ const updateProfileAsGeneralUser = async (
     );
 
     if (updatedUserProfile === null) {
-      throw new NotFoundError(serviceResponses.USER_NOT_FOUND);
+      throw new NotFoundError(userServiceResponses.USER_NOT_FOUND);
     }
 
     return updatedUserProfile;
@@ -179,22 +183,23 @@ const updateProfileAsGeneralUser = async (
       throw error;
     }
 
-    throw new ServerError(serviceResponses.SERVER_ERROR);
+    throw new ServerError(commonServiceResponses.SERVER_ERROR);
   }
 };
 
 /**
- * Calls on the persistence layer to update a user profile (as admin).
+ * Calls on the persistence layer to update a user profile (as an admin user).
  *
  * @memberof module:src/service/user
  * @async @function updateProfileAsAdminUser
  * @description The user using this function must be logged in as an admin user.
- * @param {IUserUpdateAdmin} userUpdateInfo A custom type object containing the information to be updated in a user profile.
- * @returns {Promise<IUser | null>} A promise that resolves to the updated user object or null.
+ * @param {IUserUpdateAdmin} userUpdateInfo A custom type object containing the new information to be added to an existing a user profile.
+ * @returns {Promise<IUser>} A promise that resolves to the updated user object.
+ * @throws {NotFoundError | ServerError}
  */
 const updateProfileAsAdminUser = async (
   userUpdateInfo: IUserUpdateAdmin
-): Promise<IUser | null> => {
+): Promise<IUser> => {
   try {
     const { id, role } = userUpdateInfo;
     const idAsObjectId = new mongoose.Types.ObjectId(id);
@@ -208,7 +213,7 @@ const updateProfileAsAdminUser = async (
     );
 
     if (updatedUserProfile === null) {
-      throw new NotFoundError(serviceResponses.USER_NOT_FOUND);
+      throw new NotFoundError(userServiceResponses.USER_NOT_FOUND);
     }
 
     return updatedUserProfile;
@@ -217,7 +222,7 @@ const updateProfileAsAdminUser = async (
       throw error;
     }
 
-    throw new ServerError(serviceResponses.SERVER_ERROR);
+    throw new ServerError(commonServiceResponses.SERVER_ERROR);
   }
 };
 
@@ -227,9 +232,10 @@ const updateProfileAsAdminUser = async (
  * @memberof  module:src/service/user
  * @async @function deleteUserProfile
  * @param {string} id The id of the user profile.
- * @returns {Promise<IUser | null>} A promise that resolves to the deleted user object or null.
+ * @returns {Promise<IUser>} A promise that resolves to the deleted user object.
+ * @throws {NotFoundError | ServerError}
  */
-const deleteUserProfile = async (id: string): Promise<IUser | null> => {
+const deleteUserProfile = async (id: string): Promise<IUser> => {
   try {
     const idAsObjectId = new mongoose.Types.ObjectId(id);
     const deletedUserProfile = await userRepository.deleteUserInfo(
@@ -237,7 +243,7 @@ const deleteUserProfile = async (id: string): Promise<IUser | null> => {
     );
 
     if (deletedUserProfile === null) {
-      throw new NotFoundError(serviceResponses.USER_NOT_FOUND);
+      throw new NotFoundError(userServiceResponses.USER_NOT_FOUND);
     }
 
     return deletedUserProfile;
@@ -246,7 +252,7 @@ const deleteUserProfile = async (id: string): Promise<IUser | null> => {
       throw error;
     }
 
-    throw new ServerError(serviceResponses.USER_NOT_FOUND);
+    throw new ServerError(userServiceResponses.USER_NOT_FOUND);
   }
 };
 

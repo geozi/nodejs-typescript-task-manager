@@ -14,7 +14,7 @@ class ServerError extends Error {
 
   /**
    * Creates an instance of ServerError.
-   * @memberof module:src/service/errors/server
+   * @memberof ServerError
    * @param {string} message The error message
    */
   constructor(message: string) {

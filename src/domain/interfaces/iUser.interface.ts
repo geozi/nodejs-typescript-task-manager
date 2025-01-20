@@ -18,28 +18,28 @@ import { Document } from "mongoose";
 interface IUser extends Document {
   /**
    * The username of the user.
-   * @memberof module:src/domain/interfaces/iUser
+   * @memberof IUser
    * @type {string}
    */
   username: string;
 
   /**
    * The email of the user.
-   * @memberof module:src/domain/interfaces/iUser
+   * @memberof IUser
    * @type {string}
    */
   email: string;
 
   /**
    * The password of the user.
-   * @memberof module:src/domain/interfaces/iUser
+   * @memberof IUser
    * @type {string}
    */
   password: string;
 
   /**
    * The role of the user.
-   * @memberof module:src/domain/interfaces/iUser
+   * @memberof IUser
    * @type {string}
    */
   role: string;

@@ -79,7 +79,7 @@ const addUser = async (newUser: IUser): Promise<IUser> => {
  * @memberof module:src/persistence/user
  * @async @function updateUserInfo
  * @param {mongoose.Types.ObjectId} id The id of the user document.
- * @param {object} updateDataObj The new data to be persisted.
+ * @param {Object} updateDataObj The new data to be persisted.
  * @returns {Promise<IUser | null>} A promise that resolves to the user object after update or null.
  */
 const updateUserInfo = async (

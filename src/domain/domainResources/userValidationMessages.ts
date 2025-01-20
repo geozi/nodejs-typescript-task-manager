@@ -8,70 +8,70 @@
  *
  * @memberof module:src/domainResources/userValidationMessages
  * @type {Object}
- * @property {string} USERNAME_REQUIRED Message sent when no username is provided.
- * @property {string} USERNAME_MAX_LENGTH Message sent when the provided username is too long.
- * @property {string} USERNAME_MIN_LENGTH Message sent when the provided username is too short.
- * @property {string} EMAIL_REQUIRED Message sent when no email is provided.
- * @property {string} EMAIL_INVALID Message sent when the provided email is not a valid email address.
- * @property {string} PASSWORD_REQUIRED Message sent when no password is provided.
- * @property {string} PASSWORD_MIN_LENGTH Message sent when the provided password is too short.
- * @property {string} PASSWORD_MUST_HAVE_CHARACTERS Message sent when the provided password is invalid.
- * @property {string} ROLE_REQUIRED Message sent when no role is provided.
- * @property {string} ROLE_INVALID Message sent when the provided role does not much the standard categories.
+ * @property {string} USERNAME_REQUIRED - Message sent when no username is provided.
+ * @property {string} USERNAME_MAX_LENGTH - Message sent when the provided username is too long.
+ * @property {string} USERNAME_MIN_LENGTH - Message sent when the provided username is too short.
+ * @property {string} EMAIL_REQUIRED - Message sent when no email is provided.
+ * @property {string} EMAIL_INVALID - Message sent when the provided email is not a valid email address.
+ * @property {string} PASSWORD_REQUIRED - Message sent when no password is provided.
+ * @property {string} PASSWORD_MIN_LENGTH - Message sent when the provided password is too short.
+ * @property {string} PASSWORD_MUST_HAVE_CHARACTERS - Message sent when the provided password is invalid.
+ * @property {string} ROLE_REQUIRED - Message sent when no role is provided.
+ * @property {string} ROLE_INVALID - Message sent when the provided role does not much the standard categories.
  */
 const userFailedValidation = {
   /**
    * Message sent when no username is provided.
-   * @memberof module:src/domainResources/userValidationMessages
+   * @memberof userFailedValidation
    * @type {string}
    */
   USERNAME_REQUIRED: "Username is a required field",
 
   /**
    * Message sent when the provided username is too long.
-   * @memberof module:src/domainResources/userValidationMessages
+   * @memberof userFailedValidation
    * @type {string}
    */
   USERNAME_MAX_LENGTH: "Username must be no longer than 20 characters",
 
   /**
    * Message sent when the provided username is too short.
-   * @memberof module:src/domainResources/userValidationMessages
+   * @memberof userFailedValidation
    * @type {string}
    */
   USERNAME_MIN_LENGTH: "Username must be at least 3 characters long",
 
   /**
    * Message sent when no email is provided.
-   * @memberof module:src/domainResources/userValidationMessages
+   * @memberof userFailedValidation
    * @type {string}
    */
   EMAIL_REQUIRED: "Email is a required field",
 
   /**
    * Message sent when the provided email is not a valid email address.
-   * @memberof module:src/domainResources/userValidationMessages
+   * @memberof userFailedValidation
    * @type {string}
    */
   EMAIL_INVALID: "Invalid email address",
 
   /**
    * Message sent when no password is provided.
-   * @memberof module:src/domainResources/userValidationMessages
+   * @memberof userFailedValidation
    * @type {string}
    */
   PASSWORD_REQUIRED: "Password is a required field",
 
   /**
    * Message sent when the provided password is too short.
-   * @memberof module:src/domainResources/userValidationMessages
+   * @memberof userFailedValidation
    * @type {string}
    */
   PASSWORD_MIN_LENGTH: "Password must be at least 7 characters long",
 
   /**
    * Message sent when the provided password is invalid.
-   * @memberof module:src/domainResources/userValidationMessages
+   * @memberof userFailedValidation
    * @type {string}
    */
   PASSWORD_MUST_HAVE_CHARACTERS: `
@@ -84,14 +84,14 @@ const userFailedValidation = {
 
   /**
    * Message sent when no role is provided.
-   * @memberof module:src/domainResources/userValidationMessages
+   * @memberof userFailedValidation
    * @type {string}
    */
   ROLE_REQUIRED: "Role is a required field",
 
   /**
    * Message sent when the provided role does not much the standard categories.
-   * @memberof module:src/domainResources/userValidationMessages
+   * @memberof userFailedValidation
    * @type {string}
    */
   ROLE_INVALID: `

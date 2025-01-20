@@ -79,7 +79,7 @@ const addTask = async (newTask: ITask) => {
  * @memberof module:src/persistence/task
  * @async @function updateTask
  * @param {mongoose.Types.ObjectId} id The id of the task document.
- * @param updateDataObj The new data to be persisted.
+ * @param {Object} updateDataObj The new data to be persisted.
  * @returns {Promise<ITask | null>} A promise that resolves to the task object after update or null.
  */
 const updateTask = async (

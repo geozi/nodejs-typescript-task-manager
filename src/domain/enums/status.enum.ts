@@ -13,14 +13,14 @@
 enum Status {
   /**
    * Represents the 'Pending' status category.
-   * @memberof module:src/domain/enums/status
+   * @memberof Status
    * @type {string}
    */
   Pending = "Pending",
 
   /**
    * Represents the 'Complete' status category.
-   * @memberof module:src/domain/enums/status
+   * @memberof Status
    * @type {string}
    */
   Complete = "Complete",
