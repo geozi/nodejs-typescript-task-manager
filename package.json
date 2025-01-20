@@ -19,6 +19,8 @@
   "author": "geozi",
   "license": "ISC",
   "dependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "bcryptjs": "^2.4.3",
     "mongoose": "^7.8.4",
     "mongoose-unique-validator": "^4.0.1"
   },

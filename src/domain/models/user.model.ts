@@ -5,9 +5,9 @@
 import { Schema, model } from "mongoose";
 import IUser from "../interfaces/iUser.interface";
 import mongooseUniqueValidator from "mongoose-unique-validator";
-import userFailedValidation from "../../resources/userValidationMessages";
+import userFailedValidation from "../domainResources/userValidationMessages";
 import Role from "../enums/role.enum";
-import regularExpressions from "../../resources/validationRegExp";
+import regularExpressions from "../domainResources/validationRegExp";
 
 /**
  * User schema for persistence in MongoDB.

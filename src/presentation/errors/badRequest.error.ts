@@ -1,12 +1,12 @@
 /**
  * BadRequest error.
- * @module src/presentation/errors/BadRequestError
+ * @module src/presentation/errors/badRequest
  */
 
 /**
  * Custom error class for bad HTTP requests (400).
  *
- * @memberof module:src/presentation/errors/BadRequestError
+ * @memberof module:src/presentation/errors/badRequest
  * @extends {Error}
  */
 class BadRequestError extends Error {
@@ -14,7 +14,7 @@ class BadRequestError extends Error {
 
   /**
    * Creates an instance of BadRequestError.
-   * @memberof module:src/presentation/errors/BadRequestError
+   * @memberof module:src/presentation/errors/badRequest
    * @param {string} message - The error message
    */
   constructor(message: string) {

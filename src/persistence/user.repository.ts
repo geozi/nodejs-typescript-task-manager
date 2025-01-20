@@ -19,7 +19,7 @@ import IUser from "../domain/interfaces/iUser.interface";
  *
  * @memberof module:src/persistence/user
  * @async @function getUsers
- * @returns {Promise<Array<IUser>>} - A promise that resolves to an array of user objects.
+ * @returns {Promise<Array<IUser>>} - A promise that resolves to an array of user objects or an empty array.
  */
 const getUsers = async (): Promise<Array<IUser>> => {
   return await User.find({});
@@ -31,9 +31,9 @@ const getUsers = async (): Promise<Array<IUser>> => {
  * @memberof module:src/persistence/user
  * @async @function getUsersByRole
  * @param {string} role - The role designated to a user profile.
- * @returns {Promise<Array<IUser>>} - A promise that resolves to an array of user objects.
+ * @returns {Promise<Array<IUser>>} - A promise that resolves to an array of user objects or an empty array.
  */
-const getUsersByRole = async (role: string) => {
+const getUsersByRole = async (role: string): Promise<Array<IUser>> => {
   return await User.find({ role: role });
 };
 
@@ -43,9 +43,9 @@ const getUsersByRole = async (role: string) => {
  * @memberof module:src/persistence/user
  * @async @function getUserByUsername
  * @param {string} username - The username of the user.
- * @returns {Promise<IUser>} - A promise that resolves to a user object.
+ * @returns {Promise<IUser | null>} - A promise that resolves to a user object or null.
  */
-const getUserByUsername = async (username: string) => {
+const getUserByUsername = async (username: string): Promise<IUser | null> => {
   return await User.findOne({ username: username });
 };
 
@@ -55,9 +55,9 @@ const getUserByUsername = async (username: string) => {
  * @memberof module:src/persistence/user
  * @async @function getUserByEmail
  * @param {string} email  - The email of the user.
- * @returns {Promise<IUser>} - A promise that resolves to a user object.
+ * @returns {Promise<IUser | null>} - A promise that resolves to a user object or null.
  */
-const getUserByEmail = async (email: string) => {
+const getUserByEmail = async (email: string): Promise<IUser | null> => {
   return await User.findOne({ email: email });
 };
 
@@ -80,12 +80,12 @@ const addUser = async (newUser: IUser): Promise<IUser> => {
  * @async @function updateUserInfo
  * @param {mongoose.Types.ObjectId} id - The id of the user document.
  * @param {object} updateDataObj - The new data to be persisted.
- * @returns {Promise<IUser>} - A promise that resolves to the user object after update.
+ * @returns {Promise<IUser | null>} - A promise that resolves to the user object after update or null.
  */
 const updateUserInfo = async (
   id: mongoose.Types.ObjectId,
   updateDataObj: object
-) => {
+): Promise<IUser | null> => {
   return await User.findByIdAndUpdate(id, updateDataObj, {
     new: true,
     runValidators: true,
@@ -99,9 +99,11 @@ const updateUserInfo = async (
  * @memberof module:src/persistence/user
  * @async @function deleteUserInfo
  * @param {mongoose.Types.ObjectId} id - The id of the user document.
- * @returns {Promise<IUser>} - A promise that resolves to the deleted document in the form of a user object.
+ * @returns {Promise<IUser | null>} - A promise that resolves to the deleted document in the form of a user object or null.
  */
-const deleteUserInfo = async (id: mongoose.Types.ObjectId) => {
+const deleteUserInfo = async (
+  id: mongoose.Types.ObjectId
+): Promise<IUser | null> => {
   return await User.findByIdAndDelete(id);
 };
 

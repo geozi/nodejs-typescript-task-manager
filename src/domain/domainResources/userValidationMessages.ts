@@ -1,12 +1,12 @@
 /**
  * User validation error messages.
- * @module src/resources/userValidationMessages
+ * @module src/domainResources/userValidationMessages
  */
 
 /**
  * Contains response messages triggered when user validation fails.
  *
- * @memberof module:src/resources/userValidationMessages
+ * @memberof module:src/domainResources/userValidationMessages
  * @type {Object}
  * @property {string} USERNAME_REQUIRED - Message sent when no username is provided.
  * @property {string} USERNAME_MAX_LENGTH - Message sent when the provided username is too long.
