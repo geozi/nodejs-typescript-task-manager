@@ -1,47 +1,46 @@
 /**
- * ITaskUpdateGeneral interface.
- * @module src/presentation/interfaces/ITaskUpdateGeneral
+ * ITaskUpdate interface.
+ * @module src/presentation/interfaces/iTaskUpdate
  */
 
 /**
- * Represents a data object for updating a task (as a general user).
+ * Represents a data object for updating a task.
  *
  * @interface
- * @memberof module:src/presentation/interfaces/ITaskUpdateGeneral
- * @description The user using this data object must be logged in as a general user.
+ * @memberof module:src/presentation/interfaces/iTaskUpdate
  * @property {string} id - The id of the task document.
  * @property {string} [subject] - The subject of the task (optional).
  * @property {string} [description] - The description of the task (optional).
  * @property {string} [status] - The status of the task (optional).
  */
-interface ITaskUpdateGeneral {
+interface ITaskUpdate {
   /**
    * The id of the task document.
-   * @memberof ITaskUpdateGeneral
+   * @memberof ITaskUpdate
    * @type {string}
    */
   id: string;
 
   /**
    * The subject of the task (optional).
-   * @memberof ITaskUpdateGeneral
+   * @memberof ITaskUpdate
    * @type {string}
    */
   subject?: string;
 
   /**
    * The description of the task (optional).
-   * @memberof ITaskUpdateGeneral
+   * @memberof ITaskUpdate
    * @type {string}
    */
   description?: string;
 
   /**
    * The status of the task (optional).
-   * @memberof ITaskUpdateGeneral
+   * @memberof ITaskUpdate
    * @type {string}
    */
   status?: string;
 }
 
-export default ITaskUpdateGeneral;
+export default ITaskUpdate;

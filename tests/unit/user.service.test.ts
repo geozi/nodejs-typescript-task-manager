@@ -1,7 +1,6 @@
 /**
  * User service unit tests.
  */
-import IUser from "../../src/domain/interfaces/iUser.interface";
 import User from "../../src/domain/models/user.model";
 import assert from "assert";
 import userService from "../../src/service/user.service";
@@ -10,19 +9,13 @@ import testInput from "../testInput";
 import sinon from "sinon";
 import NotFoundError from "../../src/service/errors/notFound.error";
 import ServerError from "../../src/service/errors/server.error";
-import IUserUpdateGeneral from "../../src/presentation/interfaces/iUserUpdateGeneral.interface";
-import IUserUpdateAdmin from "../../src/presentation/interfaces/iUserUpdateAdmin.interface";
+import IUserUpdate from "../../src/presentation/interfaces/iUserUpdate.interface";
 
 describe("User service unit test", () => {
   const validUser = new User(testInput.validUserInput);
-  const mockUsers: IUser[] = [];
   const mockUser = new User();
-  const mockGeneralUpdateDataObj: IUserUpdateGeneral = {
+  const mockGeneralUpdateDataObj: IUserUpdate = {
     id: "678f6f5feeb9f5507709b24e",
-  };
-  const mockAdminUpdateDataObj: IUserUpdateAdmin = {
-    id: "678f6f5feeb9f5507709b24e",
-    role: "general",
   };
   const mockId = "678f72307a6663eec0337095";
   let methodStub: sinon.SinonStub;
@@ -30,53 +23,6 @@ describe("User service unit test", () => {
   describe("Promise rejects", () => {
     beforeEach(() => {
       sinon.restore();
-    });
-
-    describe("retrieveAllUsers()", () => {
-      beforeEach(() => {
-        methodStub = sinon.stub(userRepository, "getUsers");
-      });
-
-      afterEach(() => {
-        methodStub.restore();
-      });
-
-      it("server error", async () => {
-        methodStub.rejects();
-        await assert.rejects(async () => {
-          await userService.retrieveAllUsers();
-        }, ServerError);
-      });
-
-      it("no users in db", async () => {
-        methodStub.resolves(mockUsers);
-        await assert.rejects(async () => {
-          await userService.retrieveAllUsers();
-        }, NotFoundError);
-      });
-    });
-
-    describe("retrieveUsersByRole()", () => {
-      beforeEach(() => {
-        methodStub = sinon.stub(userRepository, "getUsersByRole");
-      });
-
-      afterEach(() => {
-        methodStub.restore();
-      });
-      it("server error", async () => {
-        methodStub.rejects();
-        await assert.rejects(async () => {
-          await userService.retrieveUsersByRole(validUser.role);
-        }, ServerError);
-      });
-
-      it("users not found", async () => {
-        methodStub.resolves(mockUsers);
-        await assert.rejects(async () => {
-          await userService.retrieveUsersByRole(validUser.role);
-        }, NotFoundError);
-      });
     });
 
     describe("retrieveUserByUsername()", () => {
@@ -113,7 +59,7 @@ describe("User service unit test", () => {
       });
     });
 
-    describe("updateProfileAsGeneralUser()", () => {
+    describe("updateUserProfile()", () => {
       beforeEach(() => {
         methodStub = sinon.stub(userRepository, "updateUserInfo");
       });
@@ -125,42 +71,14 @@ describe("User service unit test", () => {
       it("server error", async () => {
         methodStub.rejects();
         await assert.rejects(async () => {
-          await userService.updateProfileAsGeneralUser(
-            mockGeneralUpdateDataObj
-          );
+          await userService.updateUserProfile(mockGeneralUpdateDataObj);
         }, ServerError);
       });
 
       it("user not found", async () => {
         methodStub.resolves(null);
         await assert.rejects(async () => {
-          await userService.updateProfileAsGeneralUser(
-            mockGeneralUpdateDataObj
-          );
-        }, NotFoundError);
-      });
-    });
-
-    describe("updateProfileAsAdminUser()", () => {
-      beforeEach(() => {
-        methodStub = sinon.stub(userRepository, "updateUserInfo");
-      });
-
-      afterEach(() => {
-        methodStub.restore();
-      });
-
-      it("server error", async () => {
-        methodStub.rejects();
-        await assert.rejects(async () => {
-          await userService.updateProfileAsAdminUser(mockAdminUpdateDataObj);
-        }, ServerError);
-      });
-
-      it("user not found", async () => {
-        methodStub.resolves(null);
-        await assert.rejects(async () => {
-          await userService.updateProfileAsAdminUser(mockAdminUpdateDataObj);
+          await userService.updateUserProfile(mockGeneralUpdateDataObj);
         }, NotFoundError);
       });
     });

@@ -72,15 +72,6 @@ describe("User repository unit test", () => {
           });
         }
       );
-
-      it("has invalid role", () => {
-        newUser = new User(testInput.validUserInput);
-        newUser.role = testInput.invalidUserInputs.INVALID_ROLE;
-
-        assert.rejects(async () => {
-          await userRepository.addUser(newUser);
-        }, mongoose.Error.ValidationError);
-      });
     });
   });
 });

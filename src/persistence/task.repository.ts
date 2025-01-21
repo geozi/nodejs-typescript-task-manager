@@ -2,7 +2,6 @@
  * Task repository.
  *
  * @module src/persistence/task
- * @async @function getTasks
  * @async @function getTasksByStatus
  * @async @function getTasksByUsername
  * @async @function getTaskBySubject
@@ -13,17 +12,6 @@
 import mongoose from "mongoose";
 import Task from "../domain/models/task.model";
 import ITask from "../domain/interfaces/iTask.interface";
-
-/**
- * Returns all tasks persisted in the 'tasks' collection.
- *
- * @memberof module:src/persistence/task
- * @async @function getTasks
- * @returns {Promise<Array<ITask>>} A promise that resolves to an array of task objects or an empty array.
- */
-const getTasks = async (): Promise<Array<ITask>> => {
-  return await Task.find({});
-};
 
 /**
  * Returns all tasks with the specified status.
@@ -108,7 +96,6 @@ const deleteTask = async (
 };
 
 export default {
-  getTasks,
   getTasksByStatus,
   getTasksByUsername,
   getTaskBySubject,

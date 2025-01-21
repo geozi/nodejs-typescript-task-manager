@@ -2,7 +2,6 @@
  * Task service.
  *
  * @module src/service/task
- * @async @function retrieveAllTasks
  * @async @function retrieveTasksByStatus
  * @async @function retrieveTasksByUsername
  * @async @function retrieveTaskBySubject
@@ -14,35 +13,11 @@
 import mongoose from "mongoose";
 import ITask from "../domain/interfaces/iTask.interface";
 import taskRepository from "../persistence/task.repository";
-import ITaskUpdateGeneral from "../presentation/interfaces/iTaskUpdateGeneral.interface";
+import ITaskUpdate from "../presentation/interfaces/iTaskUpdate.interface";
 import NotFoundError from "./errors/notFound.error";
 import ServerError from "./errors/server.error";
 import commonServiceResponses from "./serviceResources/commonService.response";
 import taskServiceResponses from "./serviceResources/taskService.response";
-
-/**
- * Calls on the persistence layer to retrieve all tasks from the 'tasks' collection.
- *
- * @memberof module:src/service/task
- * @async @function retrieveAllTasks
- * @returns {Promise<Array<ITask>>} A promise that resolves to an array of task objects.
- * @throws {NotFoundError | ServerError}
- */
-const retrieveAllTasks = async (): Promise<Array<ITask>> => {
-  try {
-    const tasks = await taskRepository.getTasks();
-    if (tasks.length === 0) {
-      throw new NotFoundError(taskServiceResponses.NO_TASKS_IN_DB);
-    }
-
-    return tasks;
-  } catch (error) {
-    if (error instanceof NotFoundError) {
-      throw error;
-    }
-    throw new ServerError(commonServiceResponses.SERVER_ERROR);
-  }
-};
 
 /**
  * Calls on the persistence layer to retrieve all tasks having the specified status.
@@ -149,7 +124,7 @@ const createTaskRecord = async (newTask: ITask) => {
  * @throws {NotFoundError | ServerError}
  */
 const updateTaskRecord = async (
-  taskUpdateInfo: ITaskUpdateGeneral
+  taskUpdateInfo: ITaskUpdate
 ): Promise<ITask> => {
   try {
     const { id, subject, description, status } = taskUpdateInfo;
@@ -205,7 +180,6 @@ const deleteTaskRecord = async (id: string): Promise<ITask> => {
 };
 
 export default {
-  retrieveAllTasks,
   retrieveTasksByStatus,
   retrieveTasksByUsername,
   retrieveTaskBySubject,

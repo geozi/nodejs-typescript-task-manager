@@ -54,14 +54,4 @@ describe("User model unit test", () => {
       });
     }
   );
-
-  it("has invalid role", () => {
-    newUser.role = testInput.invalidUserInputs.INVALID_ROLE;
-    const err = newUser.validateSync();
-
-    assert.strictEqual(
-      err?.errors.role.message,
-      userFailedValidation.ROLE_INVALID
-    );
-  });
 });

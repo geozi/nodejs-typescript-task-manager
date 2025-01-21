@@ -3,7 +3,7 @@
  */
 import Task from "../../src/domain/models/task.model";
 import ITask from "../../src/domain/interfaces/iTask.interface";
-import ITaskUpdateGeneral from "../../src/presentation/interfaces/iTaskUpdateGeneral.interface";
+import ITaskUpdate from "../../src/presentation/interfaces/iTaskUpdate.interface";
 import assert from "assert";
 import testInput from "../testInput";
 import sinon from "sinon";
@@ -16,37 +16,13 @@ describe("Task service unit test", () => {
   const validTask = new Task(testInput.validTaskInput);
   const mockTasks: ITask[] = [];
   const mockTask = new Task();
-  const mockUpdateDataObj: ITaskUpdateGeneral = {
+  const mockUpdateDataObj: ITaskUpdate = {
     id: "678f6f5feeb9f5507709b24e",
   };
   const mockId = "678f7e88196eec7b9d3d549a";
   let methodStub: sinon.SinonStub;
 
   describe("Promise rejects", () => {
-    describe("retrieveAllTasks()", () => {
-      beforeEach(() => {
-        methodStub = sinon.stub(taskRepository, "getTasks");
-      });
-
-      afterEach(() => {
-        methodStub.restore();
-      });
-
-      it("server error", async () => {
-        methodStub.rejects();
-        await assert.rejects(async () => {
-          await taskService.retrieveAllTasks();
-        }, ServerError);
-      });
-
-      it("no tasks in db", async () => {
-        methodStub.resolves(mockTasks);
-        await assert.rejects(async () => {
-          await taskService.retrieveAllTasks();
-        }, NotFoundError);
-      });
-    });
-
     describe("retrieveTasksByStatus()", () => {
       beforeEach(() => {
         methodStub = sinon.stub(taskRepository, "getTasksByStatus");
