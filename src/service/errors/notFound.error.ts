@@ -10,7 +10,7 @@
  * @extends {Error}
  */
 class NotFoundError extends Error {
-  public httpCode = 404;
+  public static httpCode = 404;
 
   /**
    * Creates an instance of NotFoundError.

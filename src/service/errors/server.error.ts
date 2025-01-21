@@ -10,7 +10,7 @@
  * @extends {Error}
  */
 class ServerError extends Error {
-  public httpCode = 500;
+  public static httpCode = 500;
 
   /**
    * Creates an instance of ServerError.

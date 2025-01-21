@@ -16,6 +16,9 @@
  * @property {string} PASSWORD_REQUIRED - Message sent when no password is provided.
  * @property {string} PASSWORD_MIN_LENGTH - Message sent when the provided password is too short.
  * @property {string} PASSWORD_MUST_HAVE_CHARACTERS - Message sent when the provided password is invalid.
+ * @property {string} USER_ID_REQUIRED - Message sent when the user ID is not provided.
+ * @property {string} USER_ID_INVALID - Message sent when the user ID does not match the standard regex pattern.
+ * @property {string} USER_ID_LENGTH - Message sent when the user ID's length is not 24 characters long.
  */
 const userFailedValidation = {
   /**
@@ -79,6 +82,27 @@ const userFailedValidation = {
   - **one number**,
   - **one special symbol**
   `,
+
+  /**
+   * Message sent when the user ID is not provided.
+   * @memberof userFailedValidation
+   * @type {string}
+   */
+  USER_ID_REQUIRED: "User ID is a required field",
+
+  /**
+   * Message sent when the user ID does not match the standard regex pattern.
+   * @memberof userFailedValidation
+   * @type {string}
+   */
+  USER_ID_INVALID: "User ID must only contain alphanumeric characters",
+
+  /**
+   * Message sent when the user ID's length is not 24 characters long.
+   * @memberof userFailedValidation
+   * @type {string}
+   */
+  USER_ID_LENGTH: "User ID must be 24 characters long",
 };
 
 export default userFailedValidation;

@@ -21,7 +21,9 @@ import ITask from "../domain/interfaces/iTask.interface";
  * @param {string} status The current status of the task.
  * @returns {Promise<Array<ITask>>} A promise that resolves to an array of task objects or an empty array.
  */
-const getTasksByStatus = async (status: string): Promise<Array<ITask>> => {
+export const getTasksByStatus = async (
+  status: string
+): Promise<Array<ITask>> => {
   return await Task.find({ status: status });
 };
 
