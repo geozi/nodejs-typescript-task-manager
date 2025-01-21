@@ -27,15 +27,21 @@ import IUserUpdateAdmin from "../presentation/interfaces/iUserUpdateAdmin.interf
  *
  * @memberof module:src/service/user
  * @async @function retrieveAllUsers
- * @returns {Promise<Array<IUser>>} A promise that resolves to an array of user objects or an empty array.
- * @throws {ServerError}
+ * @returns {Promise<Array<IUser>>} A promise that resolves to an array of user objects.
+ * @throws {NotFoundError | ServerError}
  */
 const retrieveAllUsers = async (): Promise<Array<IUser>> => {
   try {
-    return await userRepository.getUsers();
+    const users = await userRepository.getUsers();
+    if (users.length === 0) {
+      throw new NotFoundError(userServiceResponses.NO_USERS_IN_DB);
+    }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    return users;
   } catch (error) {
+    if (error instanceof NotFoundError) {
+      throw error;
+    }
     throw new ServerError(commonServiceResponses.SERVER_ERROR);
   }
 };

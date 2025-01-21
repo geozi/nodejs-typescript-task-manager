@@ -25,15 +25,21 @@ import taskServiceResponses from "./serviceResources/taskService.response";
  *
  * @memberof module:src/service/task
  * @async @function retrieveAllTasks
- * @returns {Promise<Array<ITask>>} A promise that resolves to an array of task objects or an empty array.
- * @throws {ServerError}
+ * @returns {Promise<Array<ITask>>} A promise that resolves to an array of task objects.
+ * @throws {NotFoundError | ServerError}
  */
 const retrieveAllTasks = async (): Promise<Array<ITask>> => {
   try {
-    return await taskRepository.getTasks();
+    const tasks = await taskRepository.getTasks();
+    if (tasks.length === 0) {
+      throw new NotFoundError(taskServiceResponses.NO_TASKS_IN_DB);
+    }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    return tasks;
   } catch (error) {
+    if (error instanceof NotFoundError) {
+      throw error;
+    }
     throw new ServerError(commonServiceResponses.SERVER_ERROR);
   }
 };
