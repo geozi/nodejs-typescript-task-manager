@@ -2,8 +2,6 @@
  * User repository.
  *
  * @module src/persistence/user
- * @async @function getUsers
- * @async @function getUsersByRole
  * @async @function getUserByEmail
  * @async @function getUserByUsername
  * @async @function addUser
@@ -13,29 +11,6 @@
 import mongoose from "mongoose";
 import User from "../domain/models/user.model";
 import IUser from "../domain/interfaces/iUser.interface";
-
-/**
- * Returns all users persisted in the 'users' collection.
- *
- * @memberof module:src/persistence/user
- * @async @function getUsers
- * @returns {Promise<Array<IUser>>} A promise that resolves to an array of user objects or an empty array.
- */
-const getUsers = async (): Promise<Array<IUser>> => {
-  return await User.find({});
-};
-
-/**
- * Returns all users having the specified role.
- *
- * @memberof module:src/persistence/user
- * @async @function getUsersByRole
- * @param {string} role The role designated to a user profile.
- * @returns {Promise<Array<IUser>>} A promise that resolves to an array of user objects or an empty array.
- */
-const getUsersByRole = async (role: string): Promise<Array<IUser>> => {
-  return await User.find({ role: role });
-};
 
 /**
  * Returns the user with the specified username.
@@ -108,8 +83,6 @@ const deleteUserInfo = async (
 };
 
 export default {
-  getUsers,
-  getUsersByRole,
   getUserByEmail,
   getUserByUsername,
   addUser,

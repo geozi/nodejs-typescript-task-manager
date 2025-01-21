@@ -16,8 +16,6 @@
  * @property {string} PASSWORD_REQUIRED - Message sent when no password is provided.
  * @property {string} PASSWORD_MIN_LENGTH - Message sent when the provided password is too short.
  * @property {string} PASSWORD_MUST_HAVE_CHARACTERS - Message sent when the provided password is invalid.
- * @property {string} ROLE_REQUIRED - Message sent when no role is provided.
- * @property {string} ROLE_INVALID - Message sent when the provided role does not much the standard categories.
  */
 const userFailedValidation = {
   /**
@@ -80,24 +78,6 @@ const userFailedValidation = {
   - **one uppercase character**,
   - **one number**,
   - **one special symbol**
-  `,
-
-  /**
-   * Message sent when no role is provided.
-   * @memberof userFailedValidation
-   * @type {string}
-   */
-  ROLE_REQUIRED: "Role is a required field",
-
-  /**
-   * Message sent when the provided role does not much the standard categories.
-   * @memberof userFailedValidation
-   * @type {string}
-   */
-  ROLE_INVALID: `
-  **The role must be one of the following categories:**
-  - **Admin**,
-  - **General**
   `,
 };
 

@@ -6,7 +6,6 @@ import { Schema, model } from "mongoose";
 import IUser from "../interfaces/iUser.interface";
 import mongooseUniqueValidator from "mongoose-unique-validator";
 import userFailedValidation from "../domainResources/userValidationMessages";
-import Role from "../enums/role.enum";
 import regularExpressions from "../domainResources/validationRegExp";
 
 /**
@@ -17,7 +16,6 @@ import regularExpressions from "../domainResources/validationRegExp";
  * @property {string} username - The username of the user.
  * @property {string} email - The email of the user.
  * @property {string} password - The password of the user.
- * @property {string} role - The role of the user.
  */
 const userSchema = new Schema<IUser>(
   {
@@ -49,14 +47,6 @@ const userSchema = new Schema<IUser>(
       ],
       minLength: [7, userFailedValidation.PASSWORD_MIN_LENGTH],
       trim: true,
-    },
-    role: {
-      type: String,
-      enum: {
-        values: Object.values(Role),
-        message: userFailedValidation.ROLE_INVALID,
-      },
-      required: [true, userFailedValidation.ROLE_REQUIRED],
     },
   },
   {
