@@ -4,7 +4,7 @@
 
 import User from "../../src/domain/models/user.model";
 import assert from "assert";
-import userFailedValidation from "../../src/resources/userValidationMessages";
+import userFailedValidation from "../../src/domain/domainResources/userValidationMessages";
 import IUser from "../../src/domain/interfaces/iUser.interface";
 import testInput from "../testInput";
 

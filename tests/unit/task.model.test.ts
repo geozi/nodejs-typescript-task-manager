@@ -4,7 +4,7 @@
 import Task from "../../src/domain/models/task.model";
 import ITask from "../../src/domain/interfaces/iTask.interface";
 import assert from "assert";
-import taskFailedValidation from "../../src/resources/taskValidationMessages";
+import taskFailedValidation from "../../src/domain/domainResources/taskValidationMessages";
 import testInput from "../testInput";
 
 describe("Task model unit test", () => {
