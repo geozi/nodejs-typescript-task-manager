@@ -3,7 +3,7 @@
  * @module src/presentation/controllers/user
  */
 
-import validator from "express-validator";
+import { validationResult } from "express-validator";
 import User from "../../domain/models/user.model";
 import responseMessages from "../resources/responseMessages";
 import userValidationRules from "../middleware/userRules.validation";
@@ -34,7 +34,7 @@ const registerUser = [
    * @returns {Promise<Response>} A promise that resolves to a response object.
    */
   async (req: Request, res: Response): Promise<Response> => {
-    const expressErrors = validator.validationResult(req);
+    const expressErrors = validationResult(req);
     if (!expressErrors.isEmpty()) {
       const errorMessage = expressErrors.array().map((err) => ({
         message: err.msg,
@@ -95,7 +95,7 @@ const updateUserInfo = [
    * @returns {Promise<Response>} - A promise that resolves to a response object.
    */
   async (req: Request, res: Response): Promise<Response> => {
-    const expressErrors = validator.validationResult(req);
+    const expressErrors = validationResult(req);
     if (!expressErrors.isEmpty()) {
       const errorMessage = expressErrors.array().map((err) => ({
         message: err.msg,

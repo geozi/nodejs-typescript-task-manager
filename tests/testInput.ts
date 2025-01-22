@@ -21,7 +21,6 @@ const validUserInput = {
   username: "newUser",
   email: "random@mail.com",
   password: "5W]L8t1m4@PcTTO",
-  role: "General",
 };
 
 const invalidUserInputs = {
@@ -34,7 +33,6 @@ const invalidUserInputs = {
     ["has invalid email: no .", "random@mailcom"],
     ["has invalid email: no top level domain", "random@mail."],
   ],
-  INVALID_ROLE: "Executive",
 };
 
 export default {
