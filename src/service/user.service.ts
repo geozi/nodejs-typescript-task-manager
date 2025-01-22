@@ -81,9 +81,8 @@ const retrieveUserByEmail = async (email: string): Promise<IUser> => {
 const createUserProfile = async (newUser: IUser): Promise<IUser> => {
   try {
     return await userRepository.addUser(newUser);
-
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (error) {
+  } catch (error: unknown) {
     throw new ServerError(commonServiceResponses.SERVER_ERROR);
   }
 };

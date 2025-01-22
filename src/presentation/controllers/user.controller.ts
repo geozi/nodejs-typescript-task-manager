@@ -64,12 +64,14 @@ const registerUser = [
           .json({ message: error.message });
       }
 
-      let message;
+      let serverErrorMessage;
       if (error instanceof ServerError) {
-        message = error.message;
+        serverErrorMessage = error.message;
       }
 
-      return res.status(ServerError.httpCode).json({ message: message });
+      return res
+        .status(ServerError.httpCode)
+        .json({ message: serverErrorMessage });
     }
   },
 ];
