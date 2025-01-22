@@ -6,7 +6,6 @@
  * @async @function retrieveUserByUsername
  * @async @function createUserProfile
  * @async @function updateUserProfile
- * @async @function deleteUserProfile
  */
 import mongoose from "mongoose";
 import IUser from "../domain/interfaces/iUser.interface";
@@ -139,40 +138,9 @@ const updateUserProfile = async (
   }
 };
 
-/**
- * Calls on the persistence layer to delete a user profile.
- *
- * @memberof  module:src/service/user
- * @async @function deleteUserProfile
- * @param {string} id The id of the user profile.
- * @returns {Promise<IUser>} A promise that resolves to the deleted user object.
- * @throws {NotFoundError | ServerError}
- */
-const deleteUserProfile = async (id: string): Promise<IUser> => {
-  try {
-    const idAsObjectId = new mongoose.Types.ObjectId(id);
-    const deletedUserProfile = await userRepository.deleteUserInfo(
-      idAsObjectId
-    );
-
-    if (deletedUserProfile === null) {
-      throw new NotFoundError(userServiceResponses.USER_NOT_FOUND);
-    }
-
-    return deletedUserProfile;
-  } catch (error) {
-    if (error instanceof NotFoundError) {
-      throw error;
-    }
-
-    throw new ServerError(userServiceResponses.USER_NOT_FOUND);
-  }
-};
-
 export default {
   retrieveUserByUsername,
   retrieveUserByEmail,
   createUserProfile,
   updateUserProfile,
-  deleteUserProfile,
 };

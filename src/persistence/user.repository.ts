@@ -6,7 +6,6 @@
  * @async @function getUserByUsername
  * @async @function addUser
  * @async @function updateUserInfo
- * @async @function deleteUserInfo
  */
 import mongoose from "mongoose";
 import User from "../domain/models/user.model";
@@ -68,24 +67,9 @@ const updateUserInfo = async (
   });
 };
 
-/**
- * Deletes the information of a specified user.
- *
- * @memberof module:src/persistence/user
- * @async @function deleteUserInfo
- * @param {mongoose.Types.ObjectId} id The id of the user document.
- * @returns {Promise<IUser | null>} A promise that resolves to the deleted document in the form of a user object or null.
- */
-const deleteUserInfo = async (
-  id: mongoose.Types.ObjectId
-): Promise<IUser | null> => {
-  return await User.findByIdAndDelete(id);
-};
-
 export default {
   getUserByEmail,
   getUserByUsername,
   addUser,
   updateUserInfo,
-  deleteUserInfo,
 };

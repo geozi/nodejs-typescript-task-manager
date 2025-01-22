@@ -17,7 +17,6 @@ describe("User service unit test", () => {
   const mockGeneralUpdateDataObj: IUserUpdate = {
     id: "678f6f5feeb9f5507709b24e",
   };
-  const mockId = "678f72307a6663eec0337095";
   let methodStub: sinon.SinonStub;
 
   describe("Promise rejects", () => {
@@ -79,30 +78,6 @@ describe("User service unit test", () => {
         methodStub.resolves(null);
         await assert.rejects(async () => {
           await userService.updateUserProfile(mockGeneralUpdateDataObj);
-        }, NotFoundError);
-      });
-    });
-
-    describe("deleteUserProfile()", async () => {
-      beforeEach(() => {
-        methodStub = sinon.stub(userRepository, "deleteUserInfo");
-      });
-
-      afterEach(() => {
-        methodStub.restore();
-      });
-
-      it("server error", async () => {
-        methodStub.rejects();
-        await assert.rejects(async () => {
-          await userService.deleteUserProfile(mockId);
-        }, ServerError);
-      });
-
-      it("user not found", async () => {
-        methodStub.resolves(null);
-        await assert.rejects(async () => {
-          await userService.deleteUserProfile(mockId);
         }, NotFoundError);
       });
     });
