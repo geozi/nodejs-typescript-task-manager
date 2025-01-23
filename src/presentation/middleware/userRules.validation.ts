@@ -54,28 +54,22 @@ const userProfileUpdateRules = (): ValidationChain[] => {
       .withMessage(userFailedValidation.USER_ID_INVALID)
       .isLength({ min: 24, max: 24 })
       .withMessage(userFailedValidation.USER_ID_LENGTH),
-    check("username").optional(),
-    check("email").optional(),
-    check("password").optional(),
-  ];
-};
-
-/**
- * Returns a validation chain for user profile deletion.
- *
- * @memberof module:src/presentation/middleware/userRules
- * @function userProfileDeletionRules
- * @returns {ValidationChain[]} Validation chain.
- */
-const userProfileDeletionRules = (): ValidationChain[] => {
-  return [
-    check("id")
-      .notEmpty()
-      .withMessage(userFailedValidation.USER_ID_REQUIRED)
-      .matches(regularExpressions.ID_REGEX)
-      .withMessage(userFailedValidation.USER_ID_INVALID)
-      .isLength({ min: 24, max: 24 })
-      .withMessage(userFailedValidation.USER_ID_LENGTH),
+    check("username")
+      .optional()
+      .isLength({ min: 3 })
+      .withMessage(userFailedValidation.USERNAME_MIN_LENGTH)
+      .isLength({ max: 20 })
+      .withMessage(userFailedValidation.USERNAME_MAX_LENGTH),
+    check("email")
+      .optional()
+      .matches(regularExpressions.EMAIL_REGEX)
+      .withMessage(userFailedValidation.EMAIL_INVALID),
+    check("password")
+      .optional()
+      .isLength({ min: 7 })
+      .withMessage(userFailedValidation.PASSWORD_MIN_LENGTH)
+      .matches(regularExpressions.PASSWORD_REGEX)
+      .withMessage(userFailedValidation.PASSWORD_MUST_HAVE_CHARACTERS),
   ];
 };
 
@@ -118,7 +112,6 @@ const userRetrievalByUsernameRules = (): ValidationChain[] => {
 export default {
   userRegistrationRules,
   userProfileUpdateRules,
-  userProfileDeletionRules,
   userRetrievalByEmailRules,
   userRetrievalByUsernameRules,
 };

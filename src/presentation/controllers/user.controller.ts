@@ -57,13 +57,7 @@ const registerUser = [
       return res
         .status(201)
         .json({ message: responseMessages.USER_REGISTERED });
-    } catch (error: NotFoundError | ServerError | unknown) {
-      if (error instanceof NotFoundError) {
-        return res
-          .status(NotFoundError.httpCode)
-          .json({ message: error.message });
-      }
-
+    } catch (error: ServerError | unknown) {
       let serverErrorMessage;
       if (error instanceof ServerError) {
         serverErrorMessage = error.message;

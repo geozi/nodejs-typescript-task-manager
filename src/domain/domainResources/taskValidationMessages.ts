@@ -14,6 +14,9 @@
  * @property {string} DESCRIPTION_MAX_LENGTH - Message sent when the provided description is too long.
  * @property {string} STATUS_REQUIRED - Message sent when no status is provided.
  * @property {string} STATUS_INVALID - Message sent when the provided status does not match the standard categories.
+ * @property {string} TASK_ID_REQUIRED - Message sent when the task ID is not provided.
+ * @property {string} TASK_ID_INVALID - Message sent when the task ID does not match the standard regex pattern.
+ * @property {string} TASK_ID_LENGTH - Message sent when the task ID's length is not 24 characters long.
  */
 const taskFailedValidation = {
   /**
@@ -61,6 +64,27 @@ const taskFailedValidation = {
   - **Pending**,
   - **Complete**
   `,
+
+  /**
+   * Message sent when the task ID is not provided.
+   * @memberof taskFailedValidation
+   * @type {string}
+   */
+  TASK_ID_REQUIRED: "Task ID is a required field",
+
+  /**
+   * Message sent when the task ID does not match the standard regex pattern.
+   * @memberof taskFailedValidation
+   * @type {string}
+   */
+  TASK_ID_INVALID: "Task ID must only contain alphanumeric characters",
+
+  /**
+   * Message sent when the task ID's length is not 24 characters long.
+   * @memberof taskFailedValidation
+   * @type {string}
+   */
+  TASK_ID_LENGTH: "Task ID must be 24 characters long",
 };
 
 export default taskFailedValidation;
