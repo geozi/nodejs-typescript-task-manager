@@ -23,7 +23,6 @@ import ITaskUpdate from "../interfaces/iTaskUpdate.interface";
  */
 const createTask = [
   ...taskValidationRules.taskCreationRules(),
-
   /**
    * Processes HTTP requests for task creation.
    *

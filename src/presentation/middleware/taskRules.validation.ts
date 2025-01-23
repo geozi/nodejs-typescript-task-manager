@@ -39,10 +39,12 @@ const taskCreationRules = (): ValidationChain[] => {
 
 /**
  * Returns a validation chain for task update.
+ * @memberof module:src/presentation/middleware/taskRules
  * @function taskUpdateRules
  * @returns {ValidationChain[]} Validation chain.
  */
 const taskUpdateRules = (): ValidationChain[] => {
+  console.log("I am inside task update rules");
   return [
     check("id")
       .notEmpty()
@@ -53,7 +55,6 @@ const taskUpdateRules = (): ValidationChain[] => {
       .withMessage(taskFailedValidation.TASK_ID_LENGTH),
     check("subject")
       .optional()
-      .withMessage(taskFailedValidation.SUBJECT_REQUIRED)
       .isLength({ min: 10 })
       .withMessage(taskFailedValidation.SUBJECT_MIN_LENGTH)
       .isLength({ max: 100 })
@@ -64,7 +65,6 @@ const taskUpdateRules = (): ValidationChain[] => {
       .withMessage(taskFailedValidation.DESCRIPTION_MAX_LENGTH),
     check("status")
       .optional()
-      .withMessage(taskFailedValidation.STATUS_REQUIRED)
       .isIn([Status.Pending, Status.Complete])
       .withMessage(taskFailedValidation.STATUS_INVALID),
   ];
@@ -72,6 +72,7 @@ const taskUpdateRules = (): ValidationChain[] => {
 
 /**
  * Returns a validation chain for task deletion.
+ * @memberof module:src/presentation/middleware/taskRules
  * @function taskDeletionRules
  * @returns {ValidationChain[]} Validation chain.
  */
@@ -89,6 +90,7 @@ const taskDeletionRules = (): ValidationChain[] => {
 
 /**
  * Returns a validation chain for username-based task fetching.
+ * @memberof module:src/presentation/middleware/taskRules
  * @function taskFetchingByUsernameRules
  * @returns {ValidationChain[]} Validation chain.
  */
@@ -106,13 +108,14 @@ const taskFetchingByUsernameRules = (): ValidationChain[] => {
 
 /**
  * Returns a validation chain for subject-based task fetching.
+ * @memberof module:src/presentation/middleware/taskRules
  * @function taskFetchingBySubjectRules
  * @returns {ValidationChain[]} Validation chain.
  */
 const taskFetchingBySubjectRules = (): ValidationChain[] => {
   return [
     check("subject")
-      .optional()
+      .notEmpty()
       .withMessage(taskFailedValidation.SUBJECT_REQUIRED)
       .isLength({ min: 10 })
       .withMessage(taskFailedValidation.SUBJECT_MIN_LENGTH)
@@ -123,10 +126,11 @@ const taskFetchingBySubjectRules = (): ValidationChain[] => {
 
 /**
  * Returns a validation chain for status-based task fetching.
+ * @memberof module:src/presentation/middleware/taskRules
  * @function taskFetchingBySubjectRules
  * @returns {ValidationChain[]} Validation chain.
  */
-const taskFetchingByStatusRules = () => {
+const taskFetchingByStatusRules = (): ValidationChain[] => {
   return [
     check("status")
       .notEmpty()

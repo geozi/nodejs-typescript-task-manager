@@ -5,10 +5,19 @@ const validTaskInput = {
   description:
     "Finish writing the final report for the project and submit it to the manager.",
   status: Status.Pending,
-  username: "d_exemplidis@random.com",
+  username: "testUser",
 };
 
 const invalidTaskInputs = {
+  TASK_ID_LENGTH_CASES: [
+    ["task ID is too short", "67927354c870a4"],
+    ["task ID is too long", "67927354c870a4ca19c3a7eb67927354c870a4ca19c3a7eb"],
+  ] as [string, string][],
+  TASK_ID_INVALID_CASES: [
+    ["task ID contains special symbols", "679273*4c&70^4ca19%3a7eb"],
+    ["task ID contains white spaces", "67927 54c870a4 a19c3a7eb"],
+    ["task ID contains capital letters", "67927354C870A4ca19c3a7eb"],
+  ] as [string, string][],
   TOO_SHORT_SUBJECT: "Hey",
   TOO_LONG_SUBJECT:
     "Comprehensive Review and Revision of the Year-End Financial Statements to Ensure Compliance with Regulatory Standards and Accuracy.",

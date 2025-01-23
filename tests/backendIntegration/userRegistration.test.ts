@@ -1,5 +1,5 @@
 /**
- * User registration integration test.
+ * User registration integration tests.
  */
 import userController from "../../src/presentation/controllers/user.controller";
 import userService from "../../src/service/user.service";

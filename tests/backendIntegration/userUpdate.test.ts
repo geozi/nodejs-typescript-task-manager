@@ -1,5 +1,5 @@
 /**
- * User update integration test.
+ * User update integration tests.
  */
 import sinon, { SinonSpy, SinonStub } from "sinon";
 import testInput from "../testInput";
