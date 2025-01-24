@@ -43,12 +43,12 @@ describe("Task creation  integration tests", () => {
           await middleware(req as Request, res as Response, next);
         }
 
-        const statusSpy = res.status as SinonStub;
-        const statusJson = res.json as SinonSpy;
+        const statusStub = res.status as SinonStub;
+        const jsonSpy = res.json as SinonSpy;
 
-        assert.strictEqual(statusSpy.calledWith(400), true);
+        assert.strictEqual(statusStub.calledWith(400), true);
         assert.strictEqual(
-          statusJson.calledWith({
+          jsonSpy.calledWith({
             message: responseMessages.BAD_REQUEST,
             errors: [
               { message: taskFailedValidation.SUBJECT_REQUIRED },
@@ -67,12 +67,12 @@ describe("Task creation  integration tests", () => {
           await middleware(req as Request, res as Response, next);
         }
 
-        const statusSpy = res.status as SinonStub;
-        const statusJson = res.json as SinonSpy;
+        const statusStub = res.status as SinonStub;
+        const jsonSpy = res.json as SinonSpy;
 
-        assert.strictEqual(statusSpy.calledWith(400), true);
+        assert.strictEqual(statusStub.calledWith(400), true);
         assert.strictEqual(
-          statusJson.calledWith({
+          jsonSpy.calledWith({
             message: responseMessages.BAD_REQUEST,
             errors: [{ message: taskFailedValidation.SUBJECT_MIN_LENGTH }],
           }),
@@ -88,12 +88,12 @@ describe("Task creation  integration tests", () => {
           await middleware(req as Request, res as Response, next);
         }
 
-        const statusSpy = res.status as SinonStub;
-        const statusJson = res.json as SinonSpy;
+        const statusStub = res.status as SinonStub;
+        const jsonSpy = res.json as SinonSpy;
 
-        assert.strictEqual(statusSpy.calledWith(400), true);
+        assert.strictEqual(statusStub.calledWith(400), true);
         assert.strictEqual(
-          statusJson.calledWith({
+          jsonSpy.calledWith({
             message: responseMessages.BAD_REQUEST,
             errors: [{ message: taskFailedValidation.SUBJECT_MAX_LENGTH }],
           }),
@@ -109,12 +109,12 @@ describe("Task creation  integration tests", () => {
           await middleware(req as Request, res as Response, next);
         }
 
-        const statusSpy = res.status as SinonStub;
-        const statusJson = res.json as SinonSpy;
+        const statusStub = res.status as SinonStub;
+        const jsonSpy = res.json as SinonSpy;
 
-        assert.strictEqual(statusSpy.calledWith(400), true);
+        assert.strictEqual(statusStub.calledWith(400), true);
         assert.strictEqual(
-          statusJson.calledWith({
+          jsonSpy.calledWith({
             message: responseMessages.BAD_REQUEST,
             errors: [{ message: taskFailedValidation.DESCRIPTION_MAX_LENGTH }],
           }),
@@ -130,12 +130,12 @@ describe("Task creation  integration tests", () => {
           await middleware(req as Request, res as Response, next);
         }
 
-        const statusSpy = res.status as SinonStub;
-        const statusJson = res.json as SinonSpy;
+        const statusStub = res.status as SinonStub;
+        const jsonSpy = res.json as SinonSpy;
 
-        assert.strictEqual(statusSpy.calledWith(400), true);
+        assert.strictEqual(statusStub.calledWith(400), true);
         assert.strictEqual(
-          statusJson.calledWith({
+          jsonSpy.calledWith({
             message: responseMessages.BAD_REQUEST,
             errors: [
               { message: taskFailedValidation.STATUS_REQUIRED },
@@ -154,12 +154,12 @@ describe("Task creation  integration tests", () => {
           await middleware(req as Request, res as Response, next);
         }
 
-        const statusSpy = res.status as SinonStub;
-        const statusJson = res.json as SinonSpy;
+        const statusStub = res.status as SinonStub;
+        const jsonSpy = res.json as SinonSpy;
 
-        assert.strictEqual(statusSpy.calledWith(400), true);
+        assert.strictEqual(statusStub.calledWith(400), true);
         assert.strictEqual(
-          statusJson.calledWith({
+          jsonSpy.calledWith({
             message: responseMessages.BAD_REQUEST,
             errors: [{ message: taskFailedValidation.STATUS_INVALID }],
           }),
@@ -176,12 +176,12 @@ describe("Task creation  integration tests", () => {
           await middleware(req as Request, res as Response, next);
         }
 
-        const statusSpy = res.status as SinonStub;
-        const statusJson = res.json as SinonSpy;
+        const statusStub = res.status as SinonStub;
+        const jsonSpy = res.json as SinonSpy;
 
-        assert.strictEqual(statusSpy.calledWith(400), true);
+        assert.strictEqual(statusStub.calledWith(400), true);
         assert.strictEqual(
-          statusJson.calledWith({
+          jsonSpy.calledWith({
             message: responseMessages.BAD_REQUEST,
             errors: [
               { message: taskFailedValidation.SUBJECT_REQUIRED },
@@ -223,12 +223,12 @@ describe("Task creation  integration tests", () => {
         await middleware(req as Request, res as Response, next);
       }
 
-      const statusSpy = res.status as SinonStub;
-      const statusJson = res.json as SinonSpy;
+      const statusStub = res.status as SinonStub;
+      const jsonSpy = res.json as SinonSpy;
 
-      assert.strictEqual(statusSpy.calledWith(500), true);
+      assert.strictEqual(statusStub.calledWith(500), true);
       assert.strictEqual(
-        statusJson.calledWith({ message: commonService.SERVER_ERROR }),
+        jsonSpy.calledWith({ message: commonService.SERVER_ERROR }),
         true
       );
     });

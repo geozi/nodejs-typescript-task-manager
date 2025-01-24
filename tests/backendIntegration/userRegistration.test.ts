@@ -43,12 +43,12 @@ describe("User registration integration tests", () => {
           await middleware(req as Request, res as Response, next);
         }
 
-        const statusSpy = res.status as SinonStub;
-        const statusJson = res.json as SinonSpy;
+        const statusStub = res.status as SinonStub;
+        const jsonSpy = res.json as SinonSpy;
 
-        assert.strictEqual(statusSpy.calledWith(400), true);
+        assert.strictEqual(statusStub.calledWith(400), true);
         assert.strictEqual(
-          statusJson.calledWith({
+          jsonSpy.calledWith({
             message: responseMessages.BAD_REQUEST,
             errors: [
               { message: userFailedValidation.USERNAME_REQUIRED },
@@ -67,12 +67,12 @@ describe("User registration integration tests", () => {
           await middleware(req as Request, res as Response, next);
         }
 
-        const statusSpy = res.status as SinonStub;
-        const statusJson = res.json as SinonSpy;
+        const statusStub = res.status as SinonStub;
+        const jsonSpy = res.json as SinonSpy;
 
-        assert.strictEqual(statusSpy.calledWith(400), true);
+        assert.strictEqual(statusStub.calledWith(400), true);
         assert.strictEqual(
-          statusJson.calledWith({
+          jsonSpy.calledWith({
             message: responseMessages.BAD_REQUEST,
             errors: [{ message: userFailedValidation.USERNAME_MIN_LENGTH }],
           }),
@@ -88,12 +88,12 @@ describe("User registration integration tests", () => {
           await middleware(req as Request, res as Response, next);
         }
 
-        const statusSpy = res.status as SinonStub;
-        const statusJson = res.json as SinonSpy;
+        const statusStub = res.status as SinonStub;
+        const jsonSpy = res.json as SinonSpy;
 
-        assert.strictEqual(statusSpy.calledWith(400), true);
+        assert.strictEqual(statusStub.calledWith(400), true);
         assert.strictEqual(
-          statusJson.calledWith({
+          jsonSpy.calledWith({
             message: responseMessages.BAD_REQUEST,
             errors: [{ message: userFailedValidation.USERNAME_MAX_LENGTH }],
           }),
@@ -109,12 +109,12 @@ describe("User registration integration tests", () => {
           await middleware(req as Request, res as Response, next);
         }
 
-        const statusSpy = res.status as SinonStub;
-        const statusJson = res.json as SinonSpy;
+        const statusStub = res.status as SinonStub;
+        const jsonSpy = res.json as SinonSpy;
 
-        assert.strictEqual(statusSpy.calledWith(400), true);
+        assert.strictEqual(statusStub.calledWith(400), true);
         assert.strictEqual(
-          statusJson.calledWith({
+          jsonSpy.calledWith({
             message: responseMessages.BAD_REQUEST,
             errors: [
               { message: userFailedValidation.EMAIL_REQUIRED },
@@ -135,12 +135,12 @@ describe("User registration integration tests", () => {
               await middleware(req as Request, res as Response, next);
             }
 
-            const statusSpy = res.status as SinonStub;
-            const statusJson = res.json as SinonSpy;
+            const statusStub = res.status as SinonStub;
+            const jsonSpy = res.json as SinonSpy;
 
-            assert.strictEqual(statusSpy.calledWith(400), true);
+            assert.strictEqual(statusStub.calledWith(400), true);
             assert.strictEqual(
-              statusJson.calledWith({
+              jsonSpy.calledWith({
                 message: responseMessages.BAD_REQUEST,
                 errors: [{ message: userFailedValidation.EMAIL_INVALID }],
               }),
@@ -158,12 +158,12 @@ describe("User registration integration tests", () => {
           await middleware(req as Request, res as Response, next);
         }
 
-        const statusSpy = res.status as SinonStub;
-        const statusJson = res.json as SinonSpy;
+        const statusStub = res.status as SinonStub;
+        const jsonSpy = res.json as SinonSpy;
 
-        assert.strictEqual(statusSpy.calledWith(400), true);
+        assert.strictEqual(statusStub.calledWith(400), true);
         assert.strictEqual(
-          statusJson.calledWith({
+          jsonSpy.calledWith({
             message: responseMessages.BAD_REQUEST,
             errors: [
               { message: userFailedValidation.PASSWORD_REQUIRED },
@@ -183,12 +183,12 @@ describe("User registration integration tests", () => {
           await middleware(req as Request, res as Response, next);
         }
 
-        const statusSpy = res.status as SinonStub;
-        const statusJson = res.json as SinonSpy;
+        const statusStub = res.status as SinonStub;
+        const jsonSpy = res.json as SinonSpy;
 
-        assert.strictEqual(statusSpy.calledWith(400), true);
+        assert.strictEqual(statusStub.calledWith(400), true);
         assert.strictEqual(
-          statusJson.calledWith({
+          jsonSpy.calledWith({
             message: responseMessages.BAD_REQUEST,
             errors: [{ message: userFailedValidation.PASSWORD_MIN_LENGTH }],
           }),
@@ -206,12 +206,12 @@ describe("User registration integration tests", () => {
               await middleware(req as Request, res as Response, next);
             }
 
-            const statusSpy = res.status as SinonStub;
-            const statusJson = res.json as SinonSpy;
+            const statusStub = res.status as SinonStub;
+            const jsonSpy = res.json as SinonSpy;
 
-            assert.strictEqual(statusSpy.calledWith(400), true);
+            assert.strictEqual(statusStub.calledWith(400), true);
             assert.strictEqual(
-              statusJson.calledWith({
+              jsonSpy.calledWith({
                 message: responseMessages.BAD_REQUEST,
                 errors: [
                   {
@@ -234,12 +234,12 @@ describe("User registration integration tests", () => {
           await middleware(req as Request, res as Response, next);
         }
 
-        const statusSpy = res.status as SinonStub;
-        const statusJson = res.json as SinonSpy;
+        const statusStub = res.status as SinonStub;
+        const jsonSpy = res.json as SinonSpy;
 
-        assert.strictEqual(statusSpy.calledWith(400), true);
+        assert.strictEqual(statusStub.calledWith(400), true);
         assert.strictEqual(
-          statusJson.calledWith({
+          jsonSpy.calledWith({
             message: responseMessages.BAD_REQUEST,
             errors: [
               { message: userFailedValidation.USERNAME_REQUIRED },
@@ -282,12 +282,12 @@ describe("User registration integration tests", () => {
         await middleware(req as Request, res as Response, next);
       }
 
-      const statusSpy = res.status as SinonStub;
-      const statusJson = res.json as SinonSpy;
+      const statusStub = res.status as SinonStub;
+      const jsonSpy = res.json as SinonSpy;
 
-      assert.strictEqual(statusSpy.calledWith(500), true);
+      assert.strictEqual(statusStub.calledWith(500), true);
       assert.strictEqual(
-        statusJson.calledWith({ message: commonService.SERVER_ERROR }),
+        jsonSpy.calledWith({ message: commonService.SERVER_ERROR }),
         true
       );
     });
