@@ -1,6 +1,6 @@
 # Task Manager API test plan
 
-Document version 1.0.2
+Document version 1.0.3
 
 ## Introduction
 
@@ -18,10 +18,12 @@ Unit tests are conducted per layer and can be further divided into **validation-
 
 #### Domain layer
 
-- User model unit tests [✔],
-- Task model unit tests [✔]
+Domain layer unit test suites:
 
-In the domain layer, unit tests contain different scenarios that will trigger the Mongoose schema's validators. The main directories and files tested are:
+- User model [✔],
+- Task model [✔]
+
+In the domain layer, unit tests contain different scenarios that trigger the Mongoose schema's validators. The directories and files included are:
 
 ```text
 └── src
@@ -47,10 +49,12 @@ Central to the domain layer's unit tests is the synchronous validation process t
 
 #### Persistence layer
 
-- User repository unit tests [✔],
-- Task repository unit tests [✔]
+Persistence layer unit test suites:
 
-The unit tests of the persistence layer contain scenarios that make a promise to be rejected given specific inputs. The main directories and files under test are:
+- User repository [✔],
+- Task repository [✔]
+
+The unit tests of the persistence layer contain scenarios in which a promise is rejected given specific inputs. The main directories and files under test are:
 
 ```text
 └── src
@@ -61,10 +65,12 @@ The unit tests of the persistence layer contain scenarios that make a promise to
 
 #### Service layer
 
-- User service unit tests [✔],
-- Task service unit tests [✔]
+Service layer unit test suites:
 
-In a similar fashion to the persistence layer, the unit tests of the service layer implement scenarios in which a promise is rejected given certain inputs. These tests are primarily testing the following directories and files:
+- User service [✔],
+- Task service [✔]
+
+In a similar fashion to the persistence layer, the unit tests of the service layer implement scenarios in which a promise is rejected given certain inputs. They are primarily probing the following directories and files:
 
 ```text
 └── src
@@ -80,15 +86,28 @@ In a similar fashion to the persistence layer, the unit tests of the service lay
         └── user.service.ts
 ```
 
-#### Presentation layer
-
-- [Under development]
-
 ### Integration tests
 
 ### Backend integration test(s)
 
-[Under development]
+Backend integration test suites:
+
+- User registration [✔],
+- User update [✔],
+- Task creation [✔],
+- Task update [✔],
+- Task deletion [✔],
+- Task fetching by subject [✔],
+- Task fetching by username [✔],
+- Task fetching by status [✔],
+
+Each test suite is divided into **validation-oriented** and **promise-oriented** tests. The validation-oriented tests create validation errors with specific input to check the behavior of both the express-validator middleware and that of the controllers receiving the errors.
+
+![A diagram showing the main parts of the presentation layer probed by the validation-oriented backend integration tests](img/backend_integration_testing_diagram_1.png)
+
+The promise-oriented tests generate promise rejections, which are caught by the service layer and then handled by the controllers in the presentation layer.
+
+![A diagram showing the application layers probed by the promise-oriented backend integration tests](img/backend_integration_testing_diagram_2.png)
 
 ### Auth logic integration test(s)
 
