@@ -1,7 +1,7 @@
 /**
  * Task repository.
  *
- * @module src/persistence/task
+ * @module src/persistence/task.repository
  * @async @function getTasksByStatus
  * @async @function getTasksByUsername
  * @async @function getTaskBySubject
@@ -16,7 +16,7 @@ import ITask from "../domain/interfaces/iTask.interface";
 /**
  * Returns all tasks with the specified status.
  *
- * @memberof module:src/persistence/task
+ * @memberof module:src/persistence/task.repository
  * @async @function getTasksByStatus
  * @param {string} status The current status of the task.
  * @returns {Promise<Array<ITask>>} A promise that resolves to an array of task objects or an empty array.
@@ -30,7 +30,7 @@ export const getTasksByStatus = async (
 /**
  * Returns all tasks with the specified username.
  *
- * @memberof module:src/persistence/task
+ * @memberof module:src/persistence/task.repository
  * @async @function getTasksByUsername
  * @param {string} username The username of the task author.
  * @returns {Promise<Array<ITask>>} A promise that resolves to an array of task objects or an empty array.
@@ -42,7 +42,7 @@ const getTasksByUsername = async (username: string): Promise<Array<ITask>> => {
 /**
  * Returns the task with the specified subject.
  *
- * @memberof module:src/persistence/task
+ * @memberof module:src/persistence/task.repository
  * @async @function getTaskBySubject
  * @param {string} subject The subject of the task.
  * @returns {Promise<ITask | null>} A promise that resolves to a task object or null.
@@ -54,7 +54,7 @@ const getTaskBySubject = async (subject: string): Promise<ITask | null> => {
 /**
  * Adds a new task to the 'tasks' collection.
  *
- * @memberof module:src/persistence/task
+ * @memberof module:src/persistence/task.repository
  * @async @function addTask
  * @param {ITask} newTask The new task to be added.
  * @returns {Promise<ITask>} A promise that resolves to the saved document in the form of a task object.
@@ -66,7 +66,7 @@ const addTask = async (newTask: ITask) => {
 /**
  * Updates the fields of a specified task.
  *
- * @memberof module:src/persistence/task
+ * @memberof module:src/persistence/task.repository
  * @async @function updateTask
  * @param {mongoose.Types.ObjectId} id The id of the task document.
  * @param {Object} updateDataObj The new data to be persisted.
@@ -86,7 +86,7 @@ const updateTask = async (
 /**
  * Deletes a task.
  *
- * @memberof module:src/persistence/task
+ * @memberof module:src/persistence/task.repository
  * @async @function
  * @param {mongoose.Types.ObjectId} id The id of the task document.
  * @returns {Promise<ITask | null>} A promise that resolves to the deleted document in the form of a user object or null.

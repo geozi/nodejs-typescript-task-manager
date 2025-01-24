@@ -1,12 +1,12 @@
 /**
  * User-related service layer HTTP responses.
- * @module src/service/serviceResources/userService
+ * @module src/service/serviceResources/userService.response
  */
 
 /**
  * Contains user-related HTTP response messages provided by the service layer to the presentation layer.
  *
- * @memberof module:src/service/serviceResources/userService
+ * @memberof module:src/service/serviceResources/userService.response
  * @type {Object}
  * @property {string} USER_NOT_FOUND - Message sent when the requested user document is not found.
  * @property {string} USERS_NOT_FOUND - Message sent when the requested user documents are not found.

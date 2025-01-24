@@ -1,6 +1,6 @@
 /**
  * User schema.
- * @module src/models/user
+ * @module src/models/user.model
  */
 import { Schema, model } from "mongoose";
 import IUser from "../interfaces/iUser.interface";
@@ -11,7 +11,7 @@ import regularExpressions from "../domainResources/validationRegExp";
 /**
  * User schema for persistence in MongoDB.
  *
- * @memberof module:src/models/user
+ * @memberof module:src/models/user.model
  * @type {Schema<IUser>}
  * @property {string} username - The username of the user.
  * @property {string} email - The email of the user.

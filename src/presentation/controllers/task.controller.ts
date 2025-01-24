@@ -1,6 +1,6 @@
 /**
  * Task controller.
- * @module src/presentation/controllers/task
+ * @module src/presentation/controllers/task.controller
  */
 
 import { validationResult } from "express-validator";
@@ -16,7 +16,7 @@ import ITaskUpdate from "../interfaces/iTaskUpdate.interface";
 /**
  * Middleware array that contains task creation logic.
  *
- * @memberof module:src/presentation/controllers/task
+ * @memberof module:src/presentation/controllers/task.controller
  * @type {Array<Object>}
  * @property {ValidationChain[]} taskCreationRules - Express validation rules for task creation.
  * @property {Function} anonymousAsyncFunction - Handles task creation requests and responses.
@@ -70,7 +70,7 @@ const createTask = [
 /**
  * Middleware array that contains task update logic.
  *
- * @memberof module:src/presentation/controllers/task
+ * @memberof module:src/presentation/controllers/task.controller
  * @type {Array<Object>}
  * @property {ValidationChain[]} taskUpdateRules - Express validation rules for task update.
  * @property {Function} anonymousAsyncFunction - Handles task update requests and responses.
@@ -129,7 +129,7 @@ const updateTask = [
 /**
  * Middleware array that contains task deletion logic.
  *
- * @memberof module:src/presentation/controllers/task
+ * @memberof module:src/presentation/controllers/task.controller
  * @type {Array<Object>}
  * @property {ValidationChain[]} taskDeletionRules - Express validation rules for task deletion.
  * @property {Function} anonymousAsyncFunction - Handles task deletion requests and responses.
@@ -182,7 +182,7 @@ const deleteTask = [
 /**
  * Middleware array that contains username-based task fetching logic.
  *
- * @memberof module:src/presentation/controllers/task
+ * @memberof module:src/presentation/controllers/task.controller
  * @type {Array<Object>}
  * @property {ValidationChain[]} taskFetchingByUsernameRules - Express validation rules for username-based task fetching.
  * @property {Function} anonymousAsyncFunction - Handles requests and responses for username-based task fetching.
@@ -235,7 +235,7 @@ const fetchTasksByUsername = [
 /**
  * Middleware array that contains subject-based task fetching.
  *
- * @memberof module:src/presentation/controllers/task
+ * @memberof module:src/presentation/controllers/task.controller
  * @type {Array<Object>}
  * @property {ValidationChain[]} taskFetchingBySubjectRules - Express validation rules for subject-based task fetching.
  * @property {Function} anonymousAsyncFunction - Handles requests and responses for subject-based task fetching.
@@ -288,7 +288,7 @@ const fetchTaskBySubject = [
 /**
  * Middleware array that contains status-based task fetching.
  *
- * @memberof module:src/presentation/controllers/task
+ * @memberof module:src/presentation/controllers/task.controller
  * @type {Array<Object>}
  * @property {ValidationChain[]} taskFetchingByStatusRules - Express validation rules for status-based task fetching.
  * @property {Function} anonymousAsyncFunction - Handles requests and responses for status-based task fetching.

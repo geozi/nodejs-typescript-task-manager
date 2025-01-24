@@ -1,7 +1,7 @@
 /**
  * User repository.
  *
- * @module src/persistence/user
+ * @module src/persistence/user.repository
  * @async @function getUserByEmail
  * @async @function getUserByUsername
  * @async @function addUser
@@ -14,7 +14,7 @@ import IUser from "../domain/interfaces/iUser.interface";
 /**
  * Returns the user with the specified username.
  *
- * @memberof module:src/persistence/user
+ * @memberof module:src/persistence/user.repository
  * @async @function getUserByUsername
  * @param {string} username The username of the user.
  * @returns {Promise<IUser | null>} A promise that resolves to a user object or null.
@@ -26,7 +26,7 @@ const getUserByUsername = async (username: string): Promise<IUser | null> => {
 /**
  * Returns the user with the specified email.
  *
- * @memberof module:src/persistence/user
+ * @memberof module:src/persistence/user.repository
  * @async @function getUserByEmail
  * @param {string} email  The email of the user.
  * @returns {Promise<IUser | null>} A promise that resolves to a user object or null.
@@ -38,7 +38,7 @@ const getUserByEmail = async (email: string): Promise<IUser | null> => {
 /**
  * Adds a new user to the 'users' collection.
  *
- * @memberof module:src/persistence/user
+ * @memberof module:src/persistence/user.repository
  * @async @function addUser
  * @param {IUser} newUser The new user to be added.
  * @returns {Promise<IUser>} A promise that resolves to the saved document in the form of a user object.
@@ -50,7 +50,7 @@ const addUser = async (newUser: IUser): Promise<IUser> => {
 /**
  * Updates the information of a specified user.
  *
- * @memberof module:src/persistence/user
+ * @memberof module:src/persistence/user.repository
  * @async @function updateUserInfo
  * @param {mongoose.Types.ObjectId} id The id of the user document.
  * @param {Object} updateDataObj The new data to be persisted.

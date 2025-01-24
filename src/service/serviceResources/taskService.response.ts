@@ -1,12 +1,12 @@
 /**
  * Task-related service layer HTTP responses.
- * @module src/service/serviceResources/taskService
+ * @module src/service/serviceResources/taskService.response
  */
 
 /**
  * Contains task-related HTTP response messages provided by the service layer to the presentation layer.
  *
- * @memberof module:src/service/serviceResources/taskService
+ * @memberof module:src/service/serviceResources/taskService.response
  * @type {Object}
  * @property {string} TASK_NOT_FOUND - Message sent when the requested task document is not found.
  * @property {string} TASK_NOT_FOUND - Message sent when the requested task documents are not found.

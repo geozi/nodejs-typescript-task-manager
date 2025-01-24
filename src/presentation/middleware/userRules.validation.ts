@@ -1,6 +1,6 @@
 /**
  * Express validation rules for user-related operations.
- * @module src/presentation/middleware/userRules
+ * @module src/presentation/middleware/userRules.validation
  */
 
 import { check, ValidationChain } from "express-validator";
@@ -10,7 +10,7 @@ import regularExpressions from "../../domain/domainResources/validationRegExp";
 /**
  * Returns a validation chain for user registration.
  *
- * @memberof module:src/presentation/middleware/userRules
+ * @memberof module:src/presentation/middleware/userRules.validation
  * @function userRegistrationRules
  * @returns {ValidationChain[]} Validation chain.
  */
@@ -41,7 +41,7 @@ const userRegistrationRules = (): ValidationChain[] => {
 /**
  * Returns a validation chain for user profile update.
  *
- * @memberof module:src/presentation/middleware/userRules
+ * @memberof module:src/presentation/middleware/userRules.validation
  * @function userProfileUpdateRules
  * @returns {ValidationChain[]} Validation chain.
  */
@@ -76,7 +76,7 @@ const userProfileUpdateRules = (): ValidationChain[] => {
 /**
  * Returns a validation chain for email-based user retrieval.
  *
- * @memberof module:src/presentation/middleware/userRules
+ * @memberof module:src/presentation/middleware/userRules.validation
  * @function userRetrievalByEmailRules
  * @returns {ValidationChain[]} Validation chain.
  */
@@ -93,7 +93,7 @@ const userRetrievalByEmailRules = (): ValidationChain[] => {
 /**
  * Returns a validation chain for username-based user retrieval.
  *
- * @memberof module:src/presentation/middleware/userRules
+ * @memberof module:src/presentation/middleware/userRules.validation
  * @function userRetrievalByUsernameRules
  * @returns {ValidationChain[]} Validation chain.
  */

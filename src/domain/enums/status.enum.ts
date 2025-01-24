@@ -1,12 +1,12 @@
 /**
  * Status enum.
- * @module src/domain/enums/status
+ * @module src/domain/enums/status.enum
  */
 
 /**
  * Enum for status categories.
  *
- * @memberof module:src/domain/enums/status
+ * @memberof module:src/domain/enums/status.enum
  * @readonly
  * @enum {string}
  */

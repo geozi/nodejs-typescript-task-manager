@@ -1,6 +1,6 @@
 /**
  * IUser interface.
- * @module src/domain/interfaces/iUser
+ * @module src/domain/interfaces/iUser.interface
  */
 import { Document } from "mongoose";
 
@@ -8,7 +8,7 @@ import { Document } from "mongoose";
  * Represents a User.
  *
  * @interface
- * @memberof module:src/domain/interfaces/iUser
+ * @memberof module:src/domain/interfaces/iUser.interface
  * @extends {Document}
  * @property {string} username - The username of the user.
  * @property {string} email - The email of the user.

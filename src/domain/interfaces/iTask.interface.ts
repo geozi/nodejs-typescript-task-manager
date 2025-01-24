@@ -1,6 +1,6 @@
 /**
  * ITask interface.
- * @module src/domain/interfaces/iTask
+ * @module src/domain/interfaces/iTask.interface
  */
 import { Document } from "mongoose";
 
@@ -8,7 +8,7 @@ import { Document } from "mongoose";
  * Represents a Task.
  *
  * @interface
- * @memberof module:src/domain/interfaces/iTask
+ * @memberof module:src/domain/interfaces/iTask.interface
  * @extends {Document}
  * @property {string} subject The subject of the task.
  * @property {string} description The description of the task.

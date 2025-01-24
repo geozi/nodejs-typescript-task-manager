@@ -1,12 +1,12 @@
 /**
  * Server error.
- * @module src/service/errors/server
+ * @module src/service/errors/server.error
  */
 
 /**
  * Custom error class for technical issues arising at the backend (500).
  *
- * @memberof module:src/service/errors/server
+ * @memberof module:src/service/errors/server.error
  * @extends {Error}
  */
 class ServerError extends Error {

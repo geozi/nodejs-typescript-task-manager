@@ -1,12 +1,12 @@
 /**
  * Role enum.
- * @module src/domain/enums/role
+ * @module src/domain/enums/role.enum
  */
 
 /**
  * Enum for user roles.
  *
- * @memberof module:src/domain/enums/role
+ * @memberof module:src/domain/enums/role.enum
  * @readonly
  * @enum {string}
  */

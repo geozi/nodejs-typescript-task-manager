@@ -1,6 +1,6 @@
 /**
  * Task schema.
- * @module src/models/task
+ * @module src/models/task.model
  */
 import { Schema, model } from "mongoose";
 import ITask from "../interfaces/iTask.interface";
@@ -12,7 +12,7 @@ import userFailedValidation from "../domainResources/userValidationMessages";
 /**
  * Task schema for persistence in MongoDB.
  *
- * @memberof module:src/models/task
+ * @memberof module:src/models/task.model
  * @type {Schema<ITask>}
  * @property {string} subject - The subject of the task.
  * @property {string} description - The description of the task.
