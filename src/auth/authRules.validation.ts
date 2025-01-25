@@ -9,9 +9,6 @@ import userFailedValidation from "../domain/resources/userValidationMessages";
 
 /**
  * Returns a validation chain for user login.
- *
- * @memberof module:src/auth/authRules
- * @function userLoginRules
  * @returns {ValidationChain[]} Validation chain.
  */
 const userLoginRules = (): ValidationChain[] => {
@@ -34,9 +31,6 @@ const userLoginRules = (): ValidationChain[] => {
 };
 
 /** Returns a validation chain for header validation.
- *
- * @memberof module:src/auth/authRules
- * @function headerValidationRules
  * @returns {ValidationChain[]} - Validation chain.
  */
 const headerValidationRules = (): ValidationChain[] => {

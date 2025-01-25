@@ -11,9 +11,6 @@ import userFailedValidation from "../../domain/resources/userValidationMessages"
 
 /**
  * Returns a validation chain for task creation.
- *
- * @memberof module:src/presentation/middleware/taskRules.validation
- * @function taskCreationRules
  * @returns {ValidationChain[]} Validation chain.
  */
 const taskCreationRules = (): ValidationChain[] => {
@@ -39,8 +36,6 @@ const taskCreationRules = (): ValidationChain[] => {
 
 /**
  * Returns a validation chain for task update.
- * @memberof module:src/presentation/middleware/taskRules.validation
- * @function taskUpdateRules
  * @returns {ValidationChain[]} Validation chain.
  */
 const taskUpdateRules = (): ValidationChain[] => {
@@ -72,8 +67,6 @@ const taskUpdateRules = (): ValidationChain[] => {
 
 /**
  * Returns a validation chain for task deletion.
- * @memberof module:src/presentation/middleware/taskRules.validation
- * @function taskDeletionRules
  * @returns {ValidationChain[]} Validation chain.
  */
 const taskDeletionRules = (): ValidationChain[] => {
@@ -90,8 +83,6 @@ const taskDeletionRules = (): ValidationChain[] => {
 
 /**
  * Returns a validation chain for username-based task fetching.
- * @memberof module:src/presentation/middleware/taskRules.validation
- * @function taskFetchingByUsernameRules
  * @returns {ValidationChain[]} Validation chain.
  */
 const taskFetchingByUsernameRules = (): ValidationChain[] => {
@@ -108,8 +99,6 @@ const taskFetchingByUsernameRules = (): ValidationChain[] => {
 
 /**
  * Returns a validation chain for subject-based task fetching.
- * @memberof module:src/presentation/middleware/taskRules.validation
- * @function taskFetchingBySubjectRules
  * @returns {ValidationChain[]} Validation chain.
  */
 const taskFetchingBySubjectRules = (): ValidationChain[] => {
@@ -126,8 +115,6 @@ const taskFetchingBySubjectRules = (): ValidationChain[] => {
 
 /**
  * Returns a validation chain for status-based task fetching.
- * @memberof module:src/presentation/middleware/taskRules.validation
- * @function taskFetchingBySubjectRules
  * @returns {ValidationChain[]} Validation chain.
  */
 const taskFetchingByStatusRules = (): ValidationChain[] => {

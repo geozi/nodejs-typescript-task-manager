@@ -1,11 +1,6 @@
 /**
  * User service.
- *
  * @module src/service/user.service
- * @async @function retrieveUserByEmail
- * @async @function retrieveUserByUsername
- * @async @function createUserProfile
- * @async @function updateUserProfile
  */
 import mongoose from "mongoose";
 import IUser from "../domain/interfaces/iUser.interface";
@@ -20,8 +15,6 @@ import IUserUpdate from "../presentation/interfaces/iUserUpdate.interface";
 /**
  * Calls on the persistence layer to retrieve the user with the specified username.
  *
- * @memberof module:src/service/user.service
- * @async @function retrieveUserByUsername
  * @param {string} username The username of the user.
  * @returns {Promise<IUser>} A promise that resolves to a user object.
  * @throws {NotFoundError | ServerError}
@@ -46,8 +39,6 @@ const retrieveUserByUsername = async (username: string): Promise<IUser> => {
 /**
  * Calls on the persistence layer to retrieve the user with the specified email.
  *
- * @memberof module:src/service/user.service
- * @async @function retrieveUserByEmail
  * @param {string} email The email of the user.
  * @returns {Promise<IUser>} A promise that resolves to a user object.
  * @throws {NotFoundError | ServerError}
@@ -72,8 +63,6 @@ const retrieveUserByEmail = async (email: string): Promise<IUser> => {
 /**
  * Calls on the persistence layer to add a new user to the database.
  *
- * @memberof module:src/service/user.service
- * @async @function createUserProfile
  * @param {IUser} newUser The new user profile to be created.
  * @returns {Promise<IUser>} A promise that resolves to the newly saved user object.
  * @throws {ServerError}
@@ -90,8 +79,6 @@ const createUserProfile = async (newUser: IUser): Promise<IUser> => {
 /**
  * Calls on the persistence layer to update a user profile.
  *
- * @memberof module:src/service/user.service
- * @async @function updateUserProfile
  * @param {IUserUpdate} userUpdateInfo A custom type object containing the information to be updated in a user profile.
  * @returns {Promise<IUser>} A promise that resolves to the updated user object.
  * @throws {NotFoundError | ServerError}

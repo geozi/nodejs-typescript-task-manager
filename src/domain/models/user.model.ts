@@ -11,7 +11,6 @@ import regularExpressions from "../resources/validationRegExp";
 /**
  * User schema for persistence in MongoDB.
  *
- * @memberof module:src/models/user.model
  * @type {Schema<IUser>}
  * @property {string} username - The username of the user.
  * @property {string} email - The email of the user.

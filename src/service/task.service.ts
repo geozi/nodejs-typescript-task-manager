@@ -1,13 +1,6 @@
 /**
  * Task service.
- *
  * @module src/service/task.service
- * @async @function retrieveTasksByStatus
- * @async @function retrieveTasksByUsername
- * @async @function retrieveTaskBySubject
- * @async @function createTaskRecord
- * @async @function updateTaskRecord
- * @async @function deleteTaskRecord
  */
 
 import mongoose from "mongoose";
@@ -22,8 +15,6 @@ import taskServiceResponses from "./resources/taskService.response";
 /**
  * Calls on the persistence layer to retrieve all tasks having the specified status.
  *
- * @memberof module:src/service/task.service
- * @async @function retrieveTasksByStatus
  * @param {string} status The status of a task.
  * @returns {Promise<Array<ITask>>} A promise that resolves to an array of task objects.
  * @throws {NotFoundError | ServerError}
@@ -47,8 +38,6 @@ const retrieveTasksByStatus = async (status: string): Promise<Array<ITask>> => {
 /**
  * Calls on the persistence layer to retrieve all tasks having the specified username.
  *
- * @memberof module:src/service/task.service
- * @async @function retrieveTasksByUsername
  * @param {string} username The username of the task's author.
  * @returns {Promise<Array<ITask>>} A promise that resolves to an array of task objects.
  * @throws {NotFoundError | ServerError}
@@ -74,8 +63,6 @@ const retrieveTasksByUsername = async (
 /**
  * Calls on the persistence layer to retrieve a task with the specified subject.
  *
- * @memberof module:src/service/task.service
- * @async @function retrieveTaskBySubject
  * @param {string} subject The subject of the task.
  * @returns {Promise<ITask>} A promise that resolves to a task object.
  * @throws {NotFoundError | ServerError}
@@ -99,8 +86,6 @@ const retrieveTaskBySubject = async (subject: string): Promise<ITask> => {
 /**
  * Calls on the persistence layer to add a new task to the database.
  *
- * @memberof module:src/service/task.service
- * @async @function createTaskRecord
  * @param {ITask} newTask The new task to be added.
  * @returns {Promise<ITask>} A promise that resolves to the newly saved task object.
  * @throws {ServerError}
@@ -117,8 +102,6 @@ const createTaskRecord = async (newTask: ITask) => {
 /**
  * Calls on the persistence layer to update a task (as a general user).
  *
- * @memberof module:src/service/task.service
- * @async @function updateTaskRecord
  * @param {ITaskUpdateGeneral} taskUpdateInfo A custom type object containing the new information to be added to an existing task.
  * @returns {Promise<ITask>} A promise that resolves to the updated task object.
  * @throws {NotFoundError | ServerError}
@@ -155,8 +138,6 @@ const updateTaskRecord = async (
 /**
  * Calls on the persistence layer to delete a task.
  *
- * @memberof module:src/service/task.service
- * @async @function deleteTaskRecord
  * @param {string} id The id of the task.
  * @returns {Promise<ITask>} A promise that resolves to the deleted task object.
  * @throws {NotFoundError | ServerError}

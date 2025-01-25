@@ -22,7 +22,6 @@ dotenv.config();
 /**
  * Middleware array that contains user login logic.
  *
- * @memberof src/auth/auth.controller
  * @type {Array<Object>}
  * @property {ValidationChain[]} userLoginRules - Express validation rules for user login.
  * @property {Function} anonymousAsyncFunction - Handles user login requests and responses.
@@ -33,8 +32,6 @@ const loginUser = [
   /**
    * Processes HTTP requests for user login.
    *
-   * @memberof loginUser
-   * @async @function anonymousAsyncFunction
    * @param {Request} req - An HTTP request.
    * @param {Response} res - An HTTP response.
    * @returns {Promise<void>} A promise that resolves void.
@@ -84,7 +81,6 @@ const loginUser = [
 /**
  * Middleware array that contains token validation logic.
  *
- * @memberof module:src/auth/auth.controller
  * @type {Array<Object>}
  * @property {ValidationChain[]} headerValidationRules - Express validation rules for token validation.
  * @property {Function} - Handles token validation processes.
@@ -95,8 +91,6 @@ const verifyToken = [
   /**
    * Performs token validation.
    *
-   * @memberof verifyToken
-   * @async @function anonymousAsyncFunction
    * @param {Request} req - An HTTP request.
    * @param {Response} res - An HTTP response.
    * @param {NextFunction} next - A function to move to the next step of the middleware path.

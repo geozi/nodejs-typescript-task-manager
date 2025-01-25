@@ -5,8 +5,6 @@
 
 /**
  * Custom error class for technical issues arising at the backend (500).
- *
- * @memberof module:src/service/errors/server.error
  * @extends {Error}
  */
 class ServerError extends Error {
@@ -14,7 +12,6 @@ class ServerError extends Error {
 
   /**
    * Creates an instance of ServerError.
-   * @memberof ServerError
    * @param {string} message The error message
    */
   constructor(message: string) {

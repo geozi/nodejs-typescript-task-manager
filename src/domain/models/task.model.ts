@@ -12,7 +12,6 @@ import userFailedValidation from "../resources/userValidationMessages";
 /**
  * Task schema for persistence in MongoDB.
  *
- * @memberof module:src/models/task.model
  * @type {Schema<ITask>}
  * @property {string} subject - The subject of the task.
  * @property {string} description - The description of the task.

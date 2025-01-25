@@ -5,8 +5,6 @@
 
 /**
  * Custom error class for not founding the requested documents (404).
- *
- * @memberof module:src/service/errors/notFound.error
  * @extends {Error}
  */
 class NotFoundError extends Error {
@@ -14,7 +12,6 @@ class NotFoundError extends Error {
 
   /**
    * Creates an instance of NotFoundError.
-   * @memberof NotFoundError
    * @param {string} message The error message.
    */
   constructor(message: string) {

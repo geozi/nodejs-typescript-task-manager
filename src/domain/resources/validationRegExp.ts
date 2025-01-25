@@ -6,7 +6,6 @@
 /**
  * Contains regular expressions used in validation processes.
  *
- * @memberof module:src/resources/validationRegExp
  * @type {Object}
  * @property {RegExp} EMAIL_REGEX - Regular expression used in checking email validity.
  * @property {RegExp} ID_REGEX - Regular expression used in checking id validity.
@@ -15,21 +14,18 @@
 const regularExpressions = {
   /**
    * Regular expression used in checking email validity.
-   * @memberof regularExpressions
    * @type {RegExp}
    */
   EMAIL_REGEX: new RegExp(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/),
 
   /**
    * Regular expression used in checking id validity.
-   * @memberof regularExpressions
    * @type {RegExp}
    */
   ID_REGEX: new RegExp(/^[0-9a-f]{1,}$/),
 
   /**
    * Regular expression used in checking password validity.
-   * @memberof regularExpressions
    * @type {RegExp}
    */
   PASSWORD_REGEX: new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/),

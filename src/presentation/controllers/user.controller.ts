@@ -16,7 +16,6 @@ import IUserUpdate from "../interfaces/iUserUpdate.interface";
 /**
  * Middleware array that contains user registration logic.
  *
- * @memberof module:src/presentation/controllers/user.controller
  * @type {Array<Object>}
  * @property {ValidationChain[]} userRegistrationRules - Express validation rules for user registration.
  * @property {Function} anonymousAsyncFunction - Handles user registration requests and responses.
@@ -27,8 +26,6 @@ const registerUser = [
   /**
    * Processes HTTP requests for user registration.
    *
-   * @memberof registerUser
-   * @async @function anonymousAsyncFunction
    * @param {Request} req - An HTTP request.
    * @param {Response} res - An HTTP response.
    * @returns {Promise<void>} A promise that resolves to void.
@@ -69,7 +66,6 @@ const registerUser = [
 /**
  * Middleware array that contains user update logic.
  *
- * @memberof module:src/presentation/controllers/user.controller
  * @type {Array<Object>}
  * @property {ValidationChain[]} userProfileUpdateRules - Express validation rules for user update.
  * @property {Function} anonymousAsyncFunction - Handles user update requests and responses.
@@ -80,8 +76,6 @@ const updateUserInfo = [
   /**
    * Processes HTTP requests for user update.
    *
-   * @memberof updateUser
-   * @async @function anonymousAsyncFunction
    * @param {Request} req - An HTTP request.
    * @param {Response} res - An HTTP response.
    * @returns {Promise<void>} - A promise that resolves to void.

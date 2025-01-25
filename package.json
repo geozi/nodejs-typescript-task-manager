@@ -9,7 +9,8 @@
     "test": "mocha",
     "testWithCoverage": "nyc mocha",
     "lint": "eslint .",
-    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/app.ts"
+    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/app.ts",
+    "generateDocs": "npx typedoc"
   },
   "keywords": [
     "middleware pattern",
@@ -45,6 +46,8 @@
     "nyc": "^17.1.0",
     "sinon": "^19.0.2",
     "ts-node": "^10.9.2",
+    "typedoc": "^0.27.6",
+    "typedoc-plugin-markdown": "^4.4.1",
     "typescript-eslint": "^8.20.0"
   }
 }
