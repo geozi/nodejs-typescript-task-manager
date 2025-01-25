@@ -8,7 +8,8 @@
     "build": "tsc",
     "test": "mocha",
     "testWithCoverage": "nyc mocha",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/app.ts"
   },
   "keywords": [
     "middleware pattern",

@@ -1,6 +1,6 @@
 # Task Manager API test plan
 
-Document version 1.0.3
+Document version 1.0.4
 
 ## Introduction
 
@@ -12,7 +12,7 @@ The project's tests are unit and integration tests. Completed tests are noted wi
 
 ## Unit tests
 
-Unit tests are conducted per layer and can be further divided into **validation-oriented** (synchronous) and **promise-oriented** (asynchronous).
+Unit tests are conducted per layer and can be further divided into **validation-oriented** and **promise-oriented**.
 
 ### Validation-oriented
 
@@ -21,26 +21,26 @@ Unit tests are conducted per layer and can be further divided into **validation-
 Domain layer unit test suites:
 
 - User model [✔],
-- Task model [✔]
+- Task model [✔].
 
 In the domain layer, unit tests contain different scenarios that trigger the Mongoose schema's validators. The directories and files included are:
 
 ```text
 └── src
     └── domain
-        ├── domainResources
-        │   ├── taskValidationMessages.ts
-        │   ├── userValidationMessages.ts
-        │   └── validationRegExp.ts
         ├── enums
         │   ├── role.enum.ts
         │   └── status.enum.ts
         ├── interfaces
         │   ├── iTask.interface.ts
         │   └── iUser.interface.ts
-        └── models
-            ├── task.model.ts
-            └── user.model.ts
+        ├── models
+        │   ├── task.model.ts
+        │   └── user.model.ts
+        └── resources
+            ├── taskValidationMessages.ts
+            ├── userValidationMessages.ts
+            └── validationRegExp.ts
 ```
 
 Central to the domain layer's unit tests is the synchronous validation process through the `doc.validateSync()` method as provided by Mongoose.
@@ -52,7 +52,7 @@ Central to the domain layer's unit tests is the synchronous validation process t
 Persistence layer unit test suites:
 
 - User repository [✔],
-- Task repository [✔]
+- Task repository [✔].
 
 The unit tests of the persistence layer contain scenarios in which a promise is rejected given specific inputs. The main directories and files under test are:
 
@@ -68,7 +68,7 @@ The unit tests of the persistence layer contain scenarios in which a promise is 
 Service layer unit test suites:
 
 - User service [✔],
-- Task service [✔]
+- Task service [✔].
 
 In a similar fashion to the persistence layer, the unit tests of the service layer implement scenarios in which a promise is rejected given certain inputs. They are primarily probing the following directories and files:
 
@@ -78,7 +78,7 @@ In a similar fashion to the persistence layer, the unit tests of the service lay
         ├── errors
         │   ├── notFound.error.ts
         │   └── server.error.ts
-        ├── serviceResources
+        ├── resources
         │   ├── commonService.response.ts
         │   ├── taskService.response.ts
         │   └── userService.response.ts
@@ -105,13 +105,28 @@ Each test suite is divided into **validation-oriented** and **promise-oriented**
 
 ![A diagram showing the main parts of the presentation layer probed by the validation-oriented backend integration tests](img/backend_integration_testing_diagram_1.png)
 
-The promise-oriented tests generate promise rejections, which are caught by the service layer and then handled by the controllers in the presentation layer.
+The promise-oriented tests generate promise rejections, which are caught by the service layer and, then, handled by the controllers in the presentation layer.
 
 ![A diagram showing the application layers probed by the promise-oriented backend integration tests](img/backend_integration_testing_diagram_2.png)
 
 ### Auth logic integration test(s)
 
-[Under development]
+Auth logic integration test suites:
+
+- User successful login [✔],
+- User failed login [✔]
+
+Following the same organizational pattern as in the case of the backend integration tests, each suite is divided into **validation-oriented** and **promise-oriented** tests. The only difference lies in the existence of a dedicated directory for all auth files.
+
+```text
+└── src
+    └── auth
+        ├── auth.controller.ts
+        ├── authResponseMessages.ts
+        ├── authRules.validation.ts
+        └── interfaces
+            └── iToken.interface.ts
+```
 
 ### Database integration test(s)
 
