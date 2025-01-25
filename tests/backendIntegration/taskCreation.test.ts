@@ -7,8 +7,8 @@ import sinon, { SinonStub, SinonSpy } from "sinon";
 import testInput from "../testInput";
 import { Request, Response } from "express";
 import responseMessages from "../../src/presentation/resources/responseMessages";
-import taskFailedValidation from "../../src/domain/domainResources/taskValidationMessages";
-import commonService from "../../src/service/serviceResources/commonService.response";
+import taskFailedValidation from "../../src/domain/resources/taskValidationMessages";
+import commonService from "../../src/service/resources/commonService.response";
 import assert from "assert";
 import taskRepository from "../../src/persistence/task.repository";
 

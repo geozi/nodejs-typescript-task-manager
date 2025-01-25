@@ -6,12 +6,12 @@ import testInput from "../testInput";
 import assert from "assert";
 import { Request, Response } from "express";
 import taskService from "../../src/service/task.service";
-import taskServiceResponses from "../../src/service/serviceResources/taskService.response";
-import commonService from "../../src/service/serviceResources/commonService.response";
+import taskServiceResponses from "../../src/service/resources/taskService.response";
+import commonService from "../../src/service/resources/commonService.response";
 import taskController from "../../src/presentation/controllers/task.controller";
 import responseMessages from "../../src/presentation/resources/responseMessages";
 import taskRepository from "../../src/persistence/task.repository";
-import userFailedValidation from "../../src/domain/domainResources/userValidationMessages";
+import userFailedValidation from "../../src/domain/resources/userValidationMessages";
 import ITask from "../../src/domain/interfaces/iTask.interface";
 
 describe("Username-based task fetching integration tests", () => {

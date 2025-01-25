@@ -12,8 +12,8 @@ import IUser from "../domain/interfaces/iUser.interface";
 import userRepository from "../persistence/user.repository";
 import NotFoundError from "./errors/notFound.error";
 import ServerError from "./errors/server.error";
-import userServiceResponses from "./serviceResources/userService.response";
-import commonServiceResponses from "./serviceResources/commonService.response";
+import userServiceResponses from "./resources/userService.response";
+import commonServiceResponses from "./resources/commonService.response";
 import bcrypt from "bcryptjs";
 import IUserUpdate from "../presentation/interfaces/iUserUpdate.interface";
 

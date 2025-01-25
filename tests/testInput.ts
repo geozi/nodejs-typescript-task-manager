@@ -60,9 +60,13 @@ const invalidUserInputs = {
   ] as [string, string][],
 };
 
+const testToken =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5ld1VzZXIiLCJpYXQiOjE1MTYyMzkwMjJ9.6X6NKeg86aa_8fjqOnI0iGsANvBUgBDBqV4Mc6Kiigg";
+
 export default {
   invalidTaskInputs,
   validTaskInput,
   validUserInput,
   invalidUserInputs,
+  testToken,
 };

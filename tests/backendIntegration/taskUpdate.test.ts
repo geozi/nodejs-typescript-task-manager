@@ -6,11 +6,11 @@ import testInput from "../testInput";
 import assert from "assert";
 import { Request, Response } from "express";
 import taskService from "../../src/service/task.service";
-import taskServiceResponses from "../../src/service/serviceResources/taskService.response";
-import commonService from "../../src/service/serviceResources/commonService.response";
+import taskServiceResponses from "../../src/service/resources/taskService.response";
+import commonService from "../../src/service/resources/commonService.response";
 import taskController from "../../src/presentation/controllers/task.controller";
 import responseMessages from "../../src/presentation/resources/responseMessages";
-import taskFailedValidation from "../../src/domain/domainResources/taskValidationMessages";
+import taskFailedValidation from "../../src/domain/resources/taskValidationMessages";
 import taskRepository from "../../src/persistence/task.repository";
 
 describe("Task update integration tests", () => {

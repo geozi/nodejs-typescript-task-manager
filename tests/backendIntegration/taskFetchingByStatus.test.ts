@@ -6,13 +6,13 @@ import testInput from "../testInput";
 import assert from "assert";
 import { Request, Response } from "express";
 import taskService from "../../src/service/task.service";
-import taskServiceResponses from "../../src/service/serviceResources/taskService.response";
-import commonService from "../../src/service/serviceResources/commonService.response";
+import taskServiceResponses from "../../src/service/resources/taskService.response";
+import commonService from "../../src/service/resources/commonService.response";
 import taskController from "../../src/presentation/controllers/task.controller";
 import responseMessages from "../../src/presentation/resources/responseMessages";
 import taskRepository from "../../src/persistence/task.repository";
 import ITask from "../../src/domain/interfaces/iTask.interface";
-import taskFailedValidation from "../../src/domain/domainResources/taskValidationMessages";
+import taskFailedValidation from "../../src/domain/resources/taskValidationMessages";
 
 describe("Status-based task fetching integration tests", () => {
   let req: Partial<Request>;

@@ -10,11 +10,13 @@ import authRules from "../auth/authRules.validation";
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { validationResult } from "express-validator";
-import User from "../domain/models/user.model";
 import ServerError from "../service/errors/server.error";
-import commonService from "../../src/service/serviceResources/commonService.response";
+import commonService from "../service/resources/commonService.response";
 import authRulesValidation from "../auth/authRules.validation";
 import IToken from "./interfaces/iToken.interface";
+import userServiceResponses from "../service/resources/userService.response";
+import userService from "../service/user.service";
+import NotFoundError from "../service/errors/notFound.error";
 dotenv.config();
 
 /**
@@ -43,7 +45,6 @@ const loginUser = [
       const errorMessage = expressErrors.array().map((err) => ({
         message: err.msg,
       }));
-
       return res
         .status(400)
         .json({ message: responseMessages.BAD_REQUEST, errors: errorMessage });
@@ -51,13 +52,10 @@ const loginUser = [
 
     try {
       const { username, password } = req.body;
-      const user = await User.findOne({ username: username });
-
-      if (user === null) {
-        return res.status(401).json({ message: authResponses.AUTH_FAILED });
-      }
+      const user = await userService.retrieveUserByUsername(username);
 
       const passwordMatch = await bcrypt.compare(password, user.password);
+
       if (!passwordMatch) {
         return res.status(401).json({ message: authResponses.AUTH_FAILED });
       }
@@ -71,8 +69,13 @@ const loginUser = [
       );
 
       return res.status(200).json({ token: token });
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (error: ServerError | unknown) {
+    } catch (error: NotFoundError | ServerError | unknown) {
+      if (error instanceof NotFoundError) {
+        return res
+          .status(401)
+          .json({ message: userServiceResponses.USER_NOT_FOUND });
+      }
+
       return res
         .status(ServerError.httpCode)
         .json({ message: commonService.SERVER_ERROR });

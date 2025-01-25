@@ -16,8 +16,8 @@ import taskRepository from "../persistence/task.repository";
 import ITaskUpdate from "../presentation/interfaces/iTaskUpdate.interface";
 import NotFoundError from "./errors/notFound.error";
 import ServerError from "./errors/server.error";
-import commonServiceResponses from "./serviceResources/commonService.response";
-import taskServiceResponses from "./serviceResources/taskService.response";
+import commonServiceResponses from "./resources/commonService.response";
+import taskServiceResponses from "./resources/taskService.response";
 
 /**
  * Calls on the persistence layer to retrieve all tasks having the specified status.

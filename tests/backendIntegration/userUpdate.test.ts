@@ -6,11 +6,11 @@ import testInput from "../testInput";
 import assert from "assert";
 import { Request, Response } from "express";
 import userService from "../../src/service/user.service";
-import userServiceResponses from "../../src/service/serviceResources/userService.response";
-import commonService from "../../src/service/serviceResources/commonService.response";
+import userServiceResponses from "../../src/service/resources/userService.response";
+import commonService from "../../src/service/resources/commonService.response";
 import userController from "../../src/presentation/controllers/user.controller";
 import responseMessages from "../../src/presentation/resources/responseMessages";
-import userFailedValidation from "../../src/domain/domainResources/userValidationMessages";
+import userFailedValidation from "../../src/domain/resources/userValidationMessages";
 import userRepository from "../../src/persistence/user.repository";
 
 describe("User update integration tests", () => {

@@ -8,9 +8,9 @@ import testInput from "../testInput";
 import assert from "assert";
 import { Request, Response } from "express";
 import responseMessages from "../../src/presentation/resources/responseMessages";
-import userFailedValidation from "../../src/domain/domainResources/userValidationMessages";
+import userFailedValidation from "../../src/domain/resources/userValidationMessages";
 import userRepository from "../../src/persistence/user.repository";
-import commonService from "../../src/service/serviceResources/commonService.response";
+import commonService from "../../src/service/resources/commonService.response";
 
 describe("User registration integration tests", () => {
   let req: Partial<Request>;
