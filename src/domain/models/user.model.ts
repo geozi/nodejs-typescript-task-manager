@@ -5,8 +5,8 @@
 import { Schema, model } from "mongoose";
 import IUser from "../interfaces/iUser.interface";
 import mongooseUniqueValidator from "mongoose-unique-validator";
-import userFailedValidation from "../domainResources/userValidationMessages";
-import regularExpressions from "../domainResources/validationRegExp";
+import userFailedValidation from "../resources/userValidationMessages";
+import regularExpressions from "../resources/validationRegExp";
 
 /**
  * User schema for persistence in MongoDB.

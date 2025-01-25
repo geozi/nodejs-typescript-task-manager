@@ -4,8 +4,8 @@
  */
 
 import { check, ValidationChain } from "express-validator";
-import userFailedValidation from "../../domain/domainResources/userValidationMessages";
-import regularExpressions from "../../domain/domainResources/validationRegExp";
+import userFailedValidation from "../../domain/resources/userValidationMessages";
+import regularExpressions from "../../domain/resources/validationRegExp";
 
 /**
  * Returns a validation chain for user registration.

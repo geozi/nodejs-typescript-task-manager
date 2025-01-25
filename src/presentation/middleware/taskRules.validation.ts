@@ -4,10 +4,10 @@
  */
 
 import { check, ValidationChain } from "express-validator";
-import taskFailedValidation from "../../domain/domainResources/taskValidationMessages";
+import taskFailedValidation from "../../domain/resources/taskValidationMessages";
 import Status from "../../domain/enums/status.enum";
-import regularExpressions from "../../domain/domainResources/validationRegExp";
-import userFailedValidation from "../../domain/domainResources/userValidationMessages";
+import regularExpressions from "../../domain/resources/validationRegExp";
+import userFailedValidation from "../../domain/resources/userValidationMessages";
 
 /**
  * Returns a validation chain for task creation.

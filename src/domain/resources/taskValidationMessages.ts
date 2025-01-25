@@ -1,12 +1,12 @@
 /**
  * Task validation error messages.
- * @module src/domainResources/taskValidationMessages
+ * @module src/resources/taskValidationMessages
  */
 
 /**
  * Contains response messages triggered when task validation fails.
  *
- * @memberof module:src/domainResources/taskValidationMessages
+ * @memberof module:src/resources/taskValidationMessages
  * @type {Object}
  * @property {string} SUBJECT_REQUIRED - Message sent when no subject is provided.
  * @property {string} SUBJECT_MAX_LENGTH - Message sent when the provided subject is too long.

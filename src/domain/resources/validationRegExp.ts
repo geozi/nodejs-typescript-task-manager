@@ -1,12 +1,12 @@
 /**
  * Regular expressions.
- * @module src/domainResources/validationRegExp
+ * @module src/resources/validationRegExp
  */
 
 /**
  * Contains regular expressions used in validation processes.
  *
- * @memberof module:src/domainResources/validationRegExp
+ * @memberof module:src/resources/validationRegExp
  * @type {Object}
  * @property {RegExp} EMAIL_REGEX - Regular expression used in checking email validity.
  * @property {RegExp} ID_REGEX - Regular expression used in checking id validity.

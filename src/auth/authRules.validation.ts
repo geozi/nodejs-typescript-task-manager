@@ -3,9 +3,9 @@
  * @module src/auth/authRules
  */
 import { check, header, ValidationChain } from "express-validator";
-import regularExpressions from "../domain/domainResources/validationRegExp";
+import regularExpressions from "../domain/resources/validationRegExp";
 import authResponses from "./authResponseMessages";
-import userFailedValidation from "../domain/domainResources/userValidationMessages";
+import userFailedValidation from "../domain/resources/userValidationMessages";
 
 /**
  * Returns a validation chain for user login.

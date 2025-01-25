@@ -5,9 +5,9 @@
 import { Schema, model } from "mongoose";
 import ITask from "../interfaces/iTask.interface";
 import mongooseUniqueValidator from "mongoose-unique-validator";
-import taskFailedValidation from "../domainResources/taskValidationMessages";
+import taskFailedValidation from "../resources/taskValidationMessages";
 import Status from "../enums/status.enum";
-import userFailedValidation from "../domainResources/userValidationMessages";
+import userFailedValidation from "../resources/userValidationMessages";
 
 /**
  * Task schema for persistence in MongoDB.
