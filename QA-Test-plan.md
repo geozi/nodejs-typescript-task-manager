@@ -1,6 +1,6 @@
 # Task Manager API test plan
 
-Document version 1.0.4
+Document version 1.0.5
 
 ## Introduction
 
@@ -23,7 +23,7 @@ Domain layer unit test suites:
 - User model [✔],
 - Task model [✔].
 
-In the domain layer, unit tests contain different scenarios that trigger the Mongoose schema's validators. The directories and files included are:
+In the domain layer, unit tests contain different scenarios that trigger the Mongoose schema's validators. They include the following directories and files:
 
 ```text
 └── src
@@ -70,7 +70,7 @@ Service layer unit test suites:
 - User service [✔],
 - Task service [✔].
 
-In a similar fashion to the persistence layer, the unit tests of the service layer implement scenarios in which a promise is rejected given certain inputs. They are primarily probing the following directories and files:
+In a similar fashion to the persistence layer, the unit tests of the service layer implement scenarios in which a promise is rejected given certain inputs. They primarily probe the following directories and files:
 
 ```text
 └── src
@@ -101,7 +101,7 @@ Backend integration test suites:
 - Task fetching by username [✔],
 - Task fetching by status [✔],
 
-Each test suite is divided into **validation-oriented** and **promise-oriented** tests. The validation-oriented tests create validation errors with specific input to check the behavior of both the express-validator middleware and that of the controllers receiving the errors.
+Each test suite is divided into **validation-oriented** and **promise-oriented** tests. The validation-oriented tests trigger validation errors with specific input to check the behavior of both the express-validator middleware and that of the controllers receiving the errors.
 
 ![A diagram showing the main parts of the presentation layer probed by the validation-oriented backend integration tests](img/backend_integration_testing_diagram_1.png)
 
@@ -130,7 +130,12 @@ Following the same organizational pattern as in the case of the backend integrat
 
 ### Database integration test(s)
 
-[Under development]
+Database integration test suites:
+
+- User collection [✔],
+- Task collection [✔].
+
+Here, focus is placed on limited operations per collection.
 
 ## Out of scope
 
