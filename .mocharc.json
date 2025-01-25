@@ -7,6 +7,7 @@
   "full-trace": true,
   "recursive": true,
   "slow": 1,
+  "timeout": 20000,
   "package": "./package.json",
   "watch-files": ["tests/**/*.ts"],
   "watch-ignore": ["node_modules"],

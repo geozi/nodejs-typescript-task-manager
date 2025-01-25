@@ -12,7 +12,7 @@ import testInput from "../testInput";
 import assert from "assert";
 dotenv.config();
 
-describe.only("User collection database integration test", () => {
+describe("User collection database integration test", () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
   let next: SinonSpy;

@@ -30,16 +30,16 @@ const createTask = [
    * @async @function anonymousAsyncFunction
    * @param {Request} req - An HTTP request.
    * @param {Response} res - An HTTP response.
-   * @returns {Promise<Response>} A promise that resolves to a response object.
+   * @returns {Promise<void>} A promise that resolves to void.
    */
-  async (req: Request, res: Response): Promise<Response> => {
+  async (req: Request, res: Response): Promise<void> => {
     const expressErrors = validationResult(req);
     if (!expressErrors.isEmpty()) {
       const errorMessage = expressErrors.array().map((err) => ({
         message: err.msg,
       }));
 
-      return res
+      res
         .status(400)
         .json({ message: responseMessages.BAD_REQUEST, errors: errorMessage });
     }
@@ -53,16 +53,14 @@ const createTask = [
         username: username,
       });
       await taskService.createTaskRecord(newTask);
-      return res.status(201).json({ message: responseMessages.TASK_CREATED });
+      res.status(201).json({ message: responseMessages.TASK_CREATED });
     } catch (error: ServerError | unknown) {
       let serverErrorMessage;
       if (error instanceof ServerError) {
         serverErrorMessage = error.message;
       }
 
-      return res
-        .status(ServerError.httpCode)
-        .json({ message: serverErrorMessage });
+      res.status(ServerError.httpCode).json({ message: serverErrorMessage });
     }
   },
 ];
@@ -85,16 +83,16 @@ const updateTask = [
    * @async @function anonymousAsyncFunction
    * @param {Request} req - An HTTP request.
    * @param {Response} res - An HTTP response.
-   * @returns {Promise<Response>} - A promise that resolves to a response object.
+   * @returns {Promise<void>} - A promise that resolves to void.
    */
-  async (req: Request, res: Response): Promise<Response> => {
+  async (req: Request, res: Response): Promise<void> => {
     const expressErrors = validationResult(req);
     if (!expressErrors.isEmpty()) {
       const errorMessage = expressErrors.array().map((err) => ({
         message: err.msg,
       }));
 
-      return res
+      res
         .status(400)
         .json({ message: responseMessages.BAD_REQUEST, errors: errorMessage });
     }
@@ -108,12 +106,10 @@ const updateTask = [
         status: status,
       };
       await taskService.updateTaskRecord(taskUpdateInfo);
-      return res.status(200).json({ message: responseMessages.TASK_UPDATED });
+      res.status(200).json({ message: responseMessages.TASK_UPDATED });
     } catch (error: NotFoundError | ServerError | unknown) {
       if (error instanceof NotFoundError) {
-        return res
-          .status(NotFoundError.httpCode)
-          .json({ message: error.message });
+        res.status(NotFoundError.httpCode).json({ message: error.message });
       }
 
       let message;
@@ -121,7 +117,7 @@ const updateTask = [
         message = error.message;
       }
 
-      return res.status(ServerError.httpCode).json({ message: message });
+      res.status(ServerError.httpCode).json({ message: message });
     }
   },
 ];
@@ -144,16 +140,16 @@ const deleteTask = [
    * @async @function anonymousAsyncFunction
    * @param {Request} req - An HTTP request.
    * @param {Response} res - An HTTP response.
-   * @returns {Promise<Response>} - A promise that resolves to a response object.
+   * @returns {Promise<void>} - A promise that resolves to void.
    */
-  async (req: Request, res: Response): Promise<Response> => {
+  async (req: Request, res: Response): Promise<void> => {
     const expressErrors = validationResult(req);
     if (!expressErrors.isEmpty()) {
       const errorMessage = expressErrors.array().map((err) => ({
         message: err.msg,
       }));
 
-      return res
+      res
         .status(400)
         .json({ message: responseMessages.BAD_REQUEST, errors: errorMessage });
     }
@@ -161,12 +157,10 @@ const deleteTask = [
     try {
       const { id } = req.body;
       await taskService.deleteTaskRecord(id);
-      return res.status(204).json({});
+      res.status(204).json({});
     } catch (error) {
       if (error instanceof NotFoundError) {
-        return res
-          .status(NotFoundError.httpCode)
-          .json({ message: error.message });
+        res.status(NotFoundError.httpCode).json({ message: error.message });
       }
 
       let message;
@@ -174,7 +168,7 @@ const deleteTask = [
         message = error.message;
       }
 
-      return res.status(ServerError.httpCode).json({ message: message });
+      res.status(ServerError.httpCode).json({ message: message });
     }
   },
 ];
@@ -197,16 +191,16 @@ const fetchTasksByUsername = [
    * @async @function anonymousAsyncFunction
    * @param {Request} req - An HTTP request.
    * @param {Response} res - An HTTP response.
-   * @returns {Promise<Response>} - A promise that resolves to a response object.
+   * @returns {Promise<void>} - A promise that resolves to void.
    */
-  async (req: Request, res: Response): Promise<Response> => {
+  async (req: Request, res: Response): Promise<void> => {
     const expressErrors = validationResult(req);
     if (!expressErrors.isEmpty()) {
       const errorMessage = expressErrors.array().map((err) => ({
         message: err.msg,
       }));
 
-      return res
+      res
         .status(400)
         .json({ message: responseMessages.BAD_REQUEST, errors: errorMessage });
     }
@@ -214,12 +208,10 @@ const fetchTasksByUsername = [
     try {
       const { username } = req.body;
       const tasks = await taskService.retrieveTasksByUsername(username);
-      return res.status(200).json({ data: tasks });
+      res.status(200).json({ data: tasks });
     } catch (error) {
       if (error instanceof NotFoundError) {
-        return res
-          .status(NotFoundError.httpCode)
-          .json({ message: error.message });
+        res.status(NotFoundError.httpCode).json({ message: error.message });
       }
 
       let message;
@@ -227,7 +219,7 @@ const fetchTasksByUsername = [
         message = error.message;
       }
 
-      return res.status(ServerError.httpCode).json({ message: message });
+      res.status(ServerError.httpCode).json({ message: message });
     }
   },
 ];
@@ -250,16 +242,16 @@ const fetchTaskBySubject = [
    * @async @function anonymousAsyncFunction
    * @param {Request} req - An HTTP request.
    * @param {Response} res - An HTTP response.
-   * @returns {Promise<Response>} - A promise that resolves to a response object.
+   * @returns {Promise<void>} - A promise that resolves to void.
    */
-  async (req: Request, res: Response): Promise<Response> => {
+  async (req: Request, res: Response): Promise<void> => {
     const expressErrors = validationResult(req);
     if (!expressErrors.isEmpty()) {
       const errorMessage = expressErrors.array().map((err) => ({
         message: err.msg,
       }));
 
-      return res
+      res
         .status(400)
         .json({ message: responseMessages.BAD_REQUEST, errors: errorMessage });
     }
@@ -267,12 +259,10 @@ const fetchTaskBySubject = [
     try {
       const { subject } = req.body;
       const task = await taskService.retrieveTaskBySubject(subject);
-      return res.status(200).json({ data: task });
+      res.status(200).json({ data: task });
     } catch (error) {
       if (error instanceof NotFoundError) {
-        return res
-          .status(NotFoundError.httpCode)
-          .json({ message: error.message });
+        res.status(NotFoundError.httpCode).json({ message: error.message });
       }
 
       let message;
@@ -280,7 +270,7 @@ const fetchTaskBySubject = [
         message = error.message;
       }
 
-      return res.status(ServerError.httpCode).json({ message: message });
+      res.status(ServerError.httpCode).json({ message: message });
     }
   },
 ];
@@ -303,16 +293,16 @@ const fetchTasksByStatus = [
    * @async @function anonymousAsyncFunction
    * @param {Request} req - An HTTP request.
    * @param {Response} res - An HTTP response.
-   * @returns {Promise<Response>} - A promise that resolves to a response object.
+   * @returns {Promise<void>} - A promise that resolves to void.
    */
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response): Promise<void> => {
     const expressErrors = validationResult(req);
     if (!expressErrors.isEmpty()) {
       const errorMessage = expressErrors.array().map((err) => ({
         message: err.msg,
       }));
 
-      return res
+      res
         .status(400)
         .json({ message: responseMessages.BAD_REQUEST, errors: errorMessage });
     }
@@ -322,9 +312,7 @@ const fetchTasksByStatus = [
       res.status(200).json({ data: tasks });
     } catch (error) {
       if (error instanceof NotFoundError) {
-        return res
-          .status(NotFoundError.httpCode)
-          .json({ message: error.message });
+        res.status(NotFoundError.httpCode).json({ message: error.message });
       }
 
       let message;
@@ -332,7 +320,7 @@ const fetchTasksByStatus = [
         message = error.message;
       }
 
-      return res.status(ServerError.httpCode).json({ message: message });
+      res.status(ServerError.httpCode).json({ message: message });
     }
   },
 ];

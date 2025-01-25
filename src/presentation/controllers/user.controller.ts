@@ -31,16 +31,16 @@ const registerUser = [
    * @async @function anonymousAsyncFunction
    * @param {Request} req - An HTTP request.
    * @param {Response} res - An HTTP response.
-   * @returns {Promise<Response>} A promise that resolves to a response object.
+   * @returns {Promise<void>} A promise that resolves to void.
    */
-  async (req: Request, res: Response): Promise<Response> => {
+  async (req: Request, res: Response): Promise<void> => {
     const expressErrors = validationResult(req);
     if (!expressErrors.isEmpty()) {
       const errorMessage = expressErrors.array().map((err) => ({
         message: err.msg,
       }));
 
-      return res
+      res
         .status(400)
         .json({ message: responseMessages.BAD_REQUEST, errors: errorMessage });
     }
@@ -54,18 +54,14 @@ const registerUser = [
       });
 
       await userService.createUserProfile(newUser);
-      return res
-        .status(201)
-        .json({ message: responseMessages.USER_REGISTERED });
+      res.status(201).json({ message: responseMessages.USER_REGISTERED });
     } catch (error: ServerError | unknown) {
       let serverErrorMessage;
       if (error instanceof ServerError) {
         serverErrorMessage = error.message;
       }
 
-      return res
-        .status(ServerError.httpCode)
-        .json({ message: serverErrorMessage });
+      res.status(ServerError.httpCode).json({ message: serverErrorMessage });
     }
   },
 ];
@@ -88,16 +84,16 @@ const updateUserInfo = [
    * @async @function anonymousAsyncFunction
    * @param {Request} req - An HTTP request.
    * @param {Response} res - An HTTP response.
-   * @returns {Promise<Response>} - A promise that resolves to a response object.
+   * @returns {Promise<void>} - A promise that resolves to void.
    */
-  async (req: Request, res: Response): Promise<Response> => {
+  async (req: Request, res: Response): Promise<void> => {
     const expressErrors = validationResult(req);
     if (!expressErrors.isEmpty()) {
       const errorMessage = expressErrors.array().map((err) => ({
         message: err.msg,
       }));
 
-      return res
+      res
         .status(400)
         .json({ message: responseMessages.BAD_REQUEST, errors: errorMessage });
     }
@@ -111,12 +107,10 @@ const updateUserInfo = [
         password: password,
       };
       await userService.updateUserProfile(userUpdateInfo);
-      return res.status(200).json({ message: responseMessages.USER_UPDATED });
+      res.status(200).json({ message: responseMessages.USER_UPDATED });
     } catch (error: NotFoundError | ServerError | unknown) {
       if (error instanceof NotFoundError) {
-        return res
-          .status(NotFoundError.httpCode)
-          .json({ message: error.message });
+        res.status(NotFoundError.httpCode).json({ message: error.message });
       }
 
       let message;
@@ -124,7 +118,7 @@ const updateUserInfo = [
         message = error.message;
       }
 
-      return res.status(ServerError.httpCode).json({ message: message });
+      res.status(ServerError.httpCode).json({ message: message });
     }
   },
 ];

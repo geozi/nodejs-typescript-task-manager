@@ -37,15 +37,15 @@ const loginUser = [
    * @async @function anonymousAsyncFunction
    * @param {Request} req - An HTTP request.
    * @param {Response} res - An HTTP response.
-   * @returns {Promise<Response>} A promise that resolves to a response object.
+   * @returns {Promise<void>} A promise that resolves void.
    */
-  async (req: Request, res: Response): Promise<Response> => {
+  async (req: Request, res: Response): Promise<void> => {
     const expressErrors = validationResult(req);
     if (!expressErrors.isEmpty()) {
       const errorMessage = expressErrors.array().map((err) => ({
         message: err.msg,
       }));
-      return res
+      res
         .status(400)
         .json({ message: responseMessages.BAD_REQUEST, errors: errorMessage });
     }
@@ -57,7 +57,7 @@ const loginUser = [
       const passwordMatch = await bcrypt.compare(password, user.password);
 
       if (!passwordMatch) {
-        return res.status(401).json({ message: authResponses.AUTH_FAILED });
+        res.status(401).json({ message: authResponses.AUTH_FAILED });
       }
 
       const token = jwt.sign(
@@ -68,15 +68,13 @@ const loginUser = [
         }
       );
 
-      return res.status(200).json({ token: token });
+      res.status(200).json({ token: token });
     } catch (error: NotFoundError | ServerError | unknown) {
       if (error instanceof NotFoundError) {
-        return res
-          .status(401)
-          .json({ message: userServiceResponses.USER_NOT_FOUND });
+        res.status(401).json({ message: userServiceResponses.USER_NOT_FOUND });
       }
 
-      return res
+      res
         .status(ServerError.httpCode)
         .json({ message: commonService.SERVER_ERROR });
     }
@@ -102,20 +100,16 @@ const verifyToken = [
    * @param {Request} req - An HTTP request.
    * @param {Response} res - An HTTP response.
    * @param {NextFunction} next - A function to move to the next step of the middleware path.
-   * @returns {Promise<void | Response>} A promise that resolves to a response object or void.
+   * @returns {Promise<void>} A promise that resolves to void.
    */
-  async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<void | Response> => {
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const expressErrors = validationResult(req);
     if (!expressErrors.isEmpty()) {
       const errorMessage = expressErrors.array().map((err) => ({
         message: err.msg,
       }));
 
-      return res
+      res
         .status(400)
         .json({ message: responseMessages.BAD_REQUEST, errors: errorMessage });
     }
@@ -124,20 +118,17 @@ const verifyToken = [
       const token = req.headers.authorization;
 
       if (!token) {
-        return res
-          .status(401)
-          .json({ message: authResponses.AUTH_HEADER_REQUIRED });
+        res.status(401).json({ message: authResponses.AUTH_HEADER_REQUIRED });
+      } else {
+        const receivedToken = token.replace("Bearer ", "");
+        const decoded = jwt.verify(receivedToken, process.env.KEY as string);
+        req.body.username = (decoded as IToken).username;
+        next();
       }
 
-      const decoded = jwt.verify(
-        token.replace("Bearer ", ""),
-        process.env.KEY as string
-      );
-      req.body.username = (decoded as IToken).username;
-      next();
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-      return res.status(401).json({ message: authResponses.AUTH_FAILED });
+      res.status(401).json({ message: authResponses.AUTH_FAILED });
     }
   },
 ];
