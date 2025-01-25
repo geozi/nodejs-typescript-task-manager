@@ -12,7 +12,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import IUser from "../../src/domain/interfaces/iUser.interface";
 
-describe.only("User successful login integration test", () => {
+describe("User successful login integration test", () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
   let next: SinonSpy;
