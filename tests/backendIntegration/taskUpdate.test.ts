@@ -8,10 +8,10 @@ import { Request, Response } from "express";
 import { updateTaskRecord } from "../../src/service/task.service";
 import { taskServiceResponses } from "../../src/service/resources/taskService.response";
 import { commonServiceResponses } from "../../src/service/resources/commonService.response";
-import { updateTask as controllerUpdateTask } from "../../src/presentation/controllers/task.controller";
+import * as taskController from "../../src/presentation/controllers/task.controller";
 import { responseMessages } from "../../src/presentation/resources/responseMessages";
 import taskFailedValidation from "../../src/domain/resources/taskValidationMessages";
-import { updateTask as repositoryUpdateTask } from "../../src/persistence/task.repository";
+import * as taskRepository from "../../src/persistence/task.repository";
 
 describe("Task update integration tests", () => {
   let req: Partial<Request>;
@@ -39,7 +39,7 @@ describe("Task update integration tests", () => {
       it("task ID is missing", async () => {
         req = { body: { id: undefined } };
 
-        for (const middleware of controllerUpdateTask) {
+        for (const middleware of taskController.updateTask) {
           await middleware(req as Request, res as Response, next);
         }
 
@@ -64,7 +64,7 @@ describe("Task update integration tests", () => {
         ([testName, invalidLengthId]) => {
           it(testName, async () => {
             req = { body: { id: invalidLengthId } };
-            for (const middleware of controllerUpdateTask) {
+            for (const middleware of taskController.updateTask) {
               await middleware(req as Request, res as Response, next);
             }
 
@@ -87,7 +87,7 @@ describe("Task update integration tests", () => {
         ([testName, invalidId]) => {
           it(testName, async () => {
             req = { body: { id: invalidId } };
-            for (const middleware of controllerUpdateTask) {
+            for (const middleware of taskController.updateTask) {
               await middleware(req as Request, res as Response, next);
             }
 
@@ -120,7 +120,7 @@ describe("Task update integration tests", () => {
       };
 
       next = sinon.spy();
-      methodStub = sinon.stub({ repositoryUpdateTask }, "repositoryUpdateTask");
+      methodStub = sinon.stub(taskRepository, "updateTask");
     });
 
     afterEach(() => {
@@ -133,7 +133,7 @@ describe("Task update integration tests", () => {
       };
 
       methodStub.rejects();
-      for (const middleware of controllerUpdateTask) {
+      for (const middleware of taskController.updateTask) {
         await middleware(req as Request, res as Response, next);
       }
 
@@ -155,7 +155,7 @@ describe("Task update integration tests", () => {
       };
 
       methodStub.resolves(null);
-      for (const middleware of controllerUpdateTask) {
+      for (const middleware of taskController.updateTask) {
         await middleware(req as Request, res as Response, next);
       }
 

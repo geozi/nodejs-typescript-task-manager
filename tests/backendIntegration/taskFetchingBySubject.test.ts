@@ -10,7 +10,7 @@ import { taskServiceResponses } from "../../src/service/resources/taskService.re
 import { commonServiceResponses } from "../../src/service/resources/commonService.response";
 import { fetchTaskBySubject } from "../../src/presentation/controllers/task.controller";
 import { responseMessages } from "../../src/presentation/resources/responseMessages";
-import { getTaskBySubject } from "../../src/persistence/task.repository";
+import * as taskRepository from "../../src/persistence/task.repository";
 import taskFailedValidation from "../../src/domain/resources/taskValidationMessages";
 
 describe("Subject-based task fetching integration tests", () => {
@@ -121,7 +121,7 @@ describe("Subject-based task fetching integration tests", () => {
       };
 
       next = sinon.spy();
-      methodStub = sinon.stub({ getTaskBySubject }, "getTaskBySubject");
+      methodStub = sinon.stub(taskRepository, "getTaskBySubject");
     });
 
     afterEach(() => {

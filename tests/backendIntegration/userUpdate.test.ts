@@ -8,10 +8,10 @@ import { Request, Response } from "express";
 import { createUserProfile } from "../../src/service/user.service";
 import { userServiceResponses } from "../../src/service/resources/userService.response";
 import { commonServiceResponses } from "../../src/service/resources/commonService.response";
-import { updateUserInfo as controllerUpdateUserInfo } from "../../src/presentation/controllers/user.controller";
+import * as userController from "../../src/presentation/controllers/user.controller";
 import { responseMessages } from "../../src/presentation/resources/responseMessages";
 import userFailedValidation from "../../src/domain/resources/userValidationMessages";
-import { updateUserInfo as repositoryUpdateUserInfo } from "../../src/persistence/user.repository";
+import * as userRepository from "../../src/persistence/user.repository";
 
 describe("User update integration tests", () => {
   let req: Partial<Request>;
@@ -39,7 +39,7 @@ describe("User update integration tests", () => {
       it("user ID is missing", async () => {
         req = { body: { id: undefined } };
 
-        for (const middleware of controllerUpdateUserInfo) {
+        for (const middleware of userController.updateUserInfo) {
           await middleware(req as Request, res as Response, next);
         }
 
@@ -65,7 +65,7 @@ describe("User update integration tests", () => {
           it(testName, async () => {
             req = { body: { id: invalidLengthId } };
 
-            for (const middleware of controllerUpdateUserInfo) {
+            for (const middleware of userController.updateUserInfo) {
               await middleware(req as Request, res as Response, next);
             }
 
@@ -93,7 +93,7 @@ describe("User update integration tests", () => {
           it(testName, async () => {
             req = { body: { id: invalidId } };
 
-            for (const middleware of controllerUpdateUserInfo) {
+            for (const middleware of userController.updateUserInfo) {
               await middleware(req as Request, res as Response, next);
             }
 
@@ -129,10 +129,7 @@ describe("User update integration tests", () => {
         };
 
         next = sinon.spy();
-        methodStub = sinon.stub(
-          { repositoryUpdateUserInfo },
-          "repositoryUpdateUserInfo"
-        );
+        methodStub = sinon.stub(userRepository, "updateUserInfo");
       });
 
       afterEach(() => {
@@ -144,7 +141,7 @@ describe("User update integration tests", () => {
           body: { id: "67921497a589726bf54dc5f1", ...testInput.validUserInput },
         };
         methodStub.rejects();
-        for (const middleware of controllerUpdateUserInfo) {
+        for (const middleware of userController.updateUserInfo) {
           await middleware(req as Request, res as Response, next);
         }
 
@@ -163,7 +160,7 @@ describe("User update integration tests", () => {
           body: { id: "67921497a589726bf54dc5f1", ...testInput.validUserInput },
         };
         methodStub.resolves(null);
-        for (const middleware of controllerUpdateUserInfo) {
+        for (const middleware of userController.updateUserInfo) {
           await middleware(req as Request, res as Response, next);
         }
         const statusStub = res.status as SinonStub;

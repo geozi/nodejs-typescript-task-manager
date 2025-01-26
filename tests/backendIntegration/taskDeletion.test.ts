@@ -8,10 +8,10 @@ import { Request, Response } from "express";
 import { deleteTaskRecord } from "../../src/service/task.service";
 import { taskServiceResponses } from "../../src/service/resources/taskService.response";
 import { commonServiceResponses } from "../../src/service/resources/commonService.response";
-import { deleteTask as controllerDeleteTask } from "../../src/presentation/controllers/task.controller";
+import * as taskController from "../../src/presentation/controllers/task.controller";
 import { responseMessages } from "../../src/presentation/resources/responseMessages";
 import taskFailedValidation from "../../src/domain/resources/taskValidationMessages";
-import { deleteTask as repositoryDeleteTask } from "../../src/persistence/task.repository";
+import * as taskRepository from "../../src/persistence/task.repository";
 
 describe("Task deletion integration tests", () => {
   let req: Partial<Request>;
@@ -39,7 +39,7 @@ describe("Task deletion integration tests", () => {
       it("task ID is missing", async () => {
         req = { body: { id: undefined } };
 
-        for (const middleware of controllerDeleteTask) {
+        for (const middleware of taskController.deleteTask) {
           await middleware(req as Request, res as Response, next);
         }
 
@@ -64,7 +64,7 @@ describe("Task deletion integration tests", () => {
         ([testName, invalidLengthId]) => {
           it(testName, async () => {
             req = { body: { id: invalidLengthId } };
-            for (const middleware of controllerDeleteTask) {
+            for (const middleware of taskController.deleteTask) {
               await middleware(req as Request, res as Response, next);
             }
 
@@ -87,7 +87,7 @@ describe("Task deletion integration tests", () => {
         ([testName, invalidId]) => {
           it(testName, async () => {
             req = { body: { id: invalidId } };
-            for (const middleware of controllerDeleteTask) {
+            for (const middleware of taskController.deleteTask) {
               await middleware(req as Request, res as Response, next);
             }
 
@@ -120,7 +120,7 @@ describe("Task deletion integration tests", () => {
       };
 
       next = sinon.spy();
-      methodStub = sinon.stub({ repositoryDeleteTask }, "repositoryDeleteTask");
+      methodStub = sinon.stub(taskRepository, "deleteTask");
     });
 
     afterEach(() => {
@@ -133,7 +133,7 @@ describe("Task deletion integration tests", () => {
       };
 
       methodStub.rejects();
-      for (const middleware of controllerDeleteTask) {
+      for (const middleware of taskController.deleteTask) {
         await middleware(req as Request, res as Response, next);
       }
 
@@ -155,7 +155,7 @@ describe("Task deletion integration tests", () => {
       };
 
       methodStub.resolves(null);
-      for (const middleware of controllerDeleteTask) {
+      for (const middleware of taskController.deleteTask) {
         await middleware(req as Request, res as Response, next);
       }
 

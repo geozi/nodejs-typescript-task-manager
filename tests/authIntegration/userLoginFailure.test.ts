@@ -8,7 +8,7 @@ import { loginUser } from "../../src/auth/auth.controller";
 import assert from "assert";
 import userFailedValidation from "../../src/domain/resources/userValidationMessages";
 import { responseMessages } from "../../src/presentation/resources/responseMessages";
-import { getUserByUsername } from "../../src/persistence/user.repository";
+import * as userRepository from "../../src/persistence/user.repository";
 import { commonServiceResponses } from "../../src/service/resources/commonService.response";
 import { userServiceResponses } from "../../src/service/resources/userService.response";
 
@@ -239,7 +239,7 @@ describe("User failed login integration test", () => {
       };
 
       next = sinon.spy();
-      methodStub = sinon.stub({ getUserByUsername }, "getUserByUsername");
+      methodStub = sinon.stub(userRepository, "getUserByUsername");
     });
 
     afterEach(() => {

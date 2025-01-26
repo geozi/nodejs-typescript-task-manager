@@ -15,14 +15,7 @@ import {
   updateTaskRecord,
   deleteTaskRecord,
 } from "../../src/service/task.service";
-import {
-  getTaskBySubject,
-  getTasksByStatus,
-  getTasksByUsername,
-  addTask,
-  updateTask,
-  deleteTask,
-} from "../../src/persistence/task.repository";
+import * as taskRepository from "../../src/persistence/task.repository";
 import { NotFoundError } from "../../src/service/errors/notFound.error";
 import { ServerError } from "../../src/service/errors/server.error";
 
@@ -39,7 +32,7 @@ describe("Task service unit test", () => {
   describe("Promise rejects", () => {
     describe("retrieveTasksByStatus()", () => {
       beforeEach(() => {
-        methodStub = sinon.stub({ getTasksByStatus }, "getTasksByStatus");
+        methodStub = sinon.stub(taskRepository, "getTasksByStatus");
       });
 
       afterEach(() => {
@@ -63,7 +56,7 @@ describe("Task service unit test", () => {
 
     describe("retrieveTasksByUsername()", () => {
       beforeEach(() => {
-        methodStub = sinon.stub({ getTasksByUsername }, "getTasksByUsername");
+        methodStub = sinon.stub(taskRepository, "getTasksByUsername");
       });
 
       afterEach(() => {
@@ -87,7 +80,7 @@ describe("Task service unit test", () => {
 
     describe("retrieveTaskBySubject()", () => {
       beforeEach(() => {
-        methodStub = sinon.stub({ getTaskBySubject }, "getTaskBySubject");
+        methodStub = sinon.stub(taskRepository, "getTaskBySubject");
       });
 
       afterEach(() => {
@@ -111,7 +104,7 @@ describe("Task service unit test", () => {
 
     describe("createTaskRecord()", () => {
       it("server error", async () => {
-        sinon.stub({ addTask }, "addTask").rejects();
+        sinon.stub(taskRepository, "addTask").rejects();
         await assert.rejects(async () => {
           await createTaskRecord(mockTask);
         }, ServerError);
@@ -120,7 +113,7 @@ describe("Task service unit test", () => {
 
     describe("updateTaskRecord()", () => {
       beforeEach(() => {
-        methodStub = sinon.stub({ updateTask }, "updateTask");
+        methodStub = sinon.stub(taskRepository, "updateTask");
       });
 
       afterEach(() => {
@@ -145,7 +138,7 @@ describe("Task service unit test", () => {
 
   describe("deleteTaskRecord()", () => {
     beforeEach(() => {
-      methodStub = sinon.stub({ deleteTask }, "deleteTask");
+      methodStub = sinon.stub(taskRepository, "deleteTask");
     });
 
     afterEach(() => {

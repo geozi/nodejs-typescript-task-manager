@@ -10,7 +10,7 @@ import { taskServiceResponses } from "../../src/service/resources/taskService.re
 import { commonServiceResponses } from "../../src/service/resources/commonService.response";
 import { fetchTasksByUsername } from "../../src/presentation/controllers/task.controller";
 import { responseMessages } from "../../src/presentation/resources/responseMessages";
-import { getTasksByUsername } from "../../src/persistence/task.repository";
+import * as taskRepository from "../../src/persistence/task.repository";
 import userFailedValidation from "../../src/domain/resources/userValidationMessages";
 import { ITask } from "../../src/domain/interfaces/iTask.interface";
 
@@ -122,7 +122,7 @@ describe("Username-based task fetching integration tests", () => {
       };
 
       next = sinon.spy();
-      methodStub = sinon.stub({ getTasksByUsername }, "getTasksByUsername");
+      methodStub = sinon.stub(taskRepository, "getTasksByUsername");
     });
 
     afterEach(() => {

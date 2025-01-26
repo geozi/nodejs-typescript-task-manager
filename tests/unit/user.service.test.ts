@@ -8,11 +8,7 @@ import {
   createUserProfile,
   updateUserProfile,
 } from "../../src/service/user.service";
-import {
-  getUserByUsername,
-  addUser,
-  updateUserInfo,
-} from "../../src/persistence/user.repository";
+import * as userRepository from "../../src/persistence/user.repository";
 import testInput from "../testInput";
 import sinon from "sinon";
 import { NotFoundError } from "../../src/service/errors/notFound.error";
@@ -34,7 +30,7 @@ describe("User service unit test", () => {
 
     describe("retrieveUserByUsername()", () => {
       beforeEach(() => {
-        methodStub = sinon.stub({ getUserByUsername }, "getUserByUsername");
+        methodStub = sinon.stub(userRepository, "getUserByUsername");
       });
 
       afterEach(() => {
@@ -58,7 +54,7 @@ describe("User service unit test", () => {
 
     describe("createUserProfile()", () => {
       it("server error", async () => {
-        sinon.stub({ addUser }, "addUser").rejects();
+        sinon.stub(userRepository, "addUser").rejects();
 
         await assert.rejects(async () => {
           await createUserProfile(mockUser);
@@ -68,7 +64,7 @@ describe("User service unit test", () => {
 
     describe("updateUserProfile()", () => {
       beforeEach(() => {
-        methodStub = sinon.stub({ updateUserInfo }, "updateUserInfo");
+        methodStub = sinon.stub(userRepository, "updateUserInfo");
       });
 
       afterEach(() => {
