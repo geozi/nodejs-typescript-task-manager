@@ -8,7 +8,6 @@ import mongooseUniqueValidator from "mongoose-unique-validator";
 import taskFailedValidation from "../resources/taskValidationMessages";
 import { Status } from "../enums/status.enum";
 import userFailedValidation from "../resources/userValidationMessages";
-import { UniqueConstraintError } from "../errors/uniqueConstraint.error";
 
 /**
  * Task schema for persistence in MongoDB.
@@ -55,6 +54,6 @@ const taskSchema = new Schema<ITask>(
 
 taskSchema.plugin(mongooseUniqueValidator, {
   message: "{PATH} already exists in the database",
-  type: UniqueConstraintError,
+  type: "UniqueConstraintError",
 });
 export default model<ITask>("Task", taskSchema);

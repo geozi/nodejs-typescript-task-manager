@@ -2,7 +2,7 @@
  * Task service.
  * @module src/service/task.service
  */
-import mongoose from "mongoose";
+import mongoose, { Error } from "mongoose";
 import { ITask } from "../domain/interfaces/iTask.interface";
 import {
   getTaskBySubject,
@@ -105,7 +105,7 @@ export const createTaskRecord = async (newTask: ITask) => {
   try {
     return await addTask(newTask);
   } catch (error) {
-    if (error instanceof UniqueConstraintError) {
+    if (error instanceof Error.ValidationError) {
       throw new UniqueConstraintError(error.message);
     }
     throw new ServerError(commonServiceResponses.SERVER_ERROR);

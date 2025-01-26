@@ -2,7 +2,7 @@
  * User service.
  * @module src/service/user.service
  */
-import mongoose from "mongoose";
+import mongoose, { Error } from "mongoose";
 import { IUser } from "../domain/interfaces/iUser.interface";
 import {
   getUserByEmail,
@@ -80,10 +80,11 @@ export const createUserProfile = async (newUser: IUser): Promise<IUser> => {
     const hashedPassword = await bcrypt.hash(newUser.password, 10);
     newUser.password = hashedPassword;
     return await addUser(newUser);
-  } catch (error) {
-    if (error instanceof UniqueConstraintError) {
+  } catch (error: UniqueConstraintError | ServerError | unknown) {
+    if (error instanceof Error.ValidationError) {
       throw new UniqueConstraintError(error.message);
     }
+
     throw new ServerError(commonServiceResponses.SERVER_ERROR);
   }
 };
