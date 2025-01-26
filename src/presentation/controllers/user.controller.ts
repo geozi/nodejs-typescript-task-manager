@@ -116,12 +116,9 @@ export const updateUserInfo = [
         res.status(NotFoundError.httpCode).json({ message: error.message });
       }
 
-      let message;
       if (error instanceof ServerError) {
-        message = error.message;
+        res.status(ServerError.httpCode).json({ message: error.message });
       }
-
-      res.status(ServerError.httpCode).json({ message: message });
     }
   },
 ];

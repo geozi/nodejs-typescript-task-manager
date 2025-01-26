@@ -123,12 +123,9 @@ export const updateTask = [
         res.status(NotFoundError.httpCode).json({ message: error.message });
       }
 
-      let message;
       if (error instanceof ServerError) {
-        message = error.message;
+        res.status(ServerError.httpCode).json({ message: error.message });
       }
-
-      res.status(ServerError.httpCode).json({ message: message });
     }
   },
 ];
@@ -166,17 +163,14 @@ export const deleteTask = [
       const { id } = req.body;
       await deleteTaskRecord(id);
       res.status(204).json({});
-    } catch (error) {
+    } catch (error: NotFoundError | ServerError | unknown) {
       if (error instanceof NotFoundError) {
         res.status(NotFoundError.httpCode).json({ message: error.message });
       }
 
-      let message;
       if (error instanceof ServerError) {
-        message = error.message;
+        res.status(ServerError.httpCode).json({ message: error.message });
       }
-
-      res.status(ServerError.httpCode).json({ message: message });
     }
   },
 ];
@@ -214,17 +208,14 @@ export const fetchTasksByUsername = [
       const { username } = req.body;
       const tasks = await retrieveTasksByUsername(username);
       res.status(200).json({ data: tasks });
-    } catch (error) {
+    } catch (error: NotFoundError | ServerError | unknown) {
       if (error instanceof NotFoundError) {
         res.status(NotFoundError.httpCode).json({ message: error.message });
       }
 
-      let message;
       if (error instanceof ServerError) {
-        message = error.message;
+        res.status(ServerError.httpCode).json({ message: error.message });
       }
-
-      res.status(ServerError.httpCode).json({ message: message });
     }
   },
 ];
@@ -262,17 +253,14 @@ export const fetchTaskBySubject = [
       const { subject } = req.body;
       const task = await retrieveTaskBySubject(subject);
       res.status(200).json({ data: task });
-    } catch (error) {
+    } catch (error: NotFoundError | ServerError | unknown) {
       if (error instanceof NotFoundError) {
         res.status(NotFoundError.httpCode).json({ message: error.message });
       }
 
-      let message;
       if (error instanceof ServerError) {
-        message = error.message;
+        res.status(ServerError.httpCode).json({ message: error.message });
       }
-
-      res.status(ServerError.httpCode).json({ message: message });
     }
   },
 ];
@@ -309,17 +297,14 @@ export const fetchTasksByStatus = [
       const { status } = req.body;
       const tasks = await retrieveTasksByStatus(status);
       res.status(200).json({ data: tasks });
-    } catch (error) {
+    } catch (error: NotFoundError | ServerError | unknown) {
       if (error instanceof NotFoundError) {
         res.status(NotFoundError.httpCode).json({ message: error.message });
       }
 
-      let message;
       if (error instanceof ServerError) {
-        message = error.message;
+        res.status(ServerError.httpCode).json({ message: error.message });
       }
-
-      res.status(ServerError.httpCode).json({ message: message });
     }
   },
 ];

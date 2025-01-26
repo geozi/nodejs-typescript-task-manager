@@ -99,7 +99,7 @@ export const retrieveTaskBySubject = async (
  *
  * @param {ITask} newTask The new task to be added.
  * @returns {Promise<ITask>} A promise that resolves to the newly saved task object.
- * @throws {ServerError}
+ * @throws {UniqueConstraintError | ServerError}
  */
 export const createTaskRecord = async (newTask: ITask) => {
   try {

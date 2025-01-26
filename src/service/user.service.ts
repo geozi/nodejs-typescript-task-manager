@@ -73,7 +73,7 @@ export const retrieveUserByEmail = async (email: string): Promise<IUser> => {
  *
  * @param {IUser} newUser The new user profile to be created.
  * @returns {Promise<IUser>} A promise that resolves to the newly saved user object.
- * @throws {ServerError}
+ * @throws {UniqueConstraintError | ServerError}
  */
 export const createUserProfile = async (newUser: IUser): Promise<IUser> => {
   try {
