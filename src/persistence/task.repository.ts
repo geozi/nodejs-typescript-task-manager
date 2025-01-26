@@ -48,7 +48,7 @@ export const getTaskBySubject = async (
  * @param {ITask} newTask The new task to be added.
  * @returns {Promise<ITask>} A promise that resolves to the saved document in the form of a task object.
  */
-export const addTask = async (newTask: ITask) => {
+export const addTask = async (newTask: ITask): Promise<ITask> => {
   return await newTask.save();
 };
 

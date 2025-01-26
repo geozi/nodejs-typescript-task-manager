@@ -43,9 +43,10 @@ export const registerUser = [
         message: err.msg,
       }));
 
-      res
+      await res
         .status(400)
         .json({ message: responseMessages.BAD_REQUEST, errors: errorMessage });
+      return;
     }
 
     try {
@@ -57,16 +58,18 @@ export const registerUser = [
       });
 
       await createUserProfile(newUser);
-      res.status(201).json({ message: responseMessages.USER_REGISTERED });
+      await res.status(201).json({ message: responseMessages.USER_REGISTERED });
     } catch (error: ServerError | UniqueConstraintError | unknown) {
       if (error instanceof UniqueConstraintError) {
-        res
+        await res
           .status(UniqueConstraintError.httpCode)
           .json({ message: error.message });
+        return;
       }
 
       if (error instanceof ServerError) {
-        res.status(ServerError.httpCode).json({ message: error.message });
+        await res.status(ServerError.httpCode).json({ message: error.message });
+        return;
       }
     }
   },
@@ -96,9 +99,10 @@ export const updateUserInfo = [
         message: err.msg,
       }));
 
-      res
+      await res
         .status(400)
         .json({ message: responseMessages.BAD_REQUEST, errors: errorMessage });
+      return;
     }
 
     try {
@@ -110,14 +114,18 @@ export const updateUserInfo = [
         password: password,
       };
       await updateUserProfile(userUpdateInfo);
-      res.status(200).json({ message: responseMessages.USER_UPDATED });
+      await res.status(200).json({ message: responseMessages.USER_UPDATED });
     } catch (error: NotFoundError | ServerError | unknown) {
       if (error instanceof NotFoundError) {
-        res.status(NotFoundError.httpCode).json({ message: error.message });
+        await res
+          .status(NotFoundError.httpCode)
+          .json({ message: error.message });
+        return;
       }
 
       if (error instanceof ServerError) {
-        res.status(ServerError.httpCode).json({ message: error.message });
+        await res.status(ServerError.httpCode).json({ message: error.message });
+        return;
       }
     }
   },

@@ -50,9 +50,10 @@ export const createTask = [
         message: err.msg,
       }));
 
-      res
+      await res
         .status(400)
         .json({ message: responseMessages.BAD_REQUEST, errors: errorMessage });
+      return;
     }
 
     try {
@@ -64,16 +65,18 @@ export const createTask = [
         username: username,
       });
       await createTaskRecord(newTask);
-      res.status(201).json({ message: responseMessages.TASK_CREATED });
+      await res.status(201).json({ message: responseMessages.TASK_CREATED });
     } catch (error: ServerError | UniqueConstraintError | unknown) {
       if (error instanceof UniqueConstraintError) {
-        res
+        await res
           .status(UniqueConstraintError.httpCode)
           .json({ message: error.message });
+        return;
       }
 
       if (error instanceof ServerError) {
-        res.status(ServerError.httpCode).json({ message: error.message });
+        await res.status(ServerError.httpCode).json({ message: error.message });
+        return;
       }
     }
   },
@@ -103,9 +106,10 @@ export const updateTask = [
         message: err.msg,
       }));
 
-      res
+      await res
         .status(400)
         .json({ message: responseMessages.BAD_REQUEST, errors: errorMessage });
+      return;
     }
 
     try {
@@ -117,14 +121,18 @@ export const updateTask = [
         status: status,
       };
       await updateTaskRecord(taskUpdateInfo);
-      res.status(200).json({ message: responseMessages.TASK_UPDATED });
+      await res.status(200).json({ message: responseMessages.TASK_UPDATED });
     } catch (error: NotFoundError | ServerError | unknown) {
       if (error instanceof NotFoundError) {
-        res.status(NotFoundError.httpCode).json({ message: error.message });
+        await res
+          .status(NotFoundError.httpCode)
+          .json({ message: error.message });
+        return;
       }
 
       if (error instanceof ServerError) {
-        res.status(ServerError.httpCode).json({ message: error.message });
+        await res.status(ServerError.httpCode).json({ message: error.message });
+        return;
       }
     }
   },
@@ -154,22 +162,27 @@ export const deleteTask = [
         message: err.msg,
       }));
 
-      res
+      await res
         .status(400)
         .json({ message: responseMessages.BAD_REQUEST, errors: errorMessage });
+      return;
     }
 
     try {
       const { id } = req.body;
       await deleteTaskRecord(id);
-      res.status(204).json({});
+      await res.status(204).json({});
     } catch (error: NotFoundError | ServerError | unknown) {
       if (error instanceof NotFoundError) {
-        res.status(NotFoundError.httpCode).json({ message: error.message });
+        await res
+          .status(NotFoundError.httpCode)
+          .json({ message: error.message });
+        return;
       }
 
       if (error instanceof ServerError) {
-        res.status(ServerError.httpCode).json({ message: error.message });
+        await res.status(ServerError.httpCode).json({ message: error.message });
+        return;
       }
     }
   },
@@ -199,22 +212,27 @@ export const fetchTasksByUsername = [
         message: err.msg,
       }));
 
-      res
+      await res
         .status(400)
         .json({ message: responseMessages.BAD_REQUEST, errors: errorMessage });
+      return;
     }
 
     try {
       const { username } = req.body;
       const tasks = await retrieveTasksByUsername(username);
-      res.status(200).json({ data: tasks });
+      await res.status(200).json({ data: tasks });
     } catch (error: NotFoundError | ServerError | unknown) {
       if (error instanceof NotFoundError) {
-        res.status(NotFoundError.httpCode).json({ message: error.message });
+        await res
+          .status(NotFoundError.httpCode)
+          .json({ message: error.message });
+        return;
       }
 
       if (error instanceof ServerError) {
-        res.status(ServerError.httpCode).json({ message: error.message });
+        await res.status(ServerError.httpCode).json({ message: error.message });
+        return;
       }
     }
   },
@@ -244,22 +262,27 @@ export const fetchTaskBySubject = [
         message: err.msg,
       }));
 
-      res
+      await res
         .status(400)
         .json({ message: responseMessages.BAD_REQUEST, errors: errorMessage });
+      return;
     }
 
     try {
       const { subject } = req.body;
       const task = await retrieveTaskBySubject(subject);
-      res.status(200).json({ data: task });
+      await res.status(200).json({ data: task });
     } catch (error: NotFoundError | ServerError | unknown) {
       if (error instanceof NotFoundError) {
-        res.status(NotFoundError.httpCode).json({ message: error.message });
+        await res
+          .status(NotFoundError.httpCode)
+          .json({ message: error.message });
+        return;
       }
 
       if (error instanceof ServerError) {
-        res.status(ServerError.httpCode).json({ message: error.message });
+        await res.status(ServerError.httpCode).json({ message: error.message });
+        return;
       }
     }
   },
@@ -289,21 +312,26 @@ export const fetchTasksByStatus = [
         message: err.msg,
       }));
 
-      res
+      await res
         .status(400)
         .json({ message: responseMessages.BAD_REQUEST, errors: errorMessage });
+      return;
     }
     try {
       const { status } = req.body;
       const tasks = await retrieveTasksByStatus(status);
-      res.status(200).json({ data: tasks });
+      await res.status(200).json({ data: tasks });
     } catch (error: NotFoundError | ServerError | unknown) {
       if (error instanceof NotFoundError) {
-        res.status(NotFoundError.httpCode).json({ message: error.message });
+        await res
+          .status(NotFoundError.httpCode)
+          .json({ message: error.message });
+        return;
       }
 
       if (error instanceof ServerError) {
-        res.status(ServerError.httpCode).json({ message: error.message });
+        await res.status(ServerError.httpCode).json({ message: error.message });
+        return;
       }
     }
   },

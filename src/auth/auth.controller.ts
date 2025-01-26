@@ -44,9 +44,10 @@ export const loginUser = [
       const errorMessage = expressErrors.array().map((err) => ({
         message: err.msg,
       }));
-      res
+      await res
         .status(400)
         .json({ message: responseMessages.BAD_REQUEST, errors: errorMessage });
+      return;
     }
 
     try {
@@ -67,15 +68,19 @@ export const loginUser = [
         }
       );
 
-      res.status(200).json({ token: token });
+      await res.status(200).json({ token: token });
     } catch (error: NotFoundError | ServerError | unknown) {
       if (error instanceof NotFoundError) {
-        res.status(401).json({ message: userServiceResponses.USER_NOT_FOUND });
+        await res
+          .status(401)
+          .json({ message: userServiceResponses.USER_NOT_FOUND });
+        return;
       }
 
-      res
+      await res
         .status(ServerError.httpCode)
         .json({ message: commonServiceResponses.SERVER_ERROR });
+      return;
     }
   },
 ];
@@ -105,16 +110,20 @@ export const verifyToken = [
         message: err.msg,
       }));
 
-      res
+      await res
         .status(400)
         .json({ message: responseMessages.BAD_REQUEST, errors: errorMessage });
+      return;
     }
 
     try {
       const token = req.headers.authorization;
 
       if (!token) {
-        res.status(401).json({ message: authResponses.AUTH_HEADER_REQUIRED });
+        await res
+          .status(401)
+          .json({ message: authResponses.AUTH_HEADER_REQUIRED });
+        return;
       } else {
         const receivedToken = token.replace("Bearer ", "");
         const decoded = jwt.verify(receivedToken, process.env.KEY as string);
@@ -124,7 +133,8 @@ export const verifyToken = [
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-      res.status(401).json({ message: authResponses.AUTH_FAILED });
+      await res.status(401).json({ message: authResponses.AUTH_FAILED });
+      return;
     }
   },
 ];
