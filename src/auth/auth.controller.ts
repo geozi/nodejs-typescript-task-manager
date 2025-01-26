@@ -13,7 +13,7 @@ import {
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { validationResult } from "express-validator";
-import { ServerError } from "../service/errors/server.error";
+import { ServerError } from "../persistence/errors/server.error";
 import { commonServiceResponses } from "../service/resources/commonService.response";
 import { IToken } from "./interfaces/iToken.interface";
 import { userServiceResponses } from "../service/resources/userService.response";

@@ -4,7 +4,7 @@
  */
 
 /**
- * Custom error class for not founding the requested documents (404).
+ * Custom error class for not founding the requested documents.
  * @extends {Error}
  */
 export class NotFoundError extends Error {

@@ -39,7 +39,6 @@ export const taskCreationRules = (): ValidationChain[] => {
  * @returns {ValidationChain[]} Validation chain.
  */
 export const taskUpdateRules = (): ValidationChain[] => {
-  console.log("I am inside task update rules");
   return [
     check("id")
       .notEmpty()

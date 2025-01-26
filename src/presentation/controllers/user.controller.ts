@@ -10,7 +10,7 @@ import {
   userRegistrationRules,
 } from "../middleware/userRules.validation";
 import { NotFoundError } from "../../service/errors/notFound.error";
-import { ServerError } from "../../service/errors/server.error";
+import { ServerError } from "../../persistence/errors/server.error";
 import {
   createUserProfile,
   updateUserProfile,

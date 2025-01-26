@@ -6,6 +6,7 @@
 
 The project contains the backend implementation of a Task Manager API in Typescript. It exposes APIs for task and user profile management:
 
+- User registration,
 - User login,
 - User profile update,
 - Task creation,

@@ -14,7 +14,7 @@ import {
 } from "../persistence/task.repository";
 import { ITaskUpdate } from "../presentation/interfaces/iTaskUpdate.interface";
 import { NotFoundError } from "./errors/notFound.error";
-import { ServerError } from "./errors/server.error";
+import { ServerError } from "../persistence/errors/server.error";
 import { commonServiceResponses } from "./resources/commonService.response";
 import { taskServiceResponses } from "./resources/taskService.response";
 

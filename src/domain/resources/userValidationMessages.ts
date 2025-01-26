@@ -67,7 +67,7 @@ const userFailedValidation = {
    * @type {string}
    */
   PASSWORD_MUST_HAVE_CHARACTERS: `
-  **Password must contain at one of the following:
+  **Password must contain at least one of the following:
   - **one lowercase character**,
   - **one uppercase character**,
   - **one number**,

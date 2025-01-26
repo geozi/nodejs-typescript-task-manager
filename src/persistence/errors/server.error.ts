@@ -1,6 +1,6 @@
 /**
  * Server error.
- * @module src/service/errors/server.error
+ * @module src/persistence/errors/server.error
  */
 
 /**

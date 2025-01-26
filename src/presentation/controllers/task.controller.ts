@@ -13,7 +13,7 @@ import {
   taskFetchingByUsernameRules,
 } from "../middleware/taskRules.validation";
 import { NotFoundError } from "../../service/errors/notFound.error";
-import { ServerError } from "../../service/errors/server.error";
+import { ServerError } from "../../persistence/errors/server.error";
 import { Request, Response } from "express";
 import Task from "../../domain/models/task.model";
 import {

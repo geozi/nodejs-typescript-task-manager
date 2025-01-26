@@ -11,7 +11,7 @@ import {
   updateUserInfo,
 } from "../persistence/user.repository";
 import { NotFoundError } from "./errors/notFound.error";
-import { ServerError } from "./errors/server.error";
+import { ServerError } from "../persistence/errors/server.error";
 import { userServiceResponses } from "./resources/userService.response";
 import { commonServiceResponses } from "./resources/commonService.response";
 import bcrypt from "bcryptjs";
@@ -76,6 +76,8 @@ export const retrieveUserByEmail = async (email: string): Promise<IUser> => {
  */
 export const createUserProfile = async (newUser: IUser): Promise<IUser> => {
   try {
+    const hashedPassword = await bcrypt.hash(newUser.password, 10);
+    newUser.password = hashedPassword;
     return await addUser(newUser);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error: unknown) {
