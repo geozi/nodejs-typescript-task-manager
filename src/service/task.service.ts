@@ -17,6 +17,7 @@ import { NotFoundError } from "./errors/notFound.error";
 import { ServerError } from "../persistence/errors/server.error";
 import { commonServiceResponses } from "./resources/commonService.response";
 import { taskServiceResponses } from "./resources/taskService.response";
+import { UniqueConstraintError } from "../domain/errors/uniqueConstraint.error";
 
 /**
  * Calls on the persistence layer to retrieve all tasks having the specified status.
@@ -103,8 +104,10 @@ export const retrieveTaskBySubject = async (
 export const createTaskRecord = async (newTask: ITask) => {
   try {
     return await addTask(newTask);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
+    if (error instanceof UniqueConstraintError) {
+      throw new UniqueConstraintError(error.message);
+    }
     throw new ServerError(commonServiceResponses.SERVER_ERROR);
   }
 };

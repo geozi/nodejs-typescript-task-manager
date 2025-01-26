@@ -36,7 +36,8 @@ The Task Manager API project :
 
 - uses Typescript for development and TypeDoc for documentation,
 - implements a layered architecture approach,
-- uses a combination of Node's build-in assert library, Sinon, and Mocha for unit and integration testing.
+- uses a combination of Node's build-in assert library, Sinon, and Mocha for unit and integration testing,
+- uses class syntax to create custom error classes.
 
 ##
 

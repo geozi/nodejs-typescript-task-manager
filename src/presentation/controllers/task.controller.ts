@@ -25,6 +25,7 @@ import {
   deleteTaskRecord,
 } from "../../service/task.service";
 import { ITaskUpdate } from "../interfaces/iTaskUpdate.interface";
+import { UniqueConstraintError } from "../../domain/errors/uniqueConstraint.error";
 
 /**
  * Middleware array that contains task creation logic.
@@ -64,13 +65,16 @@ export const createTask = [
       });
       await createTaskRecord(newTask);
       res.status(201).json({ message: responseMessages.TASK_CREATED });
-    } catch (error: ServerError | unknown) {
-      let serverErrorMessage;
-      if (error instanceof ServerError) {
-        serverErrorMessage = error.message;
+    } catch (error: ServerError | UniqueConstraintError | unknown) {
+      if (error instanceof UniqueConstraintError) {
+        res
+          .status(UniqueConstraintError.httpCode)
+          .json({ message: error.message });
       }
 
-      res.status(ServerError.httpCode).json({ message: serverErrorMessage });
+      if (error instanceof ServerError) {
+        res.status(ServerError.httpCode).json({ message: error.message });
+      }
     }
   },
 ];

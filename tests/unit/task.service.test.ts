@@ -17,7 +17,7 @@ import {
 } from "../../src/service/task.service";
 import * as taskRepository from "../../src/persistence/task.repository";
 import { NotFoundError } from "../../src/service/errors/notFound.error";
-import { ServerError } from "../../src/service/errors/server.error";
+import { ServerError } from "../../src/persistence/errors/server.error";
 
 describe("Task service unit test", () => {
   const validTask = new Task(testInput.validTaskInput);

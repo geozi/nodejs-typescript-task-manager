@@ -7,6 +7,7 @@ import { IUser } from "../interfaces/iUser.interface";
 import mongooseUniqueValidator from "mongoose-unique-validator";
 import userFailedValidation from "../resources/userValidationMessages";
 import regularExpressions from "../resources/validationRegExp";
+import { UniqueConstraintError } from "../errors/uniqueConstraint.error";
 
 /**
  * User schema for persistence in MongoDB.
@@ -54,5 +55,8 @@ const userSchema = new Schema<IUser>(
   }
 );
 
-userSchema.plugin(mongooseUniqueValidator, "{PATH} already exists.");
+userSchema.plugin(mongooseUniqueValidator, {
+  message: "{PATH} already exists in the database.",
+  type: UniqueConstraintError,
+});
 export default model<IUser>("User", userSchema);

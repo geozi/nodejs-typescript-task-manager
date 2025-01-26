@@ -12,7 +12,7 @@ import * as userRepository from "../../src/persistence/user.repository";
 import testInput from "../testInput";
 import sinon from "sinon";
 import { NotFoundError } from "../../src/service/errors/notFound.error";
-import { ServerError } from "../../src/service/errors/server.error";
+import { ServerError } from "../../src/persistence/errors/server.error";
 import { IUserUpdate } from "../../src/presentation/interfaces/iUserUpdate.interface";
 
 describe("User service unit test", () => {

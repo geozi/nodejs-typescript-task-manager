@@ -16,6 +16,7 @@ import { userServiceResponses } from "./resources/userService.response";
 import { commonServiceResponses } from "./resources/commonService.response";
 import bcrypt from "bcryptjs";
 import { IUserUpdate } from "../presentation/interfaces/iUserUpdate.interface";
+import { UniqueConstraintError } from "../domain/errors/uniqueConstraint.error";
 
 /**
  * Calls on the persistence layer to retrieve the user with the specified username.
@@ -79,8 +80,10 @@ export const createUserProfile = async (newUser: IUser): Promise<IUser> => {
     const hashedPassword = await bcrypt.hash(newUser.password, 10);
     newUser.password = hashedPassword;
     return await addUser(newUser);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (error: unknown) {
+  } catch (error) {
+    if (error instanceof UniqueConstraintError) {
+      throw new UniqueConstraintError(error.message);
+    }
     throw new ServerError(commonServiceResponses.SERVER_ERROR);
   }
 };
