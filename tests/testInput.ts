@@ -1,4 +1,4 @@
-import Status from "../src/domain/enums/status.enum";
+import { Status } from "../src/domain/enums/status.enum";
 
 const validTaskInput = {
   subject: "Complete project report",

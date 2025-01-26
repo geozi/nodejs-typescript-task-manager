@@ -9,7 +9,7 @@
  * @readonly
  * @enum {string}
  */
-enum Role {
+export enum Role {
   /**
    * Represents the 'admin' role.
    * @type {string}
@@ -22,5 +22,3 @@ enum Role {
    */
   General = "General",
 }
-
-export default Role;

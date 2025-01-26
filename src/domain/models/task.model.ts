@@ -3,10 +3,10 @@
  * @module src/models/task.model
  */
 import { Schema, model } from "mongoose";
-import ITask from "../interfaces/iTask.interface";
+import { ITask } from "../interfaces/iTask.interface";
 import mongooseUniqueValidator from "mongoose-unique-validator";
 import taskFailedValidation from "../resources/taskValidationMessages";
-import Status from "../enums/status.enum";
+import { Status } from "../enums/status.enum";
 import userFailedValidation from "../resources/userValidationMessages";
 
 /**

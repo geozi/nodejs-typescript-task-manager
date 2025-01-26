@@ -2,15 +2,29 @@
  * Task service unit tests.
  */
 import Task from "../../src/domain/models/task.model";
-import ITask from "../../src/domain/interfaces/iTask.interface";
-import ITaskUpdate from "../../src/presentation/interfaces/iTaskUpdate.interface";
+import { ITask } from "../../src/domain/interfaces/iTask.interface";
+import { ITaskUpdate } from "../../src/presentation/interfaces/iTaskUpdate.interface";
 import assert from "assert";
 import testInput from "../testInput";
 import sinon from "sinon";
-import taskService from "../../src/service/task.service";
-import taskRepository from "../../src/persistence/task.repository";
-import NotFoundError from "../../src/service/errors/notFound.error";
-import ServerError from "../../src/service/errors/server.error";
+import {
+  retrieveTaskBySubject,
+  retrieveTasksByStatus,
+  retrieveTasksByUsername,
+  createTaskRecord,
+  updateTaskRecord,
+  deleteTaskRecord,
+} from "../../src/service/task.service";
+import {
+  getTaskBySubject,
+  getTasksByStatus,
+  getTasksByUsername,
+  addTask,
+  updateTask,
+  deleteTask,
+} from "../../src/persistence/task.repository";
+import { NotFoundError } from "../../src/service/errors/notFound.error";
+import { ServerError } from "../../src/service/errors/server.error";
 
 describe("Task service unit test", () => {
   const validTask = new Task(testInput.validTaskInput);
@@ -25,7 +39,7 @@ describe("Task service unit test", () => {
   describe("Promise rejects", () => {
     describe("retrieveTasksByStatus()", () => {
       beforeEach(() => {
-        methodStub = sinon.stub(taskRepository, "getTasksByStatus");
+        methodStub = sinon.stub({ getTasksByStatus }, "getTasksByStatus");
       });
 
       afterEach(() => {
@@ -35,21 +49,21 @@ describe("Task service unit test", () => {
       it("server error", async () => {
         methodStub.rejects();
         await assert.rejects(async () => {
-          await taskService.retrieveTasksByStatus(validTask.status);
+          await retrieveTasksByStatus(validTask.status);
         }, ServerError);
       });
 
       it("tasks not found", async () => {
         methodStub.resolves(mockTasks);
         await assert.rejects(async () => {
-          await taskService.retrieveTasksByStatus(validTask.status);
+          await retrieveTasksByStatus(validTask.status);
         }, NotFoundError);
       });
     });
 
     describe("retrieveTasksByUsername()", () => {
       beforeEach(() => {
-        methodStub = sinon.stub(taskRepository, "getTasksByUsername");
+        methodStub = sinon.stub({ getTasksByUsername }, "getTasksByUsername");
       });
 
       afterEach(() => {
@@ -59,21 +73,21 @@ describe("Task service unit test", () => {
       it("server error", async () => {
         methodStub.rejects();
         await assert.rejects(async () => {
-          await taskService.retrieveTasksByUsername(validTask.username);
+          await retrieveTasksByUsername(validTask.username);
         }, ServerError);
       });
 
       it("tasks not found", async () => {
         methodStub.resolves(mockTasks);
         await assert.rejects(async () => {
-          await taskService.retrieveTasksByUsername(validTask.username);
+          await retrieveTasksByUsername(validTask.username);
         }, NotFoundError);
       });
     });
 
     describe("retrieveTaskBySubject()", () => {
       beforeEach(() => {
-        methodStub = sinon.stub(taskRepository, "getTaskBySubject");
+        methodStub = sinon.stub({ getTaskBySubject }, "getTaskBySubject");
       });
 
       afterEach(() => {
@@ -83,30 +97,30 @@ describe("Task service unit test", () => {
       it("server error", async () => {
         methodStub.rejects();
         await assert.rejects(async () => {
-          await taskService.retrieveTaskBySubject(validTask.subject);
+          await retrieveTaskBySubject(validTask.subject);
         });
       });
 
       it("task not found", async () => {
         methodStub.resolves(null);
         await assert.rejects(async () => {
-          await taskService.retrieveTaskBySubject(validTask.subject);
+          await retrieveTaskBySubject(validTask.subject);
         }, NotFoundError);
       });
     });
 
     describe("createTaskRecord()", () => {
       it("server error", async () => {
-        sinon.stub(taskRepository, "addTask").rejects();
+        sinon.stub({ addTask }, "addTask").rejects();
         await assert.rejects(async () => {
-          await taskService.createTaskRecord(mockTask);
+          await createTaskRecord(mockTask);
         }, ServerError);
       });
     });
 
     describe("updateTaskRecord()", () => {
       beforeEach(() => {
-        methodStub = sinon.stub(taskRepository, "updateTask");
+        methodStub = sinon.stub({ updateTask }, "updateTask");
       });
 
       afterEach(() => {
@@ -116,14 +130,14 @@ describe("Task service unit test", () => {
       it("server error", async () => {
         methodStub.rejects();
         await assert.rejects(async () => {
-          await taskService.updateTaskRecord(mockUpdateDataObj);
+          await updateTaskRecord(mockUpdateDataObj);
         }, ServerError);
       });
 
       it("task not found()", async () => {
         methodStub.resolves(null);
         await assert.rejects(async () => {
-          await taskService.updateTaskRecord(mockUpdateDataObj);
+          await updateTaskRecord(mockUpdateDataObj);
         }, NotFoundError);
       });
     });
@@ -131,7 +145,7 @@ describe("Task service unit test", () => {
 
   describe("deleteTaskRecord()", () => {
     beforeEach(() => {
-      methodStub = sinon.stub(taskRepository, "deleteTask");
+      methodStub = sinon.stub({ deleteTask }, "deleteTask");
     });
 
     afterEach(() => {
@@ -141,14 +155,14 @@ describe("Task service unit test", () => {
     it("server error", async () => {
       methodStub.rejects();
       await assert.rejects(async () => {
-        await taskService.deleteTaskRecord(mockId);
+        await deleteTaskRecord(mockId);
       }, ServerError);
     });
 
     it("task not found", async () => {
       methodStub.resolves(null);
       await assert.rejects(async () => {
-        await taskService.deleteTaskRecord(mockId);
+        await deleteTaskRecord(mockId);
       }, NotFoundError);
     });
   });

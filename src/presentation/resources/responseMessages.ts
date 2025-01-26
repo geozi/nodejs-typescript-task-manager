@@ -13,7 +13,7 @@
  * @property {string} TASK_UPDATED - Message sent when an existing task is successfully updated.
  * @property {string} BAD_REQUEST - Message sent when one or more request fields fail express validation rules.
  */
-const responseMessages = {
+export const responseMessages = {
   /**
    * Message sent when a new user profile is successfully created.
    * @type {string}
@@ -44,5 +44,3 @@ const responseMessages = {
    */
   BAD_REQUEST: "Bad request",
 };
-
-export default responseMessages;

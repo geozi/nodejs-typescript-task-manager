@@ -13,7 +13,7 @@
  * @property {string} USER_PROFILE_UPDATED - Message sent when an existing user profile is successfully updated.
  * @property {string} NO_USERS_IN_DB - Message sent when no users are found in the 'users' collection.
  */
-const userServiceResponses = {
+export const userServiceResponses = {
   /**
    * Message sent when the requested user document is not found.
    * @type {string}
@@ -44,5 +44,3 @@ const userServiceResponses = {
    */
   NO_USERS_IN_DB: "No users are registered in the database",
 };
-
-export default userServiceResponses;

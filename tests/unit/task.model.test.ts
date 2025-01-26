@@ -2,7 +2,7 @@
  * Task model unit tests.
  */
 import Task from "../../src/domain/models/task.model";
-import ITask from "../../src/domain/interfaces/iTask.interface";
+import { ITask } from "../../src/domain/interfaces/iTask.interface";
 import assert from "assert";
 import taskFailedValidation from "../../src/domain/resources/taskValidationMessages";
 import testInput from "../testInput";

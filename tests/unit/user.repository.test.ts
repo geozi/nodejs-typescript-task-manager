@@ -4,10 +4,10 @@
 import mongoose from "mongoose";
 import User from "../../src/domain/models/user.model";
 import sinon from "sinon";
-import userRepository from "../../src/persistence/user.repository";
+import { addUser } from "../../src/persistence/user.repository";
 import testInput from "../testInput";
 import assert from "assert";
-import IUser from "../../src/domain/interfaces/iUser.interface";
+import { IUser } from "../../src/domain/interfaces/iUser.interface";
 
 describe("User repository unit test", () => {
   let newUser: IUser;
@@ -26,7 +26,7 @@ describe("User repository unit test", () => {
         newUser = new User(testInput.validUserInput);
 
         assert.doesNotReject(async () => {
-          await userRepository.addUser(newUser);
+          await addUser(newUser);
         });
       });
     });
@@ -47,7 +47,7 @@ describe("User repository unit test", () => {
         newUser.username = testInput.invalidUserInputs.TOO_SHORT_USERNAME;
 
         assert.rejects(async () => {
-          await userRepository.addUser(newUser);
+          await addUser(newUser);
         }, mongoose.Error.ValidationError);
       });
 
@@ -56,7 +56,7 @@ describe("User repository unit test", () => {
         newUser.username = testInput.invalidUserInputs.TOO_LONG_USERNAME;
 
         assert.rejects(async () => {
-          await userRepository.addUser(newUser);
+          await addUser(newUser);
         }, mongoose.Error.ValidationError);
       });
 
@@ -67,7 +67,7 @@ describe("User repository unit test", () => {
             newUser.email = invalidEmail;
 
             assert.rejects(async () => {
-              await userRepository.addUser(newUser);
+              await addUser(newUser);
             }, mongoose.Error.ValidationError);
           });
         }

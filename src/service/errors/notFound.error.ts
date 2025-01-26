@@ -7,7 +7,7 @@
  * Custom error class for not founding the requested documents (404).
  * @extends {Error}
  */
-class NotFoundError extends Error {
+export class NotFoundError extends Error {
   public static httpCode = 404;
 
   /**
@@ -20,5 +20,3 @@ class NotFoundError extends Error {
     this.message = message;
   }
 }
-
-export default NotFoundError;

@@ -6,8 +6,8 @@ import testInput from "../testInput";
 import assert from "assert";
 import sinon from "sinon";
 import Task from "../../src/domain/models/task.model";
-import ITask from "../../src/domain/interfaces/iTask.interface";
-import taskRepository from "../../src/persistence/task.repository";
+import { ITask } from "../../src/domain/interfaces/iTask.interface";
+import { addTask } from "../../src/persistence/task.repository";
 
 describe("Task repository unit test", () => {
   let newTask: ITask;
@@ -25,7 +25,7 @@ describe("Task repository unit test", () => {
       it("task added", () => {
         newTask = new Task(testInput.validTaskInput);
         assert.doesNotReject(async () => {
-          await taskRepository.addTask(newTask);
+          await addTask(newTask);
         });
       });
     });
@@ -46,7 +46,7 @@ describe("Task repository unit test", () => {
         newTask.subject = testInput.invalidTaskInputs.TOO_SHORT_SUBJECT;
 
         assert.rejects(async () => {
-          await taskRepository.addTask(newTask);
+          await addTask(newTask);
         }, mongoose.Error.ValidationError);
       });
 
@@ -55,7 +55,7 @@ describe("Task repository unit test", () => {
         newTask.subject = testInput.invalidTaskInputs.TOO_LONG_SUBJECT;
 
         assert.rejects(async () => {
-          await taskRepository.addTask(newTask);
+          await addTask(newTask);
         }, mongoose.Error.ValidationError);
       });
 
@@ -64,7 +64,7 @@ describe("Task repository unit test", () => {
         newTask.description = testInput.invalidTaskInputs.TOO_LONG_DESCRIPTION;
 
         assert.rejects(async () => {
-          await taskRepository.addTask(newTask);
+          await addTask(newTask);
         }, mongoose.Error.ValidationError);
       });
 
@@ -73,7 +73,7 @@ describe("Task repository unit test", () => {
         newTask.status = testInput.invalidTaskInputs.INVALID_STATUS;
 
         assert.rejects(async () => {
-          await taskRepository.addTask(newTask);
+          await addTask(newTask);
         }, mongoose.Error.ValidationError);
       });
     });

@@ -11,7 +11,7 @@ import regularExpressions from "../../domain/resources/validationRegExp";
  * Returns a validation chain for user registration.
  * @returns {ValidationChain[]} Validation chain.
  */
-const userRegistrationRules = (): ValidationChain[] => {
+export const userRegistrationRules = (): ValidationChain[] => {
   return [
     check("username")
       .notEmpty()
@@ -39,7 +39,7 @@ const userRegistrationRules = (): ValidationChain[] => {
  * Returns a validation chain for user profile update.
  * @returns {ValidationChain[]} Validation chain.
  */
-const userProfileUpdateRules = (): ValidationChain[] => {
+export const userProfileUpdateRules = (): ValidationChain[] => {
   return [
     check("id")
       .notEmpty()
@@ -71,7 +71,7 @@ const userProfileUpdateRules = (): ValidationChain[] => {
  * Returns a validation chain for email-based user retrieval.
  * @returns {ValidationChain[]} Validation chain.
  */
-const userRetrievalByEmailRules = (): ValidationChain[] => {
+export const userRetrievalByEmailRules = (): ValidationChain[] => {
   return [
     check("email")
       .notEmpty()
@@ -85,7 +85,7 @@ const userRetrievalByEmailRules = (): ValidationChain[] => {
  * Returns a validation chain for username-based user retrieval.
  * @returns {ValidationChain[]} Validation chain.
  */
-const userRetrievalByUsernameRules = (): ValidationChain[] => {
+export const userRetrievalByUsernameRules = (): ValidationChain[] => {
   return [
     check("username")
       .notEmpty()
@@ -95,11 +95,4 @@ const userRetrievalByUsernameRules = (): ValidationChain[] => {
       .isLength({ max: 20 })
       .withMessage(userFailedValidation.USERNAME_MAX_LENGTH),
   ];
-};
-
-export default {
-  userRegistrationRules,
-  userProfileUpdateRules,
-  userRetrievalByEmailRules,
-  userRetrievalByUsernameRules,
 };

@@ -9,7 +9,7 @@
  * @readonly
  * @enum {string}
  */
-enum Status {
+export enum Status {
   /**
    * Represents the 'Pending' status category.
    * @type {string}
@@ -22,5 +22,3 @@ enum Status {
    */
   Complete = "Complete",
 }
-
-export default Status;

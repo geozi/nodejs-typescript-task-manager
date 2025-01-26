@@ -2,16 +2,21 @@
  * User controller
  * @module src/presentation/controllers/user.controller
  */
-
 import { validationResult } from "express-validator";
 import User from "../../domain/models/user.model";
-import responseMessages from "../resources/responseMessages";
-import userValidationRules from "../middleware/userRules.validation";
-import NotFoundError from "../../service/errors/notFound.error";
-import ServerError from "../../service/errors/server.error";
-import userService from "../../service/user.service";
+import { responseMessages } from "../resources/responseMessages";
+import {
+  userProfileUpdateRules,
+  userRegistrationRules,
+} from "../middleware/userRules.validation";
+import { NotFoundError } from "../../service/errors/notFound.error";
+import { ServerError } from "../../service/errors/server.error";
+import {
+  createUserProfile,
+  updateUserProfile,
+} from "../../service/user.service";
 import { Request, Response } from "express";
-import IUserUpdate from "../interfaces/iUserUpdate.interface";
+import { IUserUpdate } from "../interfaces/iUserUpdate.interface";
 
 /**
  * Middleware array that contains user registration logic.
@@ -20,8 +25,8 @@ import IUserUpdate from "../interfaces/iUserUpdate.interface";
  * @property {ValidationChain[]} userRegistrationRules - Express validation rules for user registration.
  * @property {Function} anonymousAsyncFunction - Handles user registration requests and responses.
  */
-const registerUser = [
-  ...userValidationRules.userRegistrationRules(),
+export const registerUser = [
+  ...userRegistrationRules(),
 
   /**
    * Processes HTTP requests for user registration.
@@ -50,7 +55,7 @@ const registerUser = [
         password: password,
       });
 
-      await userService.createUserProfile(newUser);
+      await createUserProfile(newUser);
       res.status(201).json({ message: responseMessages.USER_REGISTERED });
     } catch (error: ServerError | unknown) {
       let serverErrorMessage;
@@ -70,8 +75,8 @@ const registerUser = [
  * @property {ValidationChain[]} userProfileUpdateRules - Express validation rules for user update.
  * @property {Function} anonymousAsyncFunction - Handles user update requests and responses.
  */
-const updateUserInfo = [
-  ...userValidationRules.userProfileUpdateRules(),
+export const updateUserInfo = [
+  ...userProfileUpdateRules(),
 
   /**
    * Processes HTTP requests for user update.
@@ -100,7 +105,7 @@ const updateUserInfo = [
         email: email,
         password: password,
       };
-      await userService.updateUserProfile(userUpdateInfo);
+      await updateUserProfile(userUpdateInfo);
       res.status(200).json({ message: responseMessages.USER_UPDATED });
     } catch (error: NotFoundError | ServerError | unknown) {
       if (error instanceof NotFoundError) {
@@ -116,5 +121,3 @@ const updateUserInfo = [
     }
   },
 ];
-
-export default { registerUser, updateUserInfo };

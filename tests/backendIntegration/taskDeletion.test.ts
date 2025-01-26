@@ -5,13 +5,13 @@ import sinon, { SinonSpy, SinonStub } from "sinon";
 import testInput from "../testInput";
 import assert from "assert";
 import { Request, Response } from "express";
-import taskService from "../../src/service/task.service";
-import taskServiceResponses from "../../src/service/resources/taskService.response";
-import commonService from "../../src/service/resources/commonService.response";
-import taskController from "../../src/presentation/controllers/task.controller";
-import responseMessages from "../../src/presentation/resources/responseMessages";
+import { deleteTaskRecord } from "../../src/service/task.service";
+import { taskServiceResponses } from "../../src/service/resources/taskService.response";
+import { commonServiceResponses } from "../../src/service/resources/commonService.response";
+import { deleteTask as controllerDeleteTask } from "../../src/presentation/controllers/task.controller";
+import { responseMessages } from "../../src/presentation/resources/responseMessages";
 import taskFailedValidation from "../../src/domain/resources/taskValidationMessages";
-import taskRepository from "../../src/persistence/task.repository";
+import { deleteTask as repositoryDeleteTask } from "../../src/persistence/task.repository";
 
 describe("Task deletion integration tests", () => {
   let req: Partial<Request>;
@@ -21,7 +21,7 @@ describe("Task deletion integration tests", () => {
   describe("validation-oriented", () => {
     describe("bad requests (400)", () => {
       beforeEach(() => {
-        sinon.replace(taskService, "deleteTaskRecord", sinon.fake());
+        sinon.replace({ deleteTaskRecord }, "deleteTaskRecord", sinon.fake());
         res = {
           status: sinon.stub().callsFake(() => {
             return res;
@@ -39,7 +39,7 @@ describe("Task deletion integration tests", () => {
       it("task ID is missing", async () => {
         req = { body: { id: undefined } };
 
-        for (const middleware of taskController.deleteTask) {
+        for (const middleware of controllerDeleteTask) {
           await middleware(req as Request, res as Response, next);
         }
 
@@ -64,7 +64,7 @@ describe("Task deletion integration tests", () => {
         ([testName, invalidLengthId]) => {
           it(testName, async () => {
             req = { body: { id: invalidLengthId } };
-            for (const middleware of taskController.deleteTask) {
+            for (const middleware of controllerDeleteTask) {
               await middleware(req as Request, res as Response, next);
             }
 
@@ -87,7 +87,7 @@ describe("Task deletion integration tests", () => {
         ([testName, invalidId]) => {
           it(testName, async () => {
             req = { body: { id: invalidId } };
-            for (const middleware of taskController.deleteTask) {
+            for (const middleware of controllerDeleteTask) {
               await middleware(req as Request, res as Response, next);
             }
 
@@ -120,7 +120,7 @@ describe("Task deletion integration tests", () => {
       };
 
       next = sinon.spy();
-      methodStub = sinon.stub(taskRepository, "deleteTask");
+      methodStub = sinon.stub({ repositoryDeleteTask }, "repositoryDeleteTask");
     });
 
     afterEach(() => {
@@ -133,7 +133,7 @@ describe("Task deletion integration tests", () => {
       };
 
       methodStub.rejects();
-      for (const middleware of taskController.deleteTask) {
+      for (const middleware of controllerDeleteTask) {
         await middleware(req as Request, res as Response, next);
       }
 
@@ -143,7 +143,7 @@ describe("Task deletion integration tests", () => {
       assert.strictEqual(statusStub.calledWith(500), true);
       assert.strictEqual(
         jsonSpy.calledWith({
-          message: commonService.SERVER_ERROR,
+          message: commonServiceResponses.SERVER_ERROR,
         }),
         true
       );
@@ -155,7 +155,7 @@ describe("Task deletion integration tests", () => {
       };
 
       methodStub.resolves(null);
-      for (const middleware of taskController.deleteTask) {
+      for (const middleware of controllerDeleteTask) {
         await middleware(req as Request, res as Response, next);
       }
 

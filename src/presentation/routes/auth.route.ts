@@ -2,10 +2,10 @@
  * Authentication routes.
  * @module src/presentation/routes/auth.route
  */
-import authController from "../../auth/auth.controller";
+import { loginUser } from "../../auth/auth.controller";
 import { Router } from "express";
 const authRouter = Router();
 
-authRouter.post("/", ...authController.loginUser);
+authRouter.post("/", ...loginUser);
 
 export default authRouter;

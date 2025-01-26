@@ -3,8 +3,8 @@
  */
 import mongoose, { ConnectOptions } from "mongoose";
 import User from "../../src/domain/models/user.model";
-import responseMessages from "../../src/presentation/resources/responseMessages";
-import userController from "../../src/presentation/controllers/user.controller";
+import { responseMessages } from "../../src/presentation/resources/responseMessages";
+import { registerUser } from "../../src/presentation/controllers/user.controller";
 import * as dotenv from "dotenv";
 import sinon, { SinonStub, SinonSpy } from "sinon";
 import { Request, Response } from "express";
@@ -49,7 +49,7 @@ describe("User collection database integration test", () => {
       body: testInput.validUserInput,
     };
 
-    for (const middleware of userController.registerUser) {
+    for (const middleware of registerUser) {
       await middleware(req as Request, res as Response, next);
     }
 

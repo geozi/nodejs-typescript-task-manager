@@ -2,15 +2,21 @@
  * Task service.
  * @module src/service/task.service
  */
-
 import mongoose from "mongoose";
-import ITask from "../domain/interfaces/iTask.interface";
-import taskRepository from "../persistence/task.repository";
-import ITaskUpdate from "../presentation/interfaces/iTaskUpdate.interface";
-import NotFoundError from "./errors/notFound.error";
-import ServerError from "./errors/server.error";
-import commonServiceResponses from "./resources/commonService.response";
-import taskServiceResponses from "./resources/taskService.response";
+import { ITask } from "../domain/interfaces/iTask.interface";
+import {
+  getTaskBySubject,
+  getTasksByStatus,
+  getTasksByUsername,
+  addTask,
+  updateTask,
+  deleteTask,
+} from "../persistence/task.repository";
+import { ITaskUpdate } from "../presentation/interfaces/iTaskUpdate.interface";
+import { NotFoundError } from "./errors/notFound.error";
+import { ServerError } from "./errors/server.error";
+import { commonServiceResponses } from "./resources/commonService.response";
+import { taskServiceResponses } from "./resources/taskService.response";
 
 /**
  * Calls on the persistence layer to retrieve all tasks having the specified status.
@@ -19,9 +25,11 @@ import taskServiceResponses from "./resources/taskService.response";
  * @returns {Promise<Array<ITask>>} A promise that resolves to an array of task objects.
  * @throws {NotFoundError | ServerError}
  */
-const retrieveTasksByStatus = async (status: string): Promise<Array<ITask>> => {
+export const retrieveTasksByStatus = async (
+  status: string
+): Promise<Array<ITask>> => {
   try {
-    const tasks = await taskRepository.getTasksByStatus(status);
+    const tasks = await getTasksByStatus(status);
     if (tasks.length === 0) {
       throw new NotFoundError(taskServiceResponses.TASKS_NOT_FOUND);
     }
@@ -42,11 +50,11 @@ const retrieveTasksByStatus = async (status: string): Promise<Array<ITask>> => {
  * @returns {Promise<Array<ITask>>} A promise that resolves to an array of task objects.
  * @throws {NotFoundError | ServerError}
  */
-const retrieveTasksByUsername = async (
+export const retrieveTasksByUsername = async (
   username: string
 ): Promise<Array<ITask>> => {
   try {
-    const tasks = await taskRepository.getTasksByUsername(username);
+    const tasks = await getTasksByUsername(username);
     if (tasks.length === 0) {
       throw new NotFoundError(taskServiceResponses.TASKS_NOT_FOUND);
     }
@@ -67,9 +75,11 @@ const retrieveTasksByUsername = async (
  * @returns {Promise<ITask>} A promise that resolves to a task object.
  * @throws {NotFoundError | ServerError}
  */
-const retrieveTaskBySubject = async (subject: string): Promise<ITask> => {
+export const retrieveTaskBySubject = async (
+  subject: string
+): Promise<ITask> => {
   try {
-    const task = await taskRepository.getTaskBySubject(subject);
+    const task = await getTaskBySubject(subject);
     if (task === null) {
       throw new NotFoundError(taskServiceResponses.TASK_NOT_FOUND);
     }
@@ -90,9 +100,9 @@ const retrieveTaskBySubject = async (subject: string): Promise<ITask> => {
  * @returns {Promise<ITask>} A promise that resolves to the newly saved task object.
  * @throws {ServerError}
  */
-const createTaskRecord = async (newTask: ITask) => {
+export const createTaskRecord = async (newTask: ITask) => {
   try {
-    return await taskRepository.addTask(newTask);
+    return await addTask(newTask);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     throw new ServerError(commonServiceResponses.SERVER_ERROR);
@@ -106,7 +116,7 @@ const createTaskRecord = async (newTask: ITask) => {
  * @returns {Promise<ITask>} A promise that resolves to the updated task object.
  * @throws {NotFoundError | ServerError}
  */
-const updateTaskRecord = async (
+export const updateTaskRecord = async (
   taskUpdateInfo: ITaskUpdate
 ): Promise<ITask> => {
   try {
@@ -118,10 +128,7 @@ const updateTaskRecord = async (
       status: status,
     };
 
-    const updatedTask = await taskRepository.updateTask(
-      idAsObjectId,
-      taskToUpdate
-    );
+    const updatedTask = await updateTask(idAsObjectId, taskToUpdate);
 
     if (updatedTask === null) {
       throw new NotFoundError(taskServiceResponses.TASK_NOT_FOUND);
@@ -142,10 +149,10 @@ const updateTaskRecord = async (
  * @returns {Promise<ITask>} A promise that resolves to the deleted task object.
  * @throws {NotFoundError | ServerError}
  */
-const deleteTaskRecord = async (id: string): Promise<ITask> => {
+export const deleteTaskRecord = async (id: string): Promise<ITask> => {
   try {
     const idAsObjectId = new mongoose.Types.ObjectId(id);
-    const deletedTask = await taskRepository.deleteTask(idAsObjectId);
+    const deletedTask = await deleteTask(idAsObjectId);
     if (deletedTask === null) {
       throw new NotFoundError(taskServiceResponses.TASK_NOT_FOUND);
     }
@@ -158,13 +165,4 @@ const deleteTaskRecord = async (id: string): Promise<ITask> => {
 
     throw new ServerError(commonServiceResponses.SERVER_ERROR);
   }
-};
-
-export default {
-  retrieveTasksByStatus,
-  retrieveTasksByUsername,
-  retrieveTaskBySubject,
-  createTaskRecord,
-  updateTaskRecord,
-  deleteTaskRecord,
 };

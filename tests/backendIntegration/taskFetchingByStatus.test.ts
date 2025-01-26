@@ -5,13 +5,13 @@ import sinon, { SinonSpy, SinonStub } from "sinon";
 import testInput from "../testInput";
 import assert from "assert";
 import { Request, Response } from "express";
-import taskService from "../../src/service/task.service";
-import taskServiceResponses from "../../src/service/resources/taskService.response";
-import commonService from "../../src/service/resources/commonService.response";
-import taskController from "../../src/presentation/controllers/task.controller";
-import responseMessages from "../../src/presentation/resources/responseMessages";
-import taskRepository from "../../src/persistence/task.repository";
-import ITask from "../../src/domain/interfaces/iTask.interface";
+import { retrieveTasksByStatus } from "../../src/service/task.service";
+import { taskServiceResponses } from "../../src/service/resources/taskService.response";
+import { commonServiceResponses } from "../../src/service/resources/commonService.response";
+import { fetchTasksByStatus } from "../../src/presentation/controllers/task.controller";
+import { responseMessages } from "../../src/presentation/resources/responseMessages";
+import { getTasksByStatus } from "../../src/persistence/task.repository";
+import { ITask } from "../../src/domain/interfaces/iTask.interface";
 import taskFailedValidation from "../../src/domain/resources/taskValidationMessages";
 
 describe("Status-based task fetching integration tests", () => {
@@ -22,7 +22,11 @@ describe("Status-based task fetching integration tests", () => {
   describe("validation-oriented", () => {
     describe("bad requests (400)", () => {
       beforeEach(() => {
-        sinon.replace(taskService, "retrieveTasksByStatus", sinon.fake());
+        sinon.replace(
+          { retrieveTasksByStatus },
+          "retrieveTasksByStatus",
+          sinon.fake()
+        );
         res = {
           status: sinon.stub().callsFake(() => {
             return res;
@@ -40,7 +44,7 @@ describe("Status-based task fetching integration tests", () => {
       it("status is missing", async () => {
         req = { body: { status: undefined } };
 
-        for (const middleware of taskController.fetchTasksByStatus) {
+        for (const middleware of fetchTasksByStatus) {
           await middleware(req as Request, res as Response, next);
         }
 
@@ -63,7 +67,7 @@ describe("Status-based task fetching integration tests", () => {
       it("status is invalid", async () => {
         req = { body: { status: testInput.invalidTaskInputs.INVALID_STATUS } };
 
-        for (const middleware of taskController.fetchTasksByStatus) {
+        for (const middleware of fetchTasksByStatus) {
           await middleware(req as Request, res as Response, next);
         }
 
@@ -94,7 +98,7 @@ describe("Status-based task fetching integration tests", () => {
       };
 
       next = sinon.spy();
-      methodStub = sinon.stub(taskRepository, "getTasksByStatus");
+      methodStub = sinon.stub({ getTasksByStatus }, "getTasksByStatus");
     });
 
     afterEach(() => {
@@ -105,7 +109,7 @@ describe("Status-based task fetching integration tests", () => {
       req = { body: { status: testInput.validTaskInput.status } };
 
       methodStub.rejects();
-      for (const middleware of taskController.fetchTasksByStatus) {
+      for (const middleware of fetchTasksByStatus) {
         await middleware(req as Request, res as Response, next);
       }
 
@@ -114,7 +118,7 @@ describe("Status-based task fetching integration tests", () => {
 
       assert.strictEqual(statusStub.calledWith(500), true);
       assert.strictEqual(
-        jsonSpy.calledWith({ message: commonService.SERVER_ERROR }),
+        jsonSpy.calledWith({ message: commonServiceResponses.SERVER_ERROR }),
         true
       );
     });
@@ -124,7 +128,7 @@ describe("Status-based task fetching integration tests", () => {
       const mockTasks: ITask[] = [];
 
       methodStub.resolves(mockTasks);
-      for (const middleware of taskController.fetchTasksByStatus) {
+      for (const middleware of fetchTasksByStatus) {
         await middleware(req as Request, res as Response, next);
       }
 

@@ -5,12 +5,12 @@ import sinon, { SinonSpy, SinonStub } from "sinon";
 import testInput from "../testInput";
 import assert from "assert";
 import { Request, Response } from "express";
-import taskService from "../../src/service/task.service";
-import taskServiceResponses from "../../src/service/resources/taskService.response";
-import commonService from "../../src/service/resources/commonService.response";
-import taskController from "../../src/presentation/controllers/task.controller";
-import responseMessages from "../../src/presentation/resources/responseMessages";
-import taskRepository from "../../src/persistence/task.repository";
+import { retrieveTaskBySubject } from "../../src/service/task.service";
+import { taskServiceResponses } from "../../src/service/resources/taskService.response";
+import { commonServiceResponses } from "../../src/service/resources/commonService.response";
+import { fetchTaskBySubject } from "../../src/presentation/controllers/task.controller";
+import { responseMessages } from "../../src/presentation/resources/responseMessages";
+import { getTaskBySubject } from "../../src/persistence/task.repository";
 import taskFailedValidation from "../../src/domain/resources/taskValidationMessages";
 
 describe("Subject-based task fetching integration tests", () => {
@@ -21,7 +21,11 @@ describe("Subject-based task fetching integration tests", () => {
   describe("validation-oriented", () => {
     describe("bad requests (400)", () => {
       beforeEach(() => {
-        sinon.replace(taskService, "retrieveTaskBySubject", sinon.fake());
+        sinon.replace(
+          { retrieveTaskBySubject },
+          "retrieveTaskBySubject",
+          sinon.fake()
+        );
         res = {
           status: sinon.stub().callsFake(() => {
             return res;
@@ -39,7 +43,7 @@ describe("Subject-based task fetching integration tests", () => {
       it("subject is missing", async () => {
         req = { body: { subject: undefined } };
 
-        for (const middleware of taskController.fetchTaskBySubject) {
+        for (const middleware of fetchTaskBySubject) {
           await middleware(req as Request, res as Response, next);
         }
 
@@ -64,7 +68,7 @@ describe("Subject-based task fetching integration tests", () => {
           body: { subject: testInput.invalidTaskInputs.TOO_SHORT_SUBJECT },
         };
 
-        for (const middleware of taskController.fetchTaskBySubject) {
+        for (const middleware of fetchTaskBySubject) {
           await middleware(req as Request, res as Response, next);
         }
 
@@ -86,7 +90,7 @@ describe("Subject-based task fetching integration tests", () => {
           body: { subject: testInput.invalidTaskInputs.TOO_LONG_SUBJECT },
         };
 
-        for (const middleware of taskController.fetchTaskBySubject) {
+        for (const middleware of fetchTaskBySubject) {
           await middleware(req as Request, res as Response, next);
         }
 
@@ -117,7 +121,7 @@ describe("Subject-based task fetching integration tests", () => {
       };
 
       next = sinon.spy();
-      methodStub = sinon.stub(taskRepository, "getTaskBySubject");
+      methodStub = sinon.stub({ getTaskBySubject }, "getTaskBySubject");
     });
 
     afterEach(() => {
@@ -128,7 +132,7 @@ describe("Subject-based task fetching integration tests", () => {
       req = { body: { subject: testInput.validTaskInput.subject } };
 
       methodStub.rejects();
-      for (const middleware of taskController.fetchTaskBySubject) {
+      for (const middleware of fetchTaskBySubject) {
         await middleware(req as Request, res as Response, next);
       }
 
@@ -137,7 +141,7 @@ describe("Subject-based task fetching integration tests", () => {
 
       assert.strictEqual(statusStub.calledWith(500), true);
       assert.strictEqual(
-        jsonSpy.calledWith({ message: commonService.SERVER_ERROR }),
+        jsonSpy.calledWith({ message: commonServiceResponses.SERVER_ERROR }),
         true
       );
     });
@@ -146,7 +150,7 @@ describe("Subject-based task fetching integration tests", () => {
       req = { body: { subject: testInput.validTaskInput.subject } };
 
       methodStub.resolves(null);
-      for (const middleware of taskController.fetchTaskBySubject) {
+      for (const middleware of fetchTaskBySubject) {
         await middleware(req as Request, res as Response, next);
       }
 

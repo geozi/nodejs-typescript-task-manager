@@ -4,13 +4,13 @@
 import sinon, { SinonStub, SinonSpy } from "sinon";
 import { Request, Response } from "express";
 import testInput from "../testInput";
-import authController from "../../src/auth/auth.controller";
+import { loginUser } from "../../src/auth/auth.controller";
 import assert from "assert";
 import userFailedValidation from "../../src/domain/resources/userValidationMessages";
-import responseMessages from "../../src/presentation/resources/responseMessages";
-import userRepository from "../../src/persistence/user.repository";
-import commonService from "../../src/service/resources/commonService.response";
-import userServiceResponses from "../../src/service/resources/userService.response";
+import { responseMessages } from "../../src/presentation/resources/responseMessages";
+import { getUserByUsername } from "../../src/persistence/user.repository";
+import { commonServiceResponses } from "../../src/service/resources/commonService.response";
+import { userServiceResponses } from "../../src/service/resources/userService.response";
 
 describe("User failed login integration test", () => {
   let req: Partial<Request>;
@@ -42,7 +42,7 @@ describe("User failed login integration test", () => {
           },
         };
 
-        for (const middleware of authController.loginUser) {
+        for (const middleware of loginUser) {
           await middleware(req as Request, res as Response, next);
         }
 
@@ -70,7 +70,7 @@ describe("User failed login integration test", () => {
           },
         };
 
-        for (const middleware of authController.loginUser) {
+        for (const middleware of loginUser) {
           await middleware(req as Request, res as Response, next);
         }
 
@@ -95,7 +95,7 @@ describe("User failed login integration test", () => {
           },
         };
 
-        for (const middleware of authController.loginUser) {
+        for (const middleware of loginUser) {
           await middleware(req as Request, res as Response, next);
         }
 
@@ -120,7 +120,7 @@ describe("User failed login integration test", () => {
           },
         };
 
-        for (const middleware of authController.loginUser) {
+        for (const middleware of loginUser) {
           await middleware(req as Request, res as Response, next);
         }
 
@@ -149,7 +149,7 @@ describe("User failed login integration test", () => {
           },
         };
 
-        for (const middleware of authController.loginUser) {
+        for (const middleware of loginUser) {
           await middleware(req as Request, res as Response, next);
         }
 
@@ -176,7 +176,7 @@ describe("User failed login integration test", () => {
               },
             };
 
-            for (const middleware of authController.loginUser) {
+            for (const middleware of loginUser) {
               await middleware(req as Request, res as Response, next);
             }
 
@@ -202,7 +202,7 @@ describe("User failed login integration test", () => {
       it("username and password are undefined", async () => {
         req = { body: { username: undefined, password: undefined } };
 
-        for (const middleware of authController.loginUser) {
+        for (const middleware of loginUser) {
           await middleware(req as Request, res as Response, next);
         }
 
@@ -239,7 +239,7 @@ describe("User failed login integration test", () => {
       };
 
       next = sinon.spy();
-      methodStub = sinon.stub(userRepository, "getUserByUsername");
+      methodStub = sinon.stub({ getUserByUsername }, "getUserByUsername");
     });
 
     afterEach(() => {
@@ -255,7 +255,7 @@ describe("User failed login integration test", () => {
       };
 
       methodStub.rejects();
-      for (const middleware of authController.loginUser) {
+      for (const middleware of loginUser) {
         await middleware(req as Request, res as Response, next);
       }
 
@@ -264,7 +264,7 @@ describe("User failed login integration test", () => {
 
       assert.strictEqual(statusStub.calledWith(500), true);
       assert.strictEqual(
-        jsonSpy.calledWith({ message: commonService.SERVER_ERROR }),
+        jsonSpy.calledWith({ message: commonServiceResponses.SERVER_ERROR }),
         true
       );
     });
@@ -278,7 +278,7 @@ describe("User failed login integration test", () => {
       };
 
       methodStub.resolves(null);
-      for (const middleware of authController.loginUser) {
+      for (const middleware of loginUser) {
         await middleware(req as Request, res as Response, next);
       }
 

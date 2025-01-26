@@ -5,14 +5,14 @@ import sinon, { SinonSpy, SinonStub } from "sinon";
 import testInput from "../testInput";
 import assert from "assert";
 import { Request, Response } from "express";
-import taskService from "../../src/service/task.service";
-import taskServiceResponses from "../../src/service/resources/taskService.response";
-import commonService from "../../src/service/resources/commonService.response";
-import taskController from "../../src/presentation/controllers/task.controller";
-import responseMessages from "../../src/presentation/resources/responseMessages";
-import taskRepository from "../../src/persistence/task.repository";
+import { retrieveTasksByUsername } from "../../src/service/task.service";
+import { taskServiceResponses } from "../../src/service/resources/taskService.response";
+import { commonServiceResponses } from "../../src/service/resources/commonService.response";
+import { fetchTasksByUsername } from "../../src/presentation/controllers/task.controller";
+import { responseMessages } from "../../src/presentation/resources/responseMessages";
+import { getTasksByUsername } from "../../src/persistence/task.repository";
 import userFailedValidation from "../../src/domain/resources/userValidationMessages";
-import ITask from "../../src/domain/interfaces/iTask.interface";
+import { ITask } from "../../src/domain/interfaces/iTask.interface";
 
 describe("Username-based task fetching integration tests", () => {
   let req: Partial<Request>;
@@ -22,7 +22,11 @@ describe("Username-based task fetching integration tests", () => {
   describe("validation-oriented", () => {
     describe("bad requests (400)", () => {
       beforeEach(() => {
-        sinon.replace(taskService, "retrieveTasksByUsername", sinon.fake());
+        sinon.replace(
+          { retrieveTasksByUsername },
+          "retrieveTasksByUsername",
+          sinon.fake()
+        );
         res = {
           status: sinon.stub().callsFake(() => {
             return res;
@@ -40,7 +44,7 @@ describe("Username-based task fetching integration tests", () => {
       it("username is missing", async () => {
         req = { body: { username: undefined } };
 
-        for (const middleware of taskController.fetchTasksByUsername) {
+        for (const middleware of fetchTasksByUsername) {
           await middleware(req as Request, res as Response, next);
         }
 
@@ -65,7 +69,7 @@ describe("Username-based task fetching integration tests", () => {
           body: { username: testInput.invalidUserInputs.TOO_SHORT_USERNAME },
         };
 
-        for (const middleware of taskController.fetchTasksByUsername) {
+        for (const middleware of fetchTasksByUsername) {
           await middleware(req as Request, res as Response, next);
         }
 
@@ -87,7 +91,7 @@ describe("Username-based task fetching integration tests", () => {
           body: { username: testInput.invalidUserInputs.TOO_LONG_USERNAME },
         };
 
-        for (const middleware of taskController.fetchTasksByUsername) {
+        for (const middleware of fetchTasksByUsername) {
           await middleware(req as Request, res as Response, next);
         }
 
@@ -118,7 +122,7 @@ describe("Username-based task fetching integration tests", () => {
       };
 
       next = sinon.spy();
-      methodStub = sinon.stub(taskRepository, "getTasksByUsername");
+      methodStub = sinon.stub({ getTasksByUsername }, "getTasksByUsername");
     });
 
     afterEach(() => {
@@ -129,7 +133,7 @@ describe("Username-based task fetching integration tests", () => {
       req = { body: { username: testInput.validUserInput.username } };
 
       methodStub.rejects();
-      for (const middleware of taskController.fetchTasksByUsername) {
+      for (const middleware of fetchTasksByUsername) {
         await middleware(req as Request, res as Response, next);
       }
 
@@ -138,7 +142,7 @@ describe("Username-based task fetching integration tests", () => {
 
       assert.strictEqual(statusStub.calledWith(500), true);
       assert.strictEqual(
-        jsonSpy.calledWith({ message: commonService.SERVER_ERROR }),
+        jsonSpy.calledWith({ message: commonServiceResponses.SERVER_ERROR }),
         true
       );
     });
@@ -148,7 +152,7 @@ describe("Username-based task fetching integration tests", () => {
       const mockTasks: ITask[] = [];
 
       methodStub.resolves(mockTasks);
-      for (const middleware of taskController.fetchTasksByUsername) {
+      for (const middleware of fetchTasksByUsername) {
         await middleware(req as Request, res as Response, next);
       }
 

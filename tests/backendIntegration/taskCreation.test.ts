@@ -1,16 +1,16 @@
 /**
  * Task creation integration tests.
  */
-import taskController from "../../src/presentation/controllers/task.controller";
-import taskService from "../../src/service/task.service";
+import { createTask } from "../../src/presentation/controllers/task.controller";
+import { createTaskRecord } from "../../src/service/task.service";
 import sinon, { SinonStub, SinonSpy } from "sinon";
 import testInput from "../testInput";
 import { Request, Response } from "express";
-import responseMessages from "../../src/presentation/resources/responseMessages";
+import { responseMessages } from "../../src/presentation/resources/responseMessages";
 import taskFailedValidation from "../../src/domain/resources/taskValidationMessages";
-import commonService from "../../src/service/resources/commonService.response";
+import { commonServiceResponses } from "../../src/service/resources/commonService.response";
 import assert from "assert";
-import taskRepository from "../../src/persistence/task.repository";
+import { addTask } from "../../src/persistence/task.repository";
 
 describe("Task creation  integration tests", () => {
   let req: Partial<Request>;
@@ -20,7 +20,7 @@ describe("Task creation  integration tests", () => {
   describe("validation-oriented", () => {
     describe("bad requests (400)", () => {
       beforeEach(() => {
-        sinon.replace(taskService, "createTaskRecord", sinon.fake());
+        sinon.replace({ createTaskRecord }, "createTaskRecord", sinon.fake());
         res = {
           status: sinon.stub().callsFake(() => {
             return res;
@@ -39,7 +39,7 @@ describe("Task creation  integration tests", () => {
         req = { body: { ...testInput.validTaskInput } };
         req.body.subject = "";
 
-        for (const middleware of taskController.createTask) {
+        for (const middleware of createTask) {
           await middleware(req as Request, res as Response, next);
         }
 
@@ -63,7 +63,7 @@ describe("Task creation  integration tests", () => {
         req = { body: { ...testInput.validTaskInput } };
         req.body.subject = testInput.invalidTaskInputs.TOO_SHORT_SUBJECT;
 
-        for (const middleware of taskController.createTask) {
+        for (const middleware of createTask) {
           await middleware(req as Request, res as Response, next);
         }
 
@@ -84,7 +84,7 @@ describe("Task creation  integration tests", () => {
         req = { body: { ...testInput.validTaskInput } };
         req.body.subject = testInput.invalidTaskInputs.TOO_LONG_SUBJECT;
 
-        for (const middleware of taskController.createTask) {
+        for (const middleware of createTask) {
           await middleware(req as Request, res as Response, next);
         }
 
@@ -105,7 +105,7 @@ describe("Task creation  integration tests", () => {
         req = { body: { ...testInput.validTaskInput } };
         req.body.description = testInput.invalidTaskInputs.TOO_LONG_DESCRIPTION;
 
-        for (const middleware of taskController.createTask) {
+        for (const middleware of createTask) {
           await middleware(req as Request, res as Response, next);
         }
 
@@ -126,7 +126,7 @@ describe("Task creation  integration tests", () => {
         req = { body: { ...testInput.validTaskInput } };
         req.body.status = undefined;
 
-        for (const middleware of taskController.createTask) {
+        for (const middleware of createTask) {
           await middleware(req as Request, res as Response, next);
         }
 
@@ -150,7 +150,7 @@ describe("Task creation  integration tests", () => {
         req = { body: { ...testInput.validTaskInput } };
         req.body.status = testInput.invalidTaskInputs.INVALID_STATUS;
 
-        for (const middleware of taskController.createTask) {
+        for (const middleware of createTask) {
           await middleware(req as Request, res as Response, next);
         }
 
@@ -172,7 +172,7 @@ describe("Task creation  integration tests", () => {
         req.body.subject = undefined;
         req.body.status = undefined;
 
-        for (const middleware of taskController.createTask) {
+        for (const middleware of createTask) {
           await middleware(req as Request, res as Response, next);
         }
 
@@ -208,7 +208,7 @@ describe("Task creation  integration tests", () => {
       };
 
       next = sinon.spy();
-      methodStub = sinon.stub(taskRepository, "addTask");
+      methodStub = sinon.stub({ addTask }, "addTask");
     });
 
     afterEach(() => {
@@ -219,7 +219,7 @@ describe("Task creation  integration tests", () => {
       req = { body: { ...testInput.validTaskInput } };
 
       methodStub.rejects();
-      for (const middleware of taskController.createTask) {
+      for (const middleware of createTask) {
         await middleware(req as Request, res as Response, next);
       }
 
@@ -228,7 +228,7 @@ describe("Task creation  integration tests", () => {
 
       assert.strictEqual(statusStub.calledWith(500), true);
       assert.strictEqual(
-        jsonSpy.calledWith({ message: commonService.SERVER_ERROR }),
+        jsonSpy.calledWith({ message: commonServiceResponses.SERVER_ERROR }),
         true
       );
     });

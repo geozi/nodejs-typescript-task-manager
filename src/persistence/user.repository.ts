@@ -4,7 +4,7 @@
  */
 import mongoose from "mongoose";
 import User from "../domain/models/user.model";
-import IUser from "../domain/interfaces/iUser.interface";
+import { IUser } from "../domain/interfaces/iUser.interface";
 
 /**
  * Returns the user with the specified username.
@@ -12,7 +12,9 @@ import IUser from "../domain/interfaces/iUser.interface";
  * @param {string} username The username of the user.
  * @returns {Promise<IUser | null>} A promise that resolves to a user object or null.
  */
-const getUserByUsername = async (username: string): Promise<IUser | null> => {
+export const getUserByUsername = async (
+  username: string
+): Promise<IUser | null> => {
   return await User.findOne({ username: username });
 };
 
@@ -22,7 +24,7 @@ const getUserByUsername = async (username: string): Promise<IUser | null> => {
  * @param {string} email  The email of the user.
  * @returns {Promise<IUser | null>} A promise that resolves to a user object or null.
  */
-const getUserByEmail = async (email: string): Promise<IUser | null> => {
+export const getUserByEmail = async (email: string): Promise<IUser | null> => {
   return await User.findOne({ email: email });
 };
 
@@ -32,7 +34,7 @@ const getUserByEmail = async (email: string): Promise<IUser | null> => {
  * @param {IUser} newUser The new user to be added.
  * @returns {Promise<IUser>} A promise that resolves to the saved document in the form of a user object.
  */
-const addUser = async (newUser: IUser): Promise<IUser> => {
+export const addUser = async (newUser: IUser): Promise<IUser> => {
   return await newUser.save();
 };
 
@@ -43,7 +45,7 @@ const addUser = async (newUser: IUser): Promise<IUser> => {
  * @param {Object} updateDataObj The new data to be persisted.
  * @returns {Promise<IUser | null>} A promise that resolves to the user object after update or null.
  */
-const updateUserInfo = async (
+export const updateUserInfo = async (
   id: mongoose.Types.ObjectId,
   updateDataObj: object
 ): Promise<IUser | null> => {
@@ -52,11 +54,4 @@ const updateUserInfo = async (
     runValidators: true,
     context: "query",
   });
-};
-
-export default {
-  getUserByEmail,
-  getUserByUsername,
-  addUser,
-  updateUserInfo,
 };

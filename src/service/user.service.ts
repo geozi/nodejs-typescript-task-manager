@@ -3,14 +3,19 @@
  * @module src/service/user.service
  */
 import mongoose from "mongoose";
-import IUser from "../domain/interfaces/iUser.interface";
-import userRepository from "../persistence/user.repository";
-import NotFoundError from "./errors/notFound.error";
-import ServerError from "./errors/server.error";
-import userServiceResponses from "./resources/userService.response";
-import commonServiceResponses from "./resources/commonService.response";
+import { IUser } from "../domain/interfaces/iUser.interface";
+import {
+  getUserByEmail,
+  getUserByUsername,
+  addUser,
+  updateUserInfo,
+} from "../persistence/user.repository";
+import { NotFoundError } from "./errors/notFound.error";
+import { ServerError } from "./errors/server.error";
+import { userServiceResponses } from "./resources/userService.response";
+import { commonServiceResponses } from "./resources/commonService.response";
 import bcrypt from "bcryptjs";
-import IUserUpdate from "../presentation/interfaces/iUserUpdate.interface";
+import { IUserUpdate } from "../presentation/interfaces/iUserUpdate.interface";
 
 /**
  * Calls on the persistence layer to retrieve the user with the specified username.
@@ -19,9 +24,11 @@ import IUserUpdate from "../presentation/interfaces/iUserUpdate.interface";
  * @returns {Promise<IUser>} A promise that resolves to a user object.
  * @throws {NotFoundError | ServerError}
  */
-const retrieveUserByUsername = async (username: string): Promise<IUser> => {
+export const retrieveUserByUsername = async (
+  username: string
+): Promise<IUser> => {
   try {
-    const user = await userRepository.getUserByUsername(username);
+    const user = await getUserByUsername(username);
     if (user === null) {
       throw new NotFoundError(userServiceResponses.USER_NOT_FOUND);
     }
@@ -43,9 +50,9 @@ const retrieveUserByUsername = async (username: string): Promise<IUser> => {
  * @returns {Promise<IUser>} A promise that resolves to a user object.
  * @throws {NotFoundError | ServerError}
  */
-const retrieveUserByEmail = async (email: string): Promise<IUser> => {
+export const retrieveUserByEmail = async (email: string): Promise<IUser> => {
   try {
-    const user = await userRepository.getUserByEmail(email);
+    const user = await getUserByEmail(email);
     if (user === null) {
       throw new NotFoundError(userServiceResponses.USER_NOT_FOUND);
     }
@@ -67,9 +74,9 @@ const retrieveUserByEmail = async (email: string): Promise<IUser> => {
  * @returns {Promise<IUser>} A promise that resolves to the newly saved user object.
  * @throws {ServerError}
  */
-const createUserProfile = async (newUser: IUser): Promise<IUser> => {
+export const createUserProfile = async (newUser: IUser): Promise<IUser> => {
   try {
-    return await userRepository.addUser(newUser);
+    return await addUser(newUser);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error: unknown) {
     throw new ServerError(commonServiceResponses.SERVER_ERROR);
@@ -83,7 +90,7 @@ const createUserProfile = async (newUser: IUser): Promise<IUser> => {
  * @returns {Promise<IUser>} A promise that resolves to the updated user object.
  * @throws {NotFoundError | ServerError}
  */
-const updateUserProfile = async (
+export const updateUserProfile = async (
   userUpdateInfo: IUserUpdate
 ): Promise<IUser> => {
   try {
@@ -105,10 +112,7 @@ const updateUserProfile = async (
       email: email,
     };
 
-    const updatedUserProfile = await userRepository.updateUserInfo(
-      idAsObjectId,
-      userToUpdate
-    );
+    const updatedUserProfile = await updateUserInfo(idAsObjectId, userToUpdate);
 
     if (updatedUserProfile === null) {
       throw new NotFoundError(userServiceResponses.USER_NOT_FOUND);
@@ -122,11 +126,4 @@ const updateUserProfile = async (
 
     throw new ServerError(commonServiceResponses.SERVER_ERROR);
   }
-};
-
-export default {
-  retrieveUserByUsername,
-  retrieveUserByEmail,
-  createUserProfile,
-  updateUserProfile,
 };

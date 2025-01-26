@@ -12,7 +12,7 @@
  * @property {string} AUTH_HEADER_REQUIRED - Message sent when the login request does not contain an authorization header.
  * @property {string} TOKEN_INVALID - Message sent when the token in the request is invalid.
  */
-const authResponses = {
+export const authResponses = {
   /**
    * Message sent when authentication has failed.
    * @type {string}
@@ -37,5 +37,3 @@ const authResponses = {
    */
   TOKEN_INVALID: "Invalid token",
 };
-
-export default authResponses;

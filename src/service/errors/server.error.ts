@@ -7,7 +7,7 @@
  * Custom error class for technical issues arising at the backend (500).
  * @extends {Error}
  */
-class ServerError extends Error {
+export class ServerError extends Error {
   public static httpCode = 500;
 
   /**
@@ -20,5 +20,3 @@ class ServerError extends Error {
     this.message = message;
   }
 }
-
-export default ServerError;

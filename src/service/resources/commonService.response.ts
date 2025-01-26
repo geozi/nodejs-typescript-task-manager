@@ -9,12 +9,10 @@
  * @type {Object}
  * @property {string} SERVER_ERROR - Message sent when a technical error occurs on the server side.
  */
-const userServiceResponses = {
+export const commonServiceResponses = {
   /**
    * Message sent when a technical error occurs on the server side.
    * @type {string}
    */
   SERVER_ERROR: "Server error",
 };
-
-export default userServiceResponses;

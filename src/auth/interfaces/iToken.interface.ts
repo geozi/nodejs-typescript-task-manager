@@ -10,12 +10,10 @@
  * @property {string} username - The username of the logged in user.
  *
  */
-interface IToken {
+export interface IToken {
   /**
    *  The username of the logged in user.
    * @type {string}
    */
   username: string;
 }
-
-export default IToken;

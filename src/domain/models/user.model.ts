@@ -3,7 +3,7 @@
  * @module src/models/user.model
  */
 import { Schema, model } from "mongoose";
-import IUser from "../interfaces/iUser.interface";
+import { IUser } from "../interfaces/iUser.interface";
 import mongooseUniqueValidator from "mongoose-unique-validator";
 import userFailedValidation from "../resources/userValidationMessages";
 import regularExpressions from "../resources/validationRegExp";

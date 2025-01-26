@@ -3,13 +3,21 @@
  */
 import User from "../../src/domain/models/user.model";
 import assert from "assert";
-import userService from "../../src/service/user.service";
-import userRepository from "../../src/persistence/user.repository";
+import {
+  retrieveUserByUsername,
+  createUserProfile,
+  updateUserProfile,
+} from "../../src/service/user.service";
+import {
+  getUserByUsername,
+  addUser,
+  updateUserInfo,
+} from "../../src/persistence/user.repository";
 import testInput from "../testInput";
 import sinon from "sinon";
-import NotFoundError from "../../src/service/errors/notFound.error";
-import ServerError from "../../src/service/errors/server.error";
-import IUserUpdate from "../../src/presentation/interfaces/iUserUpdate.interface";
+import { NotFoundError } from "../../src/service/errors/notFound.error";
+import { ServerError } from "../../src/service/errors/server.error";
+import { IUserUpdate } from "../../src/presentation/interfaces/iUserUpdate.interface";
 
 describe("User service unit test", () => {
   const validUser = new User(testInput.validUserInput);
@@ -26,7 +34,7 @@ describe("User service unit test", () => {
 
     describe("retrieveUserByUsername()", () => {
       beforeEach(() => {
-        methodStub = sinon.stub(userRepository, "getUserByUsername");
+        methodStub = sinon.stub({ getUserByUsername }, "getUserByUsername");
       });
 
       afterEach(() => {
@@ -36,31 +44,31 @@ describe("User service unit test", () => {
       it("server error", async () => {
         methodStub.rejects();
         await assert.rejects(async () => {
-          await userService.retrieveUserByUsername(validUser.username);
+          await retrieveUserByUsername(validUser.username);
         }, ServerError);
       });
 
       it("user not found", async () => {
         methodStub.resolves(null);
         await assert.rejects(async () => {
-          await userService.retrieveUserByUsername(validUser.username);
+          await retrieveUserByUsername(validUser.username);
         }, NotFoundError);
       });
     });
 
     describe("createUserProfile()", () => {
       it("server error", async () => {
-        sinon.stub(userRepository, "addUser").rejects();
+        sinon.stub({ addUser }, "addUser").rejects();
 
         await assert.rejects(async () => {
-          await userService.createUserProfile(mockUser);
+          await createUserProfile(mockUser);
         }, ServerError);
       });
     });
 
     describe("updateUserProfile()", () => {
       beforeEach(() => {
-        methodStub = sinon.stub(userRepository, "updateUserInfo");
+        methodStub = sinon.stub({ updateUserInfo }, "updateUserInfo");
       });
 
       afterEach(() => {
@@ -70,14 +78,14 @@ describe("User service unit test", () => {
       it("server error", async () => {
         methodStub.rejects();
         await assert.rejects(async () => {
-          await userService.updateUserProfile(mockGeneralUpdateDataObj);
+          await updateUserProfile(mockGeneralUpdateDataObj);
         }, ServerError);
       });
 
       it("user not found", async () => {
         methodStub.resolves(null);
         await assert.rejects(async () => {
-          await userService.updateUserProfile(mockGeneralUpdateDataObj);
+          await updateUserProfile(mockGeneralUpdateDataObj);
         }, NotFoundError);
       });
     });

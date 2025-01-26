@@ -5,7 +5,7 @@
 
 import { check, ValidationChain } from "express-validator";
 import taskFailedValidation from "../../domain/resources/taskValidationMessages";
-import Status from "../../domain/enums/status.enum";
+import { Status } from "../../domain/enums/status.enum";
 import regularExpressions from "../../domain/resources/validationRegExp";
 import userFailedValidation from "../../domain/resources/userValidationMessages";
 
@@ -13,7 +13,7 @@ import userFailedValidation from "../../domain/resources/userValidationMessages"
  * Returns a validation chain for task creation.
  * @returns {ValidationChain[]} Validation chain.
  */
-const taskCreationRules = (): ValidationChain[] => {
+export const taskCreationRules = (): ValidationChain[] => {
   return [
     check("subject")
       .notEmpty()
@@ -38,7 +38,7 @@ const taskCreationRules = (): ValidationChain[] => {
  * Returns a validation chain for task update.
  * @returns {ValidationChain[]} Validation chain.
  */
-const taskUpdateRules = (): ValidationChain[] => {
+export const taskUpdateRules = (): ValidationChain[] => {
   console.log("I am inside task update rules");
   return [
     check("id")
@@ -69,7 +69,7 @@ const taskUpdateRules = (): ValidationChain[] => {
  * Returns a validation chain for task deletion.
  * @returns {ValidationChain[]} Validation chain.
  */
-const taskDeletionRules = (): ValidationChain[] => {
+export const taskDeletionRules = (): ValidationChain[] => {
   return [
     check("id")
       .notEmpty()
@@ -85,7 +85,7 @@ const taskDeletionRules = (): ValidationChain[] => {
  * Returns a validation chain for username-based task fetching.
  * @returns {ValidationChain[]} Validation chain.
  */
-const taskFetchingByUsernameRules = (): ValidationChain[] => {
+export const taskFetchingByUsernameRules = (): ValidationChain[] => {
   return [
     check("username")
       .notEmpty()
@@ -101,7 +101,7 @@ const taskFetchingByUsernameRules = (): ValidationChain[] => {
  * Returns a validation chain for subject-based task fetching.
  * @returns {ValidationChain[]} Validation chain.
  */
-const taskFetchingBySubjectRules = (): ValidationChain[] => {
+export const taskFetchingBySubjectRules = (): ValidationChain[] => {
   return [
     check("subject")
       .notEmpty()
@@ -117,7 +117,7 @@ const taskFetchingBySubjectRules = (): ValidationChain[] => {
  * Returns a validation chain for status-based task fetching.
  * @returns {ValidationChain[]} Validation chain.
  */
-const taskFetchingByStatusRules = (): ValidationChain[] => {
+export const taskFetchingByStatusRules = (): ValidationChain[] => {
   return [
     check("status")
       .notEmpty()
@@ -125,13 +125,4 @@ const taskFetchingByStatusRules = (): ValidationChain[] => {
       .isIn([Status.Pending, Status.Complete])
       .withMessage(taskFailedValidation.STATUS_INVALID),
   ];
-};
-
-export default {
-  taskCreationRules,
-  taskUpdateRules,
-  taskDeletionRules,
-  taskFetchingByUsernameRules,
-  taskFetchingBySubjectRules,
-  taskFetchingByStatusRules,
 };

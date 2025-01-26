@@ -12,7 +12,7 @@
  * @property {string} [description] - The description of the task (optional).
  * @property {string} [status] - The status of the task (optional).
  */
-interface ITaskUpdate {
+export interface ITaskUpdate {
   /**
    * The id of the task document.
    * @type {string}
@@ -37,5 +37,3 @@ interface ITaskUpdate {
    */
   status?: string;
 }
-
-export default ITaskUpdate;

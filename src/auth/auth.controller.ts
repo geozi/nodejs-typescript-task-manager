@@ -3,20 +3,22 @@
  * @module src/auth/auth.controller
  */
 import * as dotenv from "dotenv";
-import authResponses from "./authResponseMessages";
-import responseMessages from "../presentation/resources/responseMessages";
+import { authResponses } from "./authResponseMessages";
+import { responseMessages } from "../presentation/resources/responseMessages";
 import bcrypt from "bcryptjs";
-import authRules from "../auth/authRules.validation";
+import {
+  userLoginRules,
+  headerValidationRules,
+} from "../auth/authRules.validation";
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { validationResult } from "express-validator";
-import ServerError from "../service/errors/server.error";
-import commonService from "../service/resources/commonService.response";
-import authRulesValidation from "../auth/authRules.validation";
-import IToken from "./interfaces/iToken.interface";
-import userServiceResponses from "../service/resources/userService.response";
-import userService from "../service/user.service";
-import NotFoundError from "../service/errors/notFound.error";
+import { ServerError } from "../service/errors/server.error";
+import { commonServiceResponses } from "../service/resources/commonService.response";
+import { IToken } from "./interfaces/iToken.interface";
+import { userServiceResponses } from "../service/resources/userService.response";
+import { retrieveUserByUsername } from "../service/user.service";
+import { NotFoundError } from "../service/errors/notFound.error";
 dotenv.config();
 
 /**
@@ -26,8 +28,8 @@ dotenv.config();
  * @property {ValidationChain[]} userLoginRules - Express validation rules for user login.
  * @property {Function} anonymousAsyncFunction - Handles user login requests and responses.
  */
-const loginUser = [
-  ...authRules.userLoginRules(),
+export const loginUser = [
+  ...userLoginRules(),
 
   /**
    * Processes HTTP requests for user login.
@@ -49,7 +51,7 @@ const loginUser = [
 
     try {
       const { username, password } = req.body;
-      const user = await userService.retrieveUserByUsername(username);
+      const user = await retrieveUserByUsername(username);
 
       const passwordMatch = await bcrypt.compare(password, user.password);
 
@@ -73,7 +75,7 @@ const loginUser = [
 
       res
         .status(ServerError.httpCode)
-        .json({ message: commonService.SERVER_ERROR });
+        .json({ message: commonServiceResponses.SERVER_ERROR });
     }
   },
 ];
@@ -85,8 +87,8 @@ const loginUser = [
  * @property {ValidationChain[]} headerValidationRules - Express validation rules for token validation.
  * @property {Function} - Handles token validation processes.
  */
-const verifyToken = [
-  ...authRulesValidation.headerValidationRules(),
+export const verifyToken = [
+  ...headerValidationRules(),
 
   /**
    * Performs token validation.
@@ -126,5 +128,3 @@ const verifyToken = [
     }
   },
 ];
-
-export default { loginUser, verifyToken };

@@ -13,7 +13,7 @@ import { Document } from "mongoose";
  * @property {string} email - The email of the user.
  * @property {string} password - The password of the user.
  */
-interface IUser extends Document {
+export interface IUser extends Document {
   /**
    * The username of the user.
    * @type {string}
@@ -32,5 +32,3 @@ interface IUser extends Document {
    */
   password: string;
 }
-
-export default IUser;

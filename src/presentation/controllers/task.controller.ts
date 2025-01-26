@@ -2,16 +2,29 @@
  * Task controller.
  * @module src/presentation/controllers/task.controller
  */
-
 import { validationResult } from "express-validator";
-import responseMessages from "../resources/responseMessages";
-import taskValidationRules from "../middleware/taskRules.validation";
-import NotFoundError from "../../service/errors/notFound.error";
-import ServerError from "../../service/errors/server.error";
+import { responseMessages } from "../resources/responseMessages";
+import {
+  taskCreationRules,
+  taskUpdateRules,
+  taskDeletionRules,
+  taskFetchingByStatusRules,
+  taskFetchingBySubjectRules,
+  taskFetchingByUsernameRules,
+} from "../middleware/taskRules.validation";
+import { NotFoundError } from "../../service/errors/notFound.error";
+import { ServerError } from "../../service/errors/server.error";
 import { Request, Response } from "express";
 import Task from "../../domain/models/task.model";
-import taskService from "../../service/task.service";
-import ITaskUpdate from "../interfaces/iTaskUpdate.interface";
+import {
+  retrieveTaskBySubject,
+  retrieveTasksByStatus,
+  retrieveTasksByUsername,
+  createTaskRecord,
+  updateTaskRecord,
+  deleteTaskRecord,
+} from "../../service/task.service";
+import { ITaskUpdate } from "../interfaces/iTaskUpdate.interface";
 
 /**
  * Middleware array that contains task creation logic.
@@ -20,8 +33,8 @@ import ITaskUpdate from "../interfaces/iTaskUpdate.interface";
  * @property {ValidationChain[]} taskCreationRules - Express validation rules for task creation.
  * @property {Function} anonymousAsyncFunction - Handles task creation requests and responses.
  */
-const createTask = [
-  ...taskValidationRules.taskCreationRules(),
+export const createTask = [
+  ...taskCreationRules(),
   /**
    * Processes HTTP requests for task creation.
    *
@@ -49,7 +62,7 @@ const createTask = [
         status: status,
         username: username,
       });
-      await taskService.createTaskRecord(newTask);
+      await createTaskRecord(newTask);
       res.status(201).json({ message: responseMessages.TASK_CREATED });
     } catch (error: ServerError | unknown) {
       let serverErrorMessage;
@@ -69,8 +82,8 @@ const createTask = [
  * @property {ValidationChain[]} taskUpdateRules - Express validation rules for task update.
  * @property {Function} anonymousAsyncFunction - Handles task update requests and responses.
  */
-const updateTask = [
-  ...taskValidationRules.taskUpdateRules(),
+export const updateTask = [
+  ...taskUpdateRules(),
 
   /**
    * Processes HTTP requests for task update.
@@ -99,7 +112,7 @@ const updateTask = [
         description: description,
         status: status,
       };
-      await taskService.updateTaskRecord(taskUpdateInfo);
+      await updateTaskRecord(taskUpdateInfo);
       res.status(200).json({ message: responseMessages.TASK_UPDATED });
     } catch (error: NotFoundError | ServerError | unknown) {
       if (error instanceof NotFoundError) {
@@ -123,8 +136,8 @@ const updateTask = [
  * @property {ValidationChain[]} taskDeletionRules - Express validation rules for task deletion.
  * @property {Function} anonymousAsyncFunction - Handles task deletion requests and responses.
  */
-const deleteTask = [
-  ...taskValidationRules.taskDeletionRules(),
+export const deleteTask = [
+  ...taskDeletionRules(),
 
   /**
    * Processes HTTP requests for task deletion.
@@ -147,7 +160,7 @@ const deleteTask = [
 
     try {
       const { id } = req.body;
-      await taskService.deleteTaskRecord(id);
+      await deleteTaskRecord(id);
       res.status(204).json({});
     } catch (error) {
       if (error instanceof NotFoundError) {
@@ -171,8 +184,8 @@ const deleteTask = [
  * @property {ValidationChain[]} taskFetchingByUsernameRules - Express validation rules for username-based task fetching.
  * @property {Function} anonymousAsyncFunction - Handles requests and responses for username-based task fetching.
  */
-const fetchTasksByUsername = [
-  ...taskValidationRules.taskFetchingByUsernameRules(),
+export const fetchTasksByUsername = [
+  ...taskFetchingByUsernameRules(),
 
   /**
    * Processes HTTP requests for username-based task fetching.
@@ -195,7 +208,7 @@ const fetchTasksByUsername = [
 
     try {
       const { username } = req.body;
-      const tasks = await taskService.retrieveTasksByUsername(username);
+      const tasks = await retrieveTasksByUsername(username);
       res.status(200).json({ data: tasks });
     } catch (error) {
       if (error instanceof NotFoundError) {
@@ -219,8 +232,8 @@ const fetchTasksByUsername = [
  * @property {ValidationChain[]} taskFetchingBySubjectRules - Express validation rules for subject-based task fetching.
  * @property {Function} anonymousAsyncFunction - Handles requests and responses for subject-based task fetching.
  */
-const fetchTaskBySubject = [
-  ...taskValidationRules.taskFetchingBySubjectRules(),
+export const fetchTaskBySubject = [
+  ...taskFetchingBySubjectRules(),
 
   /**
    * Processes HTTP requests for subject-based task fetching.
@@ -243,7 +256,7 @@ const fetchTaskBySubject = [
 
     try {
       const { subject } = req.body;
-      const task = await taskService.retrieveTaskBySubject(subject);
+      const task = await retrieveTaskBySubject(subject);
       res.status(200).json({ data: task });
     } catch (error) {
       if (error instanceof NotFoundError) {
@@ -267,8 +280,8 @@ const fetchTaskBySubject = [
  * @property {ValidationChain[]} taskFetchingByStatusRules - Express validation rules for status-based task fetching.
  * @property {Function} anonymousAsyncFunction - Handles requests and responses for status-based task fetching.
  */
-const fetchTasksByStatus = [
-  ...taskValidationRules.taskFetchingByStatusRules(),
+export const fetchTasksByStatus = [
+  ...taskFetchingByStatusRules(),
 
   /**
    * Processes HTTP requests for subject-based task fetching.
@@ -290,7 +303,7 @@ const fetchTasksByStatus = [
     }
     try {
       const { status } = req.body;
-      const tasks = await taskService.retrieveTasksByStatus(status);
+      const tasks = await retrieveTasksByStatus(status);
       res.status(200).json({ data: tasks });
     } catch (error) {
       if (error instanceof NotFoundError) {
@@ -306,12 +319,3 @@ const fetchTasksByStatus = [
     }
   },
 ];
-
-export default {
-  createTask,
-  updateTask,
-  deleteTask,
-  fetchTasksByUsername,
-  fetchTaskBySubject,
-  fetchTasksByStatus,
-};

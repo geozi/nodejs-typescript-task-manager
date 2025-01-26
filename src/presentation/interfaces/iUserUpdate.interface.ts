@@ -12,7 +12,7 @@
  * @property {string} [email] - The email of the user (optional).
  * @property {string} [password] - The password of the user (optional).
  */
-interface IUserUpdate {
+export interface IUserUpdate {
   /**
    * The id of the user document.
    * @type {string}
@@ -37,5 +37,3 @@ interface IUserUpdate {
    */
   password?: string;
 }
-
-export default IUserUpdate;

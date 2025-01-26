@@ -1,16 +1,16 @@
 /**
  * User registration integration tests.
  */
-import userController from "../../src/presentation/controllers/user.controller";
-import userService from "../../src/service/user.service";
+import { registerUser } from "../../src/presentation/controllers/user.controller";
+import { createUserProfile } from "../../src/service/user.service";
 import sinon, { SinonSpy, SinonStub } from "sinon";
 import testInput from "../testInput";
 import assert from "assert";
 import { Request, Response } from "express";
-import responseMessages from "../../src/presentation/resources/responseMessages";
+import { responseMessages } from "../../src/presentation/resources/responseMessages";
 import userFailedValidation from "../../src/domain/resources/userValidationMessages";
-import userRepository from "../../src/persistence/user.repository";
-import commonService from "../../src/service/resources/commonService.response";
+import { addUser } from "../../src/persistence/user.repository";
+import { commonServiceResponses } from "../../src/service/resources/commonService.response";
 
 describe("User registration integration tests", () => {
   let req: Partial<Request>;
@@ -20,7 +20,7 @@ describe("User registration integration tests", () => {
   describe("validation-oriented", () => {
     describe("bad requests (400)", () => {
       beforeEach(() => {
-        sinon.replace(userService, "createUserProfile", sinon.fake());
+        sinon.replace({ createUserProfile }, "createUserProfile", sinon.fake());
         res = {
           status: sinon.stub().callsFake(() => {
             return res;
@@ -39,7 +39,7 @@ describe("User registration integration tests", () => {
         req = { body: { ...testInput.validUserInput } };
         req.body.username = "";
 
-        for (const middleware of userController.registerUser) {
+        for (const middleware of registerUser) {
           await middleware(req as Request, res as Response, next);
         }
 
@@ -63,7 +63,7 @@ describe("User registration integration tests", () => {
         req = { body: { ...testInput.validUserInput } };
         req.body.username = testInput.invalidUserInputs.TOO_SHORT_USERNAME;
 
-        for (const middleware of userController.registerUser) {
+        for (const middleware of registerUser) {
           await middleware(req as Request, res as Response, next);
         }
 
@@ -84,7 +84,7 @@ describe("User registration integration tests", () => {
         req = { body: { ...testInput.validUserInput } };
         req.body.username = testInput.invalidUserInputs.TOO_LONG_USERNAME;
 
-        for (const middleware of userController.registerUser) {
+        for (const middleware of registerUser) {
           await middleware(req as Request, res as Response, next);
         }
 
@@ -105,7 +105,7 @@ describe("User registration integration tests", () => {
         req = { body: { ...testInput.validUserInput } };
         req.body.email = undefined;
 
-        for (const middleware of userController.registerUser) {
+        for (const middleware of registerUser) {
           await middleware(req as Request, res as Response, next);
         }
 
@@ -131,7 +131,7 @@ describe("User registration integration tests", () => {
             req = { body: { ...testInput.validUserInput } };
             req.body.email = invalidEmail;
 
-            for (const middleware of userController.registerUser) {
+            for (const middleware of registerUser) {
               await middleware(req as Request, res as Response, next);
             }
 
@@ -154,7 +154,7 @@ describe("User registration integration tests", () => {
         req = { body: { ...testInput.validUserInput } };
         req.body.password = undefined;
 
-        for (const middleware of userController.registerUser) {
+        for (const middleware of registerUser) {
           await middleware(req as Request, res as Response, next);
         }
 
@@ -179,7 +179,7 @@ describe("User registration integration tests", () => {
         req = { body: { ...testInput.validUserInput } };
         req.body.password = testInput.invalidUserInputs.TOO_SHORT_PASSWORD;
 
-        for (const middleware of userController.registerUser) {
+        for (const middleware of registerUser) {
           await middleware(req as Request, res as Response, next);
         }
 
@@ -202,7 +202,7 @@ describe("User registration integration tests", () => {
             req = { body: { ...testInput.validUserInput } };
             req.body.password = invalidPassword;
 
-            for (const middleware of userController.registerUser) {
+            for (const middleware of registerUser) {
               await middleware(req as Request, res as Response, next);
             }
 
@@ -230,7 +230,7 @@ describe("User registration integration tests", () => {
         req.body.username = undefined;
         req.body.password = "";
 
-        for (const middleware of userController.registerUser) {
+        for (const middleware of registerUser) {
           await middleware(req as Request, res as Response, next);
         }
 
@@ -267,7 +267,7 @@ describe("User registration integration tests", () => {
       };
 
       next = sinon.spy();
-      methodStub = sinon.stub(userRepository, "addUser");
+      methodStub = sinon.stub({ addUser }, "addUser");
     });
 
     afterEach(() => {
@@ -278,7 +278,7 @@ describe("User registration integration tests", () => {
       req = { body: { ...testInput.validUserInput } };
 
       methodStub.rejects();
-      for (const middleware of userController.registerUser) {
+      for (const middleware of registerUser) {
         await middleware(req as Request, res as Response, next);
       }
 
@@ -287,7 +287,7 @@ describe("User registration integration tests", () => {
 
       assert.strictEqual(statusStub.calledWith(500), true);
       assert.strictEqual(
-        jsonSpy.calledWith({ message: commonService.SERVER_ERROR }),
+        jsonSpy.calledWith({ message: commonServiceResponses.SERVER_ERROR }),
         true
       );
     });

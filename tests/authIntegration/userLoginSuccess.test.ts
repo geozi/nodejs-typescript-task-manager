@@ -1,16 +1,15 @@
 /**
  * User successful login integration test.
  */
-
 import sinon, { SinonStub, SinonSpy } from "sinon";
 import User from "../../src/domain/models/user.model";
 import { Request, Response } from "express";
 import testInput from "../testInput";
-import authController from "../../src/auth/auth.controller";
+import { loginUser } from "../../src/auth/auth.controller";
 import assert from "assert";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import IUser from "../../src/domain/interfaces/iUser.interface";
+import { IUser } from "../../src/domain/interfaces/iUser.interface";
 
 describe("User successful login integration test", () => {
   let req: Partial<Request>;
@@ -52,7 +51,7 @@ describe("User successful login integration test", () => {
       },
     };
 
-    for (const middleware of authController.loginUser) {
+    for (const middleware of loginUser) {
       await middleware(req as Request, res as Response, next);
     }
 

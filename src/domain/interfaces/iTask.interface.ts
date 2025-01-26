@@ -14,7 +14,7 @@ import { Document } from "mongoose";
  * @property {string} status The status of the task.
  * @property {string} username The username of the task.
  */
-interface ITask extends Document {
+export interface ITask extends Document {
   /**
    * The subject of the task.
    * @type {string}
@@ -39,5 +39,3 @@ interface ITask extends Document {
    */
   username: string;
 }
-
-export default ITask;
