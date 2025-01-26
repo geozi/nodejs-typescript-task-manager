@@ -143,7 +143,7 @@ The Task Manager API is a backend project, therefore any tests referring to the 
 
 ## Assumptions
 
-The implementation is ongoing.
+The current implementation is for demonstration purposes and might be subject to changes due to maintenance.
 
 ## Environment + Tools
 
