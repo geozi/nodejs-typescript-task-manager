@@ -22,7 +22,7 @@ The project contains the backend implementation of a Task Manager API in Typescr
 
 ## Testing
 
-A thorough presentation of testing during development can be found in the [QA Test plan](QA-test-plan.md).
+A thorough presentation of testing during development can be found in the [QA Test plan](QA-Test-plan.md).
 
 ## Security
 
