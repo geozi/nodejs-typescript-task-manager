@@ -16,7 +16,7 @@ import {
 } from "../../src/persistence/task.repository";
 import { Types } from "mongoose";
 
-describe.only("Task repository unit tests", () => {
+describe("Task repository unit tests", () => {
   let newTask: ITask;
   const mockTask = new Task();
   const mockTasks = [new Task(), new Task()];
