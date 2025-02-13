@@ -115,7 +115,18 @@ export const updateUserInfo = [
       };
       await updateUserProfile(userUpdateInfo);
       await res.status(200).json({ message: responseMessages.USER_UPDATED });
-    } catch (error: NotFoundError | ServerError | unknown) {
+    } catch (error:
+      | NotFoundError
+      | ServerError
+      | UniqueConstraintError
+      | unknown) {
+      if (error instanceof UniqueConstraintError) {
+        await res
+          .status(UniqueConstraintError.httpCode)
+          .json({ message: error.message });
+        return;
+      }
+
       if (error instanceof NotFoundError) {
         await res
           .status(NotFoundError.httpCode)

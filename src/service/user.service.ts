@@ -2,7 +2,7 @@
  * User service.
  * @module src/service/user.service
  */
-import mongoose, { Error } from "mongoose";
+import { Error, Types } from "mongoose";
 import { IUser } from "../domain/interfaces/iUser.interface";
 import {
   getUserByEmail,
@@ -92,40 +92,39 @@ export const createUserProfile = async (newUser: IUser): Promise<IUser> => {
 /**
  * Calls on the persistence layer to update a user profile.
  *
- * @param {IUserUpdate} userUpdateInfo A custom type object containing the information to be updated in a user profile.
+ * @param {IUserUpdate} userUpdateInfo A custom type object containing information to be updated in a user profile.
  * @returns {Promise<IUser>} A promise that resolves to the updated user object.
- * @throws {NotFoundError | ServerError}
+ * @throws {NotFoundError | ServerError | UniqueConstraintError}
  */
 export const updateUserProfile = async (
   userUpdateInfo: IUserUpdate
 ): Promise<IUser> => {
   try {
-    const { id, username, email, password } = userUpdateInfo;
-    const idAsObjectId = new mongoose.Types.ObjectId(id);
+    const { id, password } = userUpdateInfo;
+    const idAsObjectId = new Types.ObjectId(id);
+    userUpdateInfo.id = idAsObjectId;
 
-    let userToUpdate = {};
     if (password) {
       const hashedPassword = await bcrypt.hash(password, 10);
-      userToUpdate = {
-        username: username,
-        email: email,
-        password: hashedPassword,
-      };
-    } else {
-      userToUpdate = {
-        username: username,
-        email: email,
-      };
+      userUpdateInfo.password = hashedPassword;
     }
 
-    const updatedUserProfile = await updateUserInfo(idAsObjectId, userToUpdate);
+    const updatedUserProfile = await updateUserInfo(userUpdateInfo);
 
     if (updatedUserProfile === null) {
       throw new NotFoundError(userServiceResponses.USER_NOT_FOUND);
     }
 
     return updatedUserProfile;
-  } catch (error) {
+  } catch (error:
+    | NotFoundError
+    | UniqueConstraintError
+    | ServerError
+    | unknown) {
+    if (error instanceof Error.ValidationError) {
+      throw new UniqueConstraintError(error.message);
+    }
+
     if (error instanceof NotFoundError) {
       throw error;
     }

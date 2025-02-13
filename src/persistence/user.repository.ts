@@ -2,9 +2,10 @@
  * User repository.
  * @module src/persistence/user.repository
  */
-import mongoose from "mongoose";
+
 import User from "../domain/models/user.model";
 import { IUser } from "../domain/interfaces/iUser.interface";
+import { IUserUpdate } from "../presentation/interfaces/iUserUpdate.interface";
 
 /**
  * Returns the user with the specified username.
@@ -41,17 +42,23 @@ export const addUser = async (newUser: IUser): Promise<IUser> => {
 /**
  * Updates the information of a specified user.
  *
- * @param {mongoose.Types.ObjectId} id The id of the user document.
- * @param {Object} updateDataObj The new data to be persisted.
+ * @param {IUserUpdate} updateDataObj The new data to be persisted.
  * @returns {Promise<IUser | null>} A promise that resolves to the user object after update or null.
  */
 export const updateUserInfo = async (
-  id: mongoose.Types.ObjectId,
-  updateDataObj: object
+  updateDataObj: IUserUpdate
 ): Promise<IUser | null> => {
-  return await User.findByIdAndUpdate(id, updateDataObj, {
-    new: true,
-    runValidators: true,
-    context: "query",
-  });
+  return await User.findByIdAndUpdate(
+    updateDataObj.id,
+    {
+      username: updateDataObj.username,
+      email: updateDataObj.email,
+      password: updateDataObj.password,
+    },
+    {
+      new: true,
+      runValidators: true,
+      context: "query",
+    }
+  );
 };
