@@ -14,7 +14,7 @@ import assert from "assert";
 import { IUser } from "../../src/domain/interfaces/iUser.interface";
 import { Types } from "mongoose";
 
-describe("User repository unit test", () => {
+describe("User repository unit tests", () => {
   let newUser: IUser;
   const mockUser = new User();
   const mockId = new Types.ObjectId("67add6a3bb16b4152728b94b");

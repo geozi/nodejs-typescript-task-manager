@@ -9,7 +9,7 @@ import testInput from "../testInput";
 import sinon from "sinon";
 import mongoose from "mongoose";
 
-describe("Task model unit test", () => {
+describe("Task model unit tests", () => {
   let newTask: ITask;
 
   describe("Successful validation", () => {

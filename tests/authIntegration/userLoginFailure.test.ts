@@ -12,7 +12,7 @@ import * as userRepository from "../../src/persistence/user.repository";
 import { commonServiceResponses } from "../../src/service/resources/commonService.response";
 import { userServiceResponses } from "../../src/service/resources/userService.response";
 
-describe("User failed login integration test", () => {
+describe("User failed login integration tests", () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
   let next: SinonSpy;
