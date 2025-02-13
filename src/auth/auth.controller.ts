@@ -57,7 +57,7 @@ export const loginUser = [
       const passwordMatch = await bcrypt.compare(password, user.password);
 
       if (!passwordMatch) {
-        res.status(401).json({ message: authResponses.AUTH_FAILED });
+        res.status(401).json({ message: authResponses.AUTHENTICATION_FAILED });
       }
 
       const token = jwt.sign(
@@ -133,7 +133,9 @@ export const verifyToken = [
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-      await res.status(401).json({ message: authResponses.AUTH_FAILED });
+      await res
+        .status(403)
+        .json({ message: authResponses.AUTHORIZATION_FAILED });
       return;
     }
   },
