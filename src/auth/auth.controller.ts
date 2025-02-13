@@ -86,7 +86,7 @@ export const loginUser = [
 ];
 
 /**
- * Middleware array that contains token validation logic.
+ * Middleware array that contains token verification logic.
  *
  * @type {Array<Object>}
  * @property {ValidationChain[]} headerValidationRules - Express validation rules for token validation.
@@ -96,7 +96,7 @@ export const verifyToken = [
   ...headerValidationRules(),
 
   /**
-   * Performs token validation.
+   * Performs token verification.
    *
    * @param {Request} req - An HTTP request.
    * @param {Response} res - An HTTP response.
