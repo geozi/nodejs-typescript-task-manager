@@ -1,5 +1,5 @@
 /**
- * User collection database integration test.
+ * User collection database integration tests.
  */
 import mongoose, { ConnectOptions } from "mongoose";
 import User from "../../src/domain/models/user.model";
@@ -12,7 +12,7 @@ import testInput from "../testInput";
 import assert from "assert";
 dotenv.config();
 
-describe("User collection database integration test", () => {
+describe("User collection database integration tests", () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
   let next: SinonSpy;
@@ -25,7 +25,6 @@ describe("User collection database integration test", () => {
   });
 
   after(async () => {
-    await User.deleteMany({});
     await mongoose.connection.close();
   });
 
@@ -40,7 +39,8 @@ describe("User collection database integration test", () => {
     next = sinon.spy();
   });
 
-  afterEach(() => {
+  afterEach(async () => {
+    await User.deleteMany({});
     sinon.restore();
   });
 

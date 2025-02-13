@@ -1,5 +1,5 @@
 /**
- * Task collection database integration test.
+ * Task collection database integration tests.
  */
 import {
   createTask,
@@ -17,7 +17,7 @@ import testInput from "../testInput";
 import assert from "assert";
 dotenv.config();
 
-describe("Task collection database integration test", () => {
+describe("Task collection database integration tests", () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
   let next: SinonSpy;
@@ -67,8 +67,6 @@ describe("Task collection database integration test", () => {
   });
 
   it("task updated (200)", async () => {
-    const statusStub = res.status as SinonStub;
-    const jsonSpy = res.json as SinonSpy;
     const task = new Task(testInput.validTaskInput);
     const savedTask = await addTask(task);
 
@@ -80,6 +78,9 @@ describe("Task collection database integration test", () => {
       await middleware(req as Request, res as Response, next);
     }
 
+    const statusStub = res.status as SinonStub;
+    const jsonSpy = res.json as SinonSpy;
+
     assert.strictEqual(statusStub.calledWith(200), true);
     assert.strictEqual(
       jsonSpy.calledWith({ message: responseMessages.TASK_UPDATED }),
@@ -88,7 +89,6 @@ describe("Task collection database integration test", () => {
   });
 
   it("task deleted (204)", async () => {
-    const statusStub = res.status as SinonStub;
     const task = new Task(testInput.validTaskInput);
     const savedTask = await addTask(task);
 
@@ -97,6 +97,8 @@ describe("Task collection database integration test", () => {
     for (const middleware of deleteTask) {
       await middleware(req as Request, res as Response, next);
     }
+
+    const statusStub = res.status as SinonStub;
 
     assert.strictEqual(statusStub.calledWith(204), true);
   });
