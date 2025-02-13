@@ -9,7 +9,7 @@ import testInput from "../testInput";
 import sinon from "sinon";
 import mongoose from "mongoose";
 
-describe.only("User model unit test", () => {
+describe("User model unit test", () => {
   let newUser: IUser;
 
   describe("Successful validation", () => {
