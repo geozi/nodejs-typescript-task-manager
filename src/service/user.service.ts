@@ -111,12 +111,12 @@ export const updateUserProfile = async (
         email: email,
         password: hashedPassword,
       };
+    } else {
+      userToUpdate = {
+        username: username,
+        email: email,
+      };
     }
-
-    userToUpdate = {
-      username: username,
-      email: email,
-    };
 
     const updatedUserProfile = await updateUserInfo(idAsObjectId, userToUpdate);
 
