@@ -84,20 +84,20 @@ describe("User repository unit tests", () => {
 
     it("Promise resolves to User object", async () => {
       sinon.stub(User, "findByIdAndUpdate").resolves(mockUser);
-      const updatedUser = await updateUserInfo(
-        mockId,
-        testInput.validUserInput
-      );
+      const updatedUser = await updateUserInfo({
+        id: mockId,
+        ...testInput.validUserInput,
+      });
 
       assert(updatedUser instanceof User);
     });
 
     it("Promise resolves to null", async () => {
       sinon.stub(User, "findByIdAndUpdate").resolves(null);
-      const updatedUser = await updateUserInfo(
-        mockId,
-        testInput.validUserInput
-      );
+      const updatedUser = await updateUserInfo({
+        id: mockId,
+        ...testInput.validUserInput,
+      });
 
       assert.strictEqual(updatedUser, null);
     });
