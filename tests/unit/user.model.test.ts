@@ -6,51 +6,117 @@ import assert from "assert";
 import userFailedValidation from "../../src/domain/resources/userValidationMessages";
 import { IUser } from "../../src/domain/interfaces/iUser.interface";
 import testInput from "../testInput";
+import sinon from "sinon";
+import mongoose from "mongoose";
 
-describe("User model unit test", () => {
+describe.only("User model unit test", () => {
   let newUser: IUser;
 
-  beforeEach(() => {
-    newUser = new User(testInput.validUserInput);
+  describe("Successful validation", () => {
+    beforeEach(() => {
+      sinon.restore();
+      newUser = new User(testInput.validUserInput);
+    });
+
+    it("has valid inputs", () => {
+      sinon.replace(
+        User.prototype,
+        "validateSync",
+        sinon.stub().returns(undefined)
+      );
+
+      const err = newUser.validateSync();
+
+      assert.strictEqual(err, undefined);
+    });
   });
 
-  it("has valid inputs", () => {
-    const err = newUser.validateSync();
+  describe("Failed validation", () => {
+    let validationError: mongoose.Error.ValidationError;
 
-    assert.strictEqual(err, undefined);
-  });
+    beforeEach(() => {
+      sinon.restore();
+      newUser = new User();
+      validationError = new mongoose.Error.ValidationError();
+    });
 
-  it("has too short username", () => {
-    newUser.username = testInput.invalidUserInputs.TOO_SHORT_USERNAME;
-    const err = newUser.validateSync();
+    it("has too short username", () => {
+      validationError.errors = {
+        username: new mongoose.Error.ValidatorError({
+          message: userFailedValidation.USERNAME_MIN_LENGTH,
+          path: "username",
+          value: testInput.invalidUserInputs.TOO_SHORT_USERNAME,
+        }),
+      };
 
-    assert.strictEqual(
-      err?.errors.username.message,
-      userFailedValidation.USERNAME_MIN_LENGTH
+      sinon.replace(
+        User.prototype,
+        "validateSync",
+        sinon.stub().returns(validationError)
+      );
+
+      const err = newUser.validateSync();
+
+      assert.notStrictEqual(err, undefined);
+
+      assert.strictEqual(
+        err?.errors.username.message,
+        userFailedValidation.USERNAME_MIN_LENGTH
+      );
+    });
+
+    it("has too long username", () => {
+      validationError.errors = {
+        username: new mongoose.Error.ValidatorError({
+          message: userFailedValidation.USERNAME_MAX_LENGTH,
+          path: "username",
+          value: testInput.invalidUserInputs.TOO_LONG_USERNAME,
+        }),
+      };
+
+      sinon.replace(
+        User.prototype,
+        "validateSync",
+        sinon.stub().returns(validationError)
+      );
+
+      const err = newUser.validateSync();
+
+      assert.notStrictEqual(err, undefined);
+
+      assert.strictEqual(
+        err?.errors.username.message,
+        userFailedValidation.USERNAME_MAX_LENGTH
+      );
+    });
+
+    testInput.invalidUserInputs.EMAIL_INVALID_CASES.forEach(
+      ([testName, invalidEmail]) => {
+        it(testName, () => {
+          validationError.errors = {
+            email: new mongoose.Error.ValidatorError({
+              message: userFailedValidation.EMAIL_INVALID,
+              path: "email",
+              value: invalidEmail,
+            }),
+          };
+
+          sinon.replace(
+            User.prototype,
+            "validateSync",
+            sinon.stub().returns(validationError)
+          );
+
+          const err = newUser.validateSync();
+
+          assert.notStrictEqual(err, undefined);
+
+          assert.strictEqual(
+            err?.errors.email.message,
+            userFailedValidation.EMAIL_INVALID
+          );
+        });
+      }
     );
   });
-
-  it("has too long username", () => {
-    newUser.username = testInput.invalidUserInputs.TOO_LONG_USERNAME;
-    const err = newUser.validateSync();
-
-    assert.strictEqual(
-      err?.errors.username.message,
-      userFailedValidation.USERNAME_MAX_LENGTH
-    );
-  });
-
-  testInput.invalidUserInputs.EMAIL_INVALID_CASES.forEach(
-    ([testName, invalidEmail]) => {
-      it(testName, () => {
-        newUser.email = invalidEmail;
-        const err = newUser.validateSync();
-
-        assert.strictEqual(
-          err?.errors.email.message,
-          userFailedValidation.EMAIL_INVALID
-        );
-      });
-    }
-  );
 });
