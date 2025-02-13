@@ -21,7 +21,7 @@ import * as chai from "chai";
 import chaiAsPromised from "chai-as-promised";
 chai.use(chaiAsPromised);
 
-describe("Task service unit test", () => {
+describe("Task service unit tests", () => {
   const mockUpdateDataObj: ITaskUpdate = {
     id: "678f6f5feeb9f5507709b24e",
   };
