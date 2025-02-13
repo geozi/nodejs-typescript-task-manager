@@ -10,7 +10,7 @@ import { responseMessages } from "../../src/presentation/resources/responseMessa
 import taskFailedValidation from "../../src/domain/resources/taskValidationMessages";
 import { commonServiceResponses } from "../../src/service/resources/commonService.response";
 import assert from "assert";
-import { addTask } from "../../src/persistence/task.repository";
+import * as taskRepository from "../../src/persistence/task.repository";
 
 describe("Task creation  integration tests", () => {
   let req: Partial<Request>;
@@ -208,7 +208,7 @@ describe("Task creation  integration tests", () => {
       };
 
       next = sinon.spy();
-      methodStub = sinon.stub({ addTask }, "addTask");
+      methodStub = sinon.stub(taskRepository, "addTask");
     });
 
     afterEach(() => {

@@ -9,7 +9,7 @@ import assert from "assert";
 import { Request, Response } from "express";
 import { responseMessages } from "../../src/presentation/resources/responseMessages";
 import userFailedValidation from "../../src/domain/resources/userValidationMessages";
-import { addUser } from "../../src/persistence/user.repository";
+import * as userRepository from "../../src/persistence/user.repository";
 import { commonServiceResponses } from "../../src/service/resources/commonService.response";
 
 describe("User registration integration tests", () => {
@@ -267,7 +267,7 @@ describe("User registration integration tests", () => {
       };
 
       next = sinon.spy();
-      methodStub = sinon.stub({ addUser }, "addUser");
+      methodStub = sinon.stub(userRepository, "addUser");
     });
 
     afterEach(() => {
