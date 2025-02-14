@@ -64,7 +64,7 @@ export const loginUser = [
       }
 
       const token = jwt.sign(
-        { username: user.username },
+        { loggedInUser: user.username },
         process.env.KEY as string,
         {
           expiresIn: "1h",
@@ -131,7 +131,7 @@ export const verifyToken = [
       } else {
         const receivedToken = token.replace("Bearer ", "");
         const decoded = jwt.verify(receivedToken, process.env.KEY as string);
-        req.body.username = (decoded as IToken).username;
+        req.body.loggedInUser = (decoded as IToken).loggedInUser;
         req.body.skipAuthenticateToken = false;
         next();
       }
@@ -164,8 +164,9 @@ export const authenticateToken = async (
   }
 
   try {
-    const username = req.body.username;
+    const username = req.body.loggedInUser;
     await retrieveUserByUsername(username);
+
     next();
   } catch (error) {
     if (error instanceof NotFoundError) {

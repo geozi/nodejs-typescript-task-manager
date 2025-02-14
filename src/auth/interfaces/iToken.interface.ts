@@ -15,5 +15,5 @@ export interface IToken {
    *  The username of the logged in user.
    * @type {string}
    */
-  username: string;
+  loggedInUser: string;
 }
