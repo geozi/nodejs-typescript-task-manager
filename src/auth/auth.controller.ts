@@ -104,12 +104,13 @@ export const verifyToken = [
    * @returns {Promise<void>} A promise that resolves to void.
    */
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    req.body.skipAuthenticateToken = true;
+
     const expressErrors = validationResult(req);
     if (!expressErrors.isEmpty()) {
       const errorMessage = expressErrors.array().map((err) => ({
         message: err.msg,
       }));
-
       await res
         .status(400)
         .json({ message: responseMessages.BAD_REQUEST, errors: errorMessage });
@@ -128,6 +129,7 @@ export const verifyToken = [
         const receivedToken = token.replace("Bearer ", "");
         const decoded = jwt.verify(receivedToken, process.env.KEY as string);
         req.body.username = (decoded as IToken).username;
+        req.body.skipAuthenticateToken = false;
         next();
       }
 
