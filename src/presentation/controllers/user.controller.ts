@@ -18,6 +18,7 @@ import {
 import { Request, Response } from "express";
 import { IUserUpdate } from "../interfaces/iUserUpdate.interface";
 import { UniqueConstraintError } from "../../domain/errors/uniqueConstraint.error";
+import { httpCodes } from "../resources/responseStatusCodes";
 
 /**
  * Middleware array that contains user registration logic.
@@ -44,7 +45,7 @@ export const registerUser = [
       }));
 
       await res
-        .status(400)
+        .status(httpCodes.BAD_REQUEST)
         .json({ message: responseMessages.BAD_REQUEST, errors: errorMessage });
       return;
     }
@@ -58,7 +59,9 @@ export const registerUser = [
       });
 
       await createUserProfile(newUser);
-      await res.status(201).json({ message: responseMessages.USER_REGISTERED });
+      await res
+        .status(httpCodes.CREATED)
+        .json({ message: responseMessages.USER_REGISTERED });
     } catch (error: ServerError | UniqueConstraintError | unknown) {
       if (error instanceof UniqueConstraintError) {
         await res
@@ -100,7 +103,7 @@ export const updateUserInfo = [
       }));
 
       await res
-        .status(400)
+        .status(httpCodes.BAD_REQUEST)
         .json({ message: responseMessages.BAD_REQUEST, errors: errorMessage });
       return;
     }
@@ -114,7 +117,9 @@ export const updateUserInfo = [
         password: password,
       };
       await updateUserProfile(userUpdateInfo);
-      await res.status(200).json({ message: responseMessages.USER_UPDATED });
+      await res
+        .status(httpCodes.OK)
+        .json({ message: responseMessages.USER_UPDATED });
     } catch (error:
       | NotFoundError
       | ServerError

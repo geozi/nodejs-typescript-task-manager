@@ -19,6 +19,7 @@ import { IToken } from "./interfaces/iToken.interface";
 import { userServiceResponses } from "../service/resources/userService.response";
 import { retrieveUserByUsername } from "../service/user.service";
 import { NotFoundError } from "../service/errors/notFound.error";
+import { httpCodes } from "../presentation/resources/responseStatusCodes";
 dotenv.config();
 
 /**
@@ -45,7 +46,7 @@ export const loginUser = [
         message: err.msg,
       }));
       await res
-        .status(400)
+        .status(httpCodes.BAD_REQUEST)
         .json({ message: responseMessages.BAD_REQUEST, errors: errorMessage });
       return;
     }
@@ -57,7 +58,9 @@ export const loginUser = [
       const passwordMatch = await bcrypt.compare(password, user.password);
 
       if (!passwordMatch) {
-        res.status(401).json({ message: authResponses.AUTHENTICATION_FAILED });
+        res
+          .status(httpCodes.UNAUTHORIZED)
+          .json({ message: authResponses.AUTHENTICATION_FAILED });
       }
 
       const token = jwt.sign(
@@ -68,11 +71,11 @@ export const loginUser = [
         }
       );
 
-      await res.status(200).json({ token: token });
+      await res.status(httpCodes.OK).json({ token: token });
     } catch (error: NotFoundError | ServerError | unknown) {
       if (error instanceof NotFoundError) {
         await res
-          .status(401)
+          .status(httpCodes.UNAUTHORIZED)
           .json({ message: userServiceResponses.USER_NOT_FOUND });
         return;
       }
@@ -112,7 +115,7 @@ export const verifyToken = [
         message: err.msg,
       }));
       await res
-        .status(400)
+        .status(httpCodes.BAD_REQUEST)
         .json({ message: responseMessages.BAD_REQUEST, errors: errorMessage });
       return;
     }
@@ -122,7 +125,7 @@ export const verifyToken = [
 
       if (!token) {
         await res
-          .status(401)
+          .status(httpCodes.UNAUTHORIZED)
           .json({ message: authResponses.AUTH_HEADER_REQUIRED });
         return;
       } else {
@@ -136,7 +139,7 @@ export const verifyToken = [
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       await res
-        .status(403)
+        .status(httpCodes.FORBIDDEN)
         .json({ message: authResponses.AUTHORIZATION_FAILED });
       return;
     }
@@ -167,14 +170,14 @@ export const authenticateToken = async (
   } catch (error) {
     if (error instanceof NotFoundError) {
       await res
-        .status(401)
+        .status(httpCodes.UNAUTHORIZED)
         .json({ message: authResponses.AUTHENTICATION_FAILED });
       return;
     }
 
     if (error instanceof ServerError) {
       await res
-        .status(500)
+        .status(httpCodes.INTERNAL_SERVER_ERROR)
         .json({ message: commonServiceResponses.SERVER_ERROR });
       return;
     }

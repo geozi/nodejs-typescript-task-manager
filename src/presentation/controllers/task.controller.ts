@@ -26,6 +26,7 @@ import {
 } from "../../service/task.service";
 import { ITaskUpdate } from "../interfaces/iTaskUpdate.interface";
 import { UniqueConstraintError } from "../../domain/errors/uniqueConstraint.error";
+import { httpCodes } from "../resources/responseStatusCodes";
 
 /**
  * Middleware array that contains task creation logic.
@@ -51,7 +52,7 @@ export const createTask = [
       }));
 
       await res
-        .status(400)
+        .status(httpCodes.BAD_REQUEST)
         .json({ message: responseMessages.BAD_REQUEST, errors: errorMessage });
       return;
     }
@@ -65,7 +66,9 @@ export const createTask = [
         username: username,
       });
       await createTaskRecord(newTask);
-      await res.status(201).json({ message: responseMessages.TASK_CREATED });
+      await res
+        .status(httpCodes.CREATED)
+        .json({ message: responseMessages.TASK_CREATED });
     } catch (error: ServerError | UniqueConstraintError | unknown) {
       if (error instanceof UniqueConstraintError) {
         await res
@@ -107,7 +110,7 @@ export const updateTask = [
       }));
 
       await res
-        .status(400)
+        .status(httpCodes.BAD_REQUEST)
         .json({ message: responseMessages.BAD_REQUEST, errors: errorMessage });
       return;
     }
@@ -121,7 +124,9 @@ export const updateTask = [
         status: status,
       };
       await updateTaskRecord(taskUpdateInfo);
-      await res.status(200).json({ message: responseMessages.TASK_UPDATED });
+      await res
+        .status(httpCodes.OK)
+        .json({ message: responseMessages.TASK_UPDATED });
     } catch (error: NotFoundError | ServerError | unknown) {
       if (error instanceof NotFoundError) {
         await res
@@ -163,7 +168,7 @@ export const deleteTask = [
       }));
 
       await res
-        .status(400)
+        .status(httpCodes.BAD_REQUEST)
         .json({ message: responseMessages.BAD_REQUEST, errors: errorMessage });
       return;
     }
@@ -171,7 +176,7 @@ export const deleteTask = [
     try {
       const { id } = req.body;
       await deleteTaskRecord(id);
-      await res.status(204).json({});
+      await res.status(httpCodes.NO_CONTENT).json({});
     } catch (error: NotFoundError | ServerError | unknown) {
       if (error instanceof NotFoundError) {
         await res
@@ -213,7 +218,7 @@ export const fetchTasksByUsername = [
       }));
 
       await res
-        .status(400)
+        .status(httpCodes.BAD_REQUEST)
         .json({ message: responseMessages.BAD_REQUEST, errors: errorMessage });
       return;
     }
@@ -221,7 +226,7 @@ export const fetchTasksByUsername = [
     try {
       const { username } = req.body;
       const tasks = await retrieveTasksByUsername(username);
-      await res.status(200).json({ data: tasks });
+      await res.status(httpCodes.OK).json({ data: tasks });
     } catch (error: NotFoundError | ServerError | unknown) {
       if (error instanceof NotFoundError) {
         await res
@@ -263,7 +268,7 @@ export const fetchTaskBySubject = [
       }));
 
       await res
-        .status(400)
+        .status(httpCodes.BAD_REQUEST)
         .json({ message: responseMessages.BAD_REQUEST, errors: errorMessage });
       return;
     }
@@ -271,7 +276,7 @@ export const fetchTaskBySubject = [
     try {
       const { subject } = req.body;
       const task = await retrieveTaskBySubject(subject);
-      await res.status(200).json({ data: task });
+      await res.status(httpCodes.OK).json({ data: task });
     } catch (error: NotFoundError | ServerError | unknown) {
       if (error instanceof NotFoundError) {
         await res
@@ -313,14 +318,14 @@ export const fetchTasksByStatus = [
       }));
 
       await res
-        .status(400)
+        .status(httpCodes.BAD_REQUEST)
         .json({ message: responseMessages.BAD_REQUEST, errors: errorMessage });
       return;
     }
     try {
       const { status } = req.body;
       const tasks = await retrieveTasksByStatus(status);
-      await res.status(200).json({ data: tasks });
+      await res.status(httpCodes.OK).json({ data: tasks });
     } catch (error: NotFoundError | ServerError | unknown) {
       if (error instanceof NotFoundError) {
         await res
