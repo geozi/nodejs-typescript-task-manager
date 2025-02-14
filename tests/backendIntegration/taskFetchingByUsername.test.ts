@@ -13,6 +13,7 @@ import { responseMessages } from "../../src/presentation/resources/responseMessa
 import * as taskRepository from "../../src/persistence/task.repository";
 import userFailedValidation from "../../src/domain/resources/userValidationMessages";
 import { ITask } from "../../src/domain/interfaces/iTask.interface";
+import { httpCodes } from "../../src/presentation/resources/responseStatusCodes";
 
 describe("Username-based task fetching integration tests", () => {
   let req: Partial<Request>;
@@ -51,7 +52,7 @@ describe("Username-based task fetching integration tests", () => {
         const statusStub = res.status as SinonStub;
         const jsonSpy = res.json as SinonSpy;
 
-        assert.strictEqual(statusStub.calledWith(400), true);
+        assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
         assert.strictEqual(
           jsonSpy.calledWith({
             message: responseMessages.BAD_REQUEST,
@@ -76,7 +77,7 @@ describe("Username-based task fetching integration tests", () => {
         const statusStub = res.status as SinonStub;
         const jsonSpy = res.json as SinonSpy;
 
-        assert.strictEqual(statusStub.calledWith(400), true);
+        assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
         assert.strictEqual(
           jsonSpy.calledWith({
             message: responseMessages.BAD_REQUEST,
@@ -98,7 +99,7 @@ describe("Username-based task fetching integration tests", () => {
         const statusStub = res.status as SinonStub;
         const jsonSpy = res.json as SinonSpy;
 
-        assert.strictEqual(statusStub.calledWith(400), true);
+        assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
         assert.strictEqual(
           jsonSpy.calledWith({
             message: responseMessages.BAD_REQUEST,
@@ -140,7 +141,10 @@ describe("Username-based task fetching integration tests", () => {
       const statusStub = res.status as SinonStub;
       const jsonSpy = res.json as SinonSpy;
 
-      assert.strictEqual(statusStub.calledWith(500), true);
+      assert.strictEqual(
+        statusStub.calledWith(httpCodes.INTERNAL_SERVER_ERROR),
+        true
+      );
       assert.strictEqual(
         jsonSpy.calledWith({ message: commonServiceResponses.SERVER_ERROR }),
         true
@@ -159,7 +163,7 @@ describe("Username-based task fetching integration tests", () => {
       const statusStub = res.status as SinonStub;
       const jsonSpy = res.json as SinonSpy;
 
-      assert.strictEqual(statusStub.calledWith(404), true);
+      assert.strictEqual(statusStub.calledWith(httpCodes.NOT_FOUND), true);
       assert.strictEqual(
         jsonSpy.calledWith({ message: taskServiceResponses.TASKS_NOT_FOUND }),
         true

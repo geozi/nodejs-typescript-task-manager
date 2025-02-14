@@ -11,6 +11,7 @@ import taskFailedValidation from "../../src/domain/resources/taskValidationMessa
 import { commonServiceResponses } from "../../src/service/resources/commonService.response";
 import assert from "assert";
 import * as taskRepository from "../../src/persistence/task.repository";
+import { httpCodes } from "../../src/presentation/resources/responseStatusCodes";
 
 describe("Task creation  integration tests", () => {
   let req: Partial<Request>;
@@ -46,7 +47,7 @@ describe("Task creation  integration tests", () => {
         const statusStub = res.status as SinonStub;
         const jsonSpy = res.json as SinonSpy;
 
-        assert.strictEqual(statusStub.calledWith(400), true);
+        assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
         assert.strictEqual(
           jsonSpy.calledWith({
             message: responseMessages.BAD_REQUEST,
@@ -70,7 +71,7 @@ describe("Task creation  integration tests", () => {
         const statusStub = res.status as SinonStub;
         const jsonSpy = res.json as SinonSpy;
 
-        assert.strictEqual(statusStub.calledWith(400), true);
+        assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
         assert.strictEqual(
           jsonSpy.calledWith({
             message: responseMessages.BAD_REQUEST,
@@ -91,7 +92,7 @@ describe("Task creation  integration tests", () => {
         const statusStub = res.status as SinonStub;
         const jsonSpy = res.json as SinonSpy;
 
-        assert.strictEqual(statusStub.calledWith(400), true);
+        assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
         assert.strictEqual(
           jsonSpy.calledWith({
             message: responseMessages.BAD_REQUEST,
@@ -112,7 +113,7 @@ describe("Task creation  integration tests", () => {
         const statusStub = res.status as SinonStub;
         const jsonSpy = res.json as SinonSpy;
 
-        assert.strictEqual(statusStub.calledWith(400), true);
+        assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
         assert.strictEqual(
           jsonSpy.calledWith({
             message: responseMessages.BAD_REQUEST,
@@ -133,7 +134,7 @@ describe("Task creation  integration tests", () => {
         const statusStub = res.status as SinonStub;
         const jsonSpy = res.json as SinonSpy;
 
-        assert.strictEqual(statusStub.calledWith(400), true);
+        assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
         assert.strictEqual(
           jsonSpy.calledWith({
             message: responseMessages.BAD_REQUEST,
@@ -157,7 +158,7 @@ describe("Task creation  integration tests", () => {
         const statusStub = res.status as SinonStub;
         const jsonSpy = res.json as SinonSpy;
 
-        assert.strictEqual(statusStub.calledWith(400), true);
+        assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
         assert.strictEqual(
           jsonSpy.calledWith({
             message: responseMessages.BAD_REQUEST,
@@ -179,7 +180,7 @@ describe("Task creation  integration tests", () => {
         const statusStub = res.status as SinonStub;
         const jsonSpy = res.json as SinonSpy;
 
-        assert.strictEqual(statusStub.calledWith(400), true);
+        assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
         assert.strictEqual(
           jsonSpy.calledWith({
             message: responseMessages.BAD_REQUEST,
@@ -226,7 +227,10 @@ describe("Task creation  integration tests", () => {
       const statusStub = res.status as SinonStub;
       const jsonSpy = res.json as SinonSpy;
 
-      assert.strictEqual(statusStub.calledWith(500), true);
+      assert.strictEqual(
+        statusStub.calledWith(httpCodes.INTERNAL_SERVER_ERROR),
+        true
+      );
       assert.strictEqual(
         jsonSpy.calledWith({ message: commonServiceResponses.SERVER_ERROR }),
         true

@@ -15,6 +15,7 @@ import sinon, { SinonStub, SinonSpy } from "sinon";
 import { Request, Response } from "express";
 import testInput from "../testInput";
 import assert from "assert";
+import { httpCodes } from "../../src/presentation/resources/responseStatusCodes";
 dotenv.config();
 
 describe("Task collection database integration tests", () => {
@@ -59,7 +60,7 @@ describe("Task collection database integration tests", () => {
     const statusStub = res.status as SinonStub;
     const jsonSpy = res.json as SinonSpy;
 
-    assert.strictEqual(statusStub.calledWith(201), true);
+    assert.strictEqual(statusStub.calledWith(httpCodes.CREATED), true);
     assert.strictEqual(
       jsonSpy.calledWith({ message: responseMessages.TASK_CREATED }),
       true
@@ -81,7 +82,7 @@ describe("Task collection database integration tests", () => {
     const statusStub = res.status as SinonStub;
     const jsonSpy = res.json as SinonSpy;
 
-    assert.strictEqual(statusStub.calledWith(200), true);
+    assert.strictEqual(statusStub.calledWith(httpCodes.OK), true);
     assert.strictEqual(
       jsonSpy.calledWith({ message: responseMessages.TASK_UPDATED }),
       true
@@ -100,6 +101,6 @@ describe("Task collection database integration tests", () => {
 
     const statusStub = res.status as SinonStub;
 
-    assert.strictEqual(statusStub.calledWith(204), true);
+    assert.strictEqual(statusStub.calledWith(httpCodes.NO_CONTENT), true);
   });
 });

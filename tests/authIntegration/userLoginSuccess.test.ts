@@ -10,6 +10,7 @@ import assert from "assert";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { IUser } from "../../src/domain/interfaces/iUser.interface";
+import { httpCodes } from "../../src/presentation/resources/responseStatusCodes";
 
 describe("User successful login integration test", () => {
   let req: Partial<Request>;
@@ -58,7 +59,7 @@ describe("User successful login integration test", () => {
     const statusStub = res.status as SinonStub;
     const jsonSpy = res.json as SinonSpy;
 
-    assert.strictEqual(statusStub.calledWith(200), true);
+    assert.strictEqual(statusStub.calledWith(httpCodes.OK), true);
     assert.strictEqual(
       jsonSpy.calledWith({
         token: testInput.testToken,

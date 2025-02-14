@@ -11,6 +11,7 @@ import { responseMessages } from "../../src/presentation/resources/responseMessa
 import * as userRepository from "../../src/persistence/user.repository";
 import { commonServiceResponses } from "../../src/service/resources/commonService.response";
 import { userServiceResponses } from "../../src/service/resources/userService.response";
+import { httpCodes } from "../../src/presentation/resources/responseStatusCodes";
 
 describe("User failed login integration tests", () => {
   let req: Partial<Request>;
@@ -49,7 +50,7 @@ describe("User failed login integration tests", () => {
         const statusStub = res.status as SinonStub;
         const jsonSpy = res.json as SinonSpy;
 
-        assert.strictEqual(statusStub.calledWith(400), true);
+        assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
         assert.strictEqual(
           jsonSpy.calledWith({
             message: responseMessages.BAD_REQUEST,
@@ -77,7 +78,7 @@ describe("User failed login integration tests", () => {
         const statusStub = res.status as SinonStub;
         const jsonSpy = res.json as SinonSpy;
 
-        assert.strictEqual(statusStub.calledWith(400), true);
+        assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
         assert.strictEqual(
           jsonSpy.calledWith({
             message: responseMessages.BAD_REQUEST,
@@ -102,7 +103,7 @@ describe("User failed login integration tests", () => {
         const statusStub = res.status as SinonStub;
         const jsonSpy = res.json as SinonSpy;
 
-        assert.strictEqual(statusStub.calledWith(400), true);
+        assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
         assert.strictEqual(
           jsonSpy.calledWith({
             message: responseMessages.BAD_REQUEST,
@@ -127,7 +128,7 @@ describe("User failed login integration tests", () => {
         const statusStub = res.status as SinonStub;
         const jsonSpy = res.json as SinonSpy;
 
-        assert.strictEqual(statusStub.calledWith(400), true);
+        assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
         assert.strictEqual(
           jsonSpy.calledWith({
             message: responseMessages.BAD_REQUEST,
@@ -156,7 +157,7 @@ describe("User failed login integration tests", () => {
         const statusStub = res.status as SinonStub;
         const jsonSpy = res.json as SinonSpy;
 
-        assert.strictEqual(statusStub.calledWith(400), true);
+        assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
         assert.strictEqual(
           jsonSpy.calledWith({
             message: responseMessages.BAD_REQUEST,
@@ -183,7 +184,10 @@ describe("User failed login integration tests", () => {
             const statusStub = res.status as SinonStub;
             const jsonSpy = res.json as SinonSpy;
 
-            assert.strictEqual(statusStub.calledWith(400), true);
+            assert.strictEqual(
+              statusStub.calledWith(httpCodes.BAD_REQUEST),
+              true
+            );
             assert.strictEqual(
               jsonSpy.calledWith({
                 message: responseMessages.BAD_REQUEST,
@@ -209,7 +213,7 @@ describe("User failed login integration tests", () => {
         const statusStub = res.status as SinonStub;
         const jsonSpy = res.json as SinonSpy;
 
-        assert.strictEqual(statusStub.calledWith(400), true);
+        assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
         assert.strictEqual(
           jsonSpy.calledWith({
             message: responseMessages.BAD_REQUEST,
@@ -262,7 +266,10 @@ describe("User failed login integration tests", () => {
       const statusStub = res.status as SinonStub;
       const jsonSpy = res.json as SinonSpy;
 
-      assert.strictEqual(statusStub.calledWith(500), true);
+      assert.strictEqual(
+        statusStub.calledWith(httpCodes.INTERNAL_SERVER_ERROR),
+        true
+      );
       assert.strictEqual(
         jsonSpy.calledWith({ message: commonServiceResponses.SERVER_ERROR }),
         true
@@ -285,7 +292,7 @@ describe("User failed login integration tests", () => {
       const statusStub = res.status as SinonStub;
       const jsonSpy = res.json as SinonSpy;
 
-      assert.strictEqual(statusStub.calledWith(401), true);
+      assert.strictEqual(statusStub.calledWith(httpCodes.UNAUTHORIZED), true);
       assert.strictEqual(
         jsonSpy.calledWith({ message: userServiceResponses.USER_NOT_FOUND }),
         true

@@ -12,6 +12,7 @@ import * as taskController from "../../src/presentation/controllers/task.control
 import { responseMessages } from "../../src/presentation/resources/responseMessages";
 import taskFailedValidation from "../../src/domain/resources/taskValidationMessages";
 import * as taskRepository from "../../src/persistence/task.repository";
+import { httpCodes } from "../../src/presentation/resources/responseStatusCodes";
 
 describe("Task deletion integration tests", () => {
   let req: Partial<Request>;
@@ -46,7 +47,7 @@ describe("Task deletion integration tests", () => {
         const statusStub = res.status as SinonStub;
         const jsonSpy = res.json as SinonSpy;
 
-        assert.strictEqual(statusStub.calledWith(400), true);
+        assert.strictEqual(statusStub.calledWith(httpCodes.BAD_REQUEST), true);
         assert.strictEqual(
           jsonSpy.calledWith({
             message: responseMessages.BAD_REQUEST,
@@ -71,7 +72,10 @@ describe("Task deletion integration tests", () => {
             const statusStub = res.status as SinonStub;
             const jsonSpy = res.json as SinonSpy;
 
-            assert.strictEqual(statusStub.calledWith(400), true);
+            assert.strictEqual(
+              statusStub.calledWith(httpCodes.BAD_REQUEST),
+              true
+            );
             assert.strictEqual(
               jsonSpy.calledWith({
                 message: responseMessages.BAD_REQUEST,
@@ -94,7 +98,10 @@ describe("Task deletion integration tests", () => {
             const statusStub = res.status as SinonStub;
             const jsonSpy = res.json as SinonSpy;
 
-            assert.strictEqual(statusStub.calledWith(400), true);
+            assert.strictEqual(
+              statusStub.calledWith(httpCodes.BAD_REQUEST),
+              true
+            );
             assert.strictEqual(
               jsonSpy.calledWith({
                 message: responseMessages.BAD_REQUEST,
@@ -140,7 +147,10 @@ describe("Task deletion integration tests", () => {
       const statusStub = res.status as SinonStub;
       const jsonSpy = res.json as SinonSpy;
 
-      assert.strictEqual(statusStub.calledWith(500), true);
+      assert.strictEqual(
+        statusStub.calledWith(httpCodes.INTERNAL_SERVER_ERROR),
+        true
+      );
       assert.strictEqual(
         jsonSpy.calledWith({
           message: commonServiceResponses.SERVER_ERROR,

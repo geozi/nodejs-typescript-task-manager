@@ -10,6 +10,7 @@ import sinon, { SinonStub, SinonSpy } from "sinon";
 import { Request, Response } from "express";
 import testInput from "../testInput";
 import assert from "assert";
+import { httpCodes } from "../../src/presentation/resources/responseStatusCodes";
 dotenv.config();
 
 describe("User collection database integration tests", () => {
@@ -56,7 +57,7 @@ describe("User collection database integration tests", () => {
     const statusStub = res.status as SinonStub;
     const jsonSpy = res.json as SinonSpy;
 
-    assert.strictEqual(statusStub.calledWith(201), true);
+    assert.strictEqual(statusStub.calledWith(httpCodes.CREATED), true);
     assert.strictEqual(
       jsonSpy.calledWith({ message: responseMessages.USER_REGISTERED }),
       true
