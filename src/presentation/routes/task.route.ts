@@ -2,7 +2,7 @@
  * Task routes.
  * @module src/presentation/routes/task.route
  */
-import { verifyToken } from "../../auth/auth.controller";
+import { authenticateToken, verifyToken } from "../../auth/auth.controller";
 import {
   createTask,
   updateTask,
@@ -14,11 +14,26 @@ import {
 import { Router } from "express";
 const taskRouter = Router();
 
-taskRouter.post("/", ...verifyToken, ...createTask);
-taskRouter.put("/", ...verifyToken, ...updateTask);
-taskRouter.delete("/", ...verifyToken, ...deleteTask);
-taskRouter.get("/status", ...verifyToken, ...fetchTasksByStatus);
-taskRouter.get("/username", ...verifyToken, ...fetchTasksByUsername);
-taskRouter.get("/subject", ...verifyToken, ...fetchTaskBySubject);
+taskRouter.post("/", ...verifyToken, authenticateToken, ...createTask);
+taskRouter.put("/", ...verifyToken, authenticateToken, ...updateTask);
+taskRouter.delete("/", ...verifyToken, authenticateToken, ...deleteTask);
+taskRouter.get(
+  "/status",
+  ...verifyToken,
+  authenticateToken,
+  ...fetchTasksByStatus
+);
+taskRouter.get(
+  "/username",
+  ...verifyToken,
+  authenticateToken,
+  ...fetchTasksByUsername
+);
+taskRouter.get(
+  "/subject",
+  ...verifyToken,
+  authenticateToken,
+  ...fetchTaskBySubject
+);
 
 export default taskRouter;
