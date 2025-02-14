@@ -18,8 +18,8 @@ The project contains the backend implementation of a Task Manager API in Typescr
 
 ## Prerequisites
 
-- Nodejs (v20.11.1 or higher),
-- MongoDB Atlas.
+- Nodejs (v20.11.1),
+- MongoDB.
 
 ## Testing
 
@@ -30,13 +30,13 @@ A thorough presentation of testing during development can be found in the [QA Te
 - **Authentication**: Single factor, local authentication.
 - **Authorization**: JSON Web Token (JWT).
 
-## Differences over previous Nodejs projects
+## Differences with previous Nodejs projects
 
 The Task Manager API project :
 
 - uses Typescript for development and TypeDoc for documentation,
 - implements a layered architecture approach,
-- uses a combination of Node's build-in assert library, Sinon, and Mocha for unit and integration testing,
+- uses a combination of Node's build-in assert library, Sinon, Chai, and Mocha for unit and integration testing,
 - uses class syntax to create custom error classes.
 
 ##
