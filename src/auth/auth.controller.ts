@@ -140,3 +140,41 @@ export const verifyToken = [
     }
   },
 ];
+
+/**
+ * Processes HTTP requests for token authentication.
+ *
+ * @param {Request} req - An HTTP request.
+ * @param {Response} res - An HTTP response.
+ * @param {NextFunction} next - A build-in Express function to move further down the routing path.
+ * @returns {Promise<void>} A promise that resolves to void.
+ */
+export const authenticateToken = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  if (req.body.skipAuthenticateToken) {
+    return;
+  }
+
+  try {
+    const username = req.body.username;
+    await retrieveUserByUsername(username);
+    next();
+  } catch (error) {
+    if (error instanceof NotFoundError) {
+      await res
+        .status(401)
+        .json({ message: authResponses.AUTHENTICATION_FAILED });
+      return;
+    }
+
+    if (error instanceof ServerError) {
+      await res
+        .status(500)
+        .json({ message: commonServiceResponses.SERVER_ERROR });
+      return;
+    }
+  }
+};
