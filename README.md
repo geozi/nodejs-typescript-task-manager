@@ -18,7 +18,7 @@ The project contains the backend implementation of a Task Manager API in Typescr
 
 ## Prerequisites
 
-- Nodejs (v20.11.1),
+- Nodejs (v20.11.1)[^1],
 - MongoDB.
 
 ## Testing
@@ -40,6 +40,8 @@ The Task Manager API project :
 - uses class syntax to create custom error classes.
 
 ##
+
+[^1] According to the [Release Schedule](https://nodejs.org/en/about/previous-releases), Node.js v20 will enter its maintenance phase in the last quarter of 2024. During that period, it is recommended that the project should migrate to the latest active LTS version.
 
 <p align="center">
         <a href="https://github.com/LelouchFR/skill-icons">
